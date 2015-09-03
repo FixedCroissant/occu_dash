@@ -1,0 +1,30 @@
+
+#left{
+
+}
+#middle{
+
+}
+
+/*Main Grid*/
+#right{
+
+}
+.bold{
+    font-weight:bold;
+
+}
+
+/*Table Header*/
+#right th{
+font-family: "Arial Narrow", Arial, sans-serif;
+text-align: center;
+}
+/*Table Data*/
+#right td{
+text-align: center;
+}
+
+.subHeadersPerArea{
+    font-weight:bold;
+}
