@@ -185,7 +185,6 @@ $universityHousingBuildings['Bragaw'] = new buildingOccupancy("Bragaw", "West", 
                  * END TOTALS       (USED ON BOTTOM ROW)
                  */
 
-
                 if ($campus != " ") {
                     //New Row
                     echo "<tr>\n";
@@ -296,7 +295,12 @@ $universityHousingBuildings['Bragaw'] = new buildingOccupancy("Bragaw", "West", 
 
                     //Total Bldg Capacity Percentage
                     echo "<td class='subHeadersPerArea'> \n";
-                    echo "test";
+                    //Below is a percentage of the total building capacity.
+                    //This takes the total ASSIGNED STUDENTS and DIVIDES the TOTAL MAXIMUM POSSIBLE people can
+                    //be in a particular building.
+
+                    echo $listRead->createPercentage($studentsAssigned, $totalPossibleBuildingOccupancyBasedOnArea, 2);
+
                     echo "</td> \n";
                     //End total Bldg Capacity Percentage
 
@@ -379,7 +383,10 @@ $universityHousingBuildings['Bragaw'] = new buildingOccupancy("Bragaw", "West", 
 
                     //Total Bldg Capacity Percentage
                     echo "<td class='subHeadersPerArea'>";
-                    echo "test";
+                    //Below is a percentage of the total building capacity.
+                    //This takes the total ASSIGNED STUDENTS and DIVIDES the TOTAL MAXIMUM POSSIBLE people can
+                    //be in a particular building.
+                    echo $listRead->createPercentage($studentsAssigned, $totalPossibleBuildingOccupancyBasedOnArea, 2);
                     echo "</td>";
                     //End total Bldg Capacity Percentage
 
@@ -458,7 +465,10 @@ $universityHousingBuildings['Bragaw'] = new buildingOccupancy("Bragaw", "West", 
 
                     //Total Bldg Capacity Percentage
                     echo "<td class='subHeadersPerArea'> \n";
-                    echo "test";
+                    //Below is a percentage of the total building capacity.
+                    //This takes the total ASSIGNED STUDENTS and DIVIDES the TOTAL MAXIMUM POSSIBLE people can
+                    //be in a particular building.
+                    echo $listRead->createPercentage($studentsAssigned, $totalPossibleBuildingOccupancyBasedOnArea, 2);
                     echo "</td> \n";
                     //End total Bldg Capacity Percentage
 
@@ -546,7 +556,10 @@ $universityHousingBuildings['Bragaw'] = new buildingOccupancy("Bragaw", "West", 
 
                     //Total Bldg Capacity Percentage
                     echo "<td class='subHeadersPerArea'> \n";
-                    echo "test";
+                    //Below is a percentage of the total building capacity.
+                    //This takes the total ASSIGNED STUDENTS and DIVIDES the TOTAL MAXIMUM POSSIBLE people can
+                    //be in a particular building.
+                    echo $listRead->createPercentage($studentsAssigned, $totalPossibleBuildingOccupancyBasedOnArea, 2);
                     echo "</td> \n";
                     //End total Bldg Capacity Percentage
 
@@ -823,7 +836,13 @@ $universityHousingBuildings['Bragaw'] = new buildingOccupancy("Bragaw", "West", 
 
                 //Total BUILDING CAPACITY UTILIZED (%)
                 echo "<td>";
-                echo "TOTAL OF TOTAL BUILDING CAPACITY %%%";
+            //Below is a percentage of the total building capacity.
+            //This takes the total ASSIGNED STUDENTS and DIVIDES the TOTAL MAXIMUM POSSIBLE people can
+            //be in a particular building.
+            echo $listRead->createPercentage($totalStudentsAssigned, $totalBuildingCapacity, 2);
+
+
+
                 echo "</td>";
                 //End Total BUILDING CAPACITY UTILIZED (%)
 

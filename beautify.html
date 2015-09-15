@@ -2,9 +2,32 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <title>Layout</title>
+<!--jQuery Import-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!--Using jQuery Rotate Plugin created by Pawel Witkowski http://jqueryrotate.com-->
+    <script src = "scripts/jQueryRotate.js"></script>
 </head>
 <body>
+<script>
+    // A $( document ).ready() block.
+    $( document ).ready(function() {
+        $("#arrowFirst").rotate({
+            bind:
+            {
+                //On first click
+                click: function(){
+                    $(this).rotate({ angle:0,animateTo:90,easing: $.easing.easeInOutExpo })
+                }
+            }
+        });
+
+    });
+</script>
+
+<img src="images/arrow.png" class="initialArrow" id="arrowFirst"/>
+
+
 
 </body>
 </html>
