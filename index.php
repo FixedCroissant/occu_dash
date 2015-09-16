@@ -8,9 +8,14 @@
 
 //Retrieve the buildingOccupancy Class.
 include('classes/buildingOccupancy.php');
+//Retrieve the buildingOccupancyDetail class.
+include('classes/buildingOccupancydetail.php');
 
 //Create new buildingOccupancy object.
 $myBuildingOccupancy = new buildingOccupancy();
+
+//Create new buildingOccupnacyDetailed object.
+$myBuildingOccupancyDetailedItem = new buildingOccupancydetail();
 
 //Create an array of buildingObjects....
 $totalHousingPicture = array();
@@ -85,7 +90,7 @@ $universityHousingBuildings['Bragaw'] = new buildingOccupancy("Bragaw", "West", 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>IN DEVELOPMENT</title>
+    <title>NC State Housing-Assignments & Occupancy Outlook</title>
     <!--Internal Stylesheet-->
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <!--Using new PURE CSS for this project-->
@@ -100,22 +105,15 @@ $universityHousingBuildings['Bragaw'] = new buildingOccupancy("Bragaw", "West", 
 
 <!--Main Container-->
 <div id="container">
+    <!--Instructions-->
+    <div id="">
+    <p>
 
-
-    <!--Left-->
-    <div id="left">
-        &nbsp;
-
+    </p>
     </div>
-
-    <!--Middle-->
-    <div id="middle">
-        &nbsp;
-    </div>
-
-    <!--Right-->
-    <div id="right">
-        <table class="pure-table pure-table-horizontal">
+    <!--Main inside the over arching container-->
+    <div id="main">
+        <table class="pure-table pure-table-horizontal" width="100%;">
             <thead>
             <th>
                 Campus
@@ -178,6 +176,7 @@ $universityHousingBuildings['Bragaw'] = new buildingOccupancy("Bragaw", "West", 
                 $totalStudentsAssigned = $listRead->totalStudentsAssigned($universityHousingBuildings);
                 $totalPossibleResidents = $listRead->totalStudentsPossibleResidents($universityHousingBuildings);
                 $totalResidencyPossiblePercentage = $listRead->createPercentage($totalStudentsAssigned, $totalPossibleResidents, 2);
+                $completeTotalStaffAssigned = $listRead->totalStaffAssigned($universityHousingBuildings);
 
                $totalBuildingCapacity= $listRead->totalBuildingCapacity($universityHousingBuildings);
 
@@ -229,7 +228,44 @@ $universityHousingBuildings['Bragaw'] = new buildingOccupancy("Bragaw", "West", 
                     //End Add Arrow
 
                     //Check Area
+                    //South east area....
+
+                    // No link.
+                    //echo $area;
+
+
+                    $pulledBuilding;
+
+                    //If the person clicks the area link, we're not going to worry about specific building being displayed.
+                    /*if($area!=''){
+                        $complexArea='Area Filter Applied';
+                        $pulledBuilding='Area Filter Applied';
+
+                    }else{
+                        $pulledBuilding=$pulledBuilding;
+                    }*/
+
+
+                    //Link available...
+                    //Use GET variables for the time being.
+                    //echo "<a href='building_information_detailed.php?campus=$campus&area=$area&complex=$complexArea&building=$pulledBuilding' target='blank' onclick="window.open('print.html', 'newwindow', 'width=300, height=250'); return false;">";
+
+                    //Add Link to pull detailed report about Gender & Classification Information
+
+                    echo "<script style='text/javascript'>";
+                    echo "function openforSoutheast(){
+                                var myWindow = window.open('building_information_detailed.php?campus=$campus&area=$area&complex=$complexArea&building=$pulledBuilding', '_blank','resizable=no, menubar=no,toolbar=no,width=715, height=900');
+                            }
+                    </script>";
+                    //echo "<a href='#' target='blank' onclick='return openforSoutheast();'>";
+
+
+
+
                     echo $area;
+
+                    echo "</a>";
+
 
                     //Setboolean to false
                     $area_NotAlreadyPrinted = false;
@@ -272,9 +308,10 @@ $universityHousingBuildings['Bragaw'] = new buildingOccupancy("Bragaw", "West", 
                     echo "</td> \n";
                     //End Total Resident Occupancy %
 
-                    //Staff Capacity
+                    //Read Staff Capacity
                     echo "<td class='subHeadersPerArea'> \n";
-                    echo "Staff Capacity Totals";
+                    $totalStaffPerSegment = $listRead->totalStaffCapacityByArea($universityHousingBuildings,$area);
+                    echo $totalStaffPerSegment;
                     echo "</td> \n";
                     //End Staff Capacity
 
@@ -368,7 +405,9 @@ $universityHousingBuildings['Bragaw'] = new buildingOccupancy("Bragaw", "West", 
 
                     //Staff Capacity
                     echo "<td class='subHeadersPerArea'>";
-                    echo "Staff Capacity Totals";
+                    //Northeast Staff
+                    $totalStaffPerSegment = $listRead->totalStaffCapacityByArea($universityHousingBuildings,$area);
+                    echo $totalStaffPerSegment;
                     echo "</td>";
                     //End Staff Capacity
 
@@ -444,7 +483,9 @@ $universityHousingBuildings['Bragaw'] = new buildingOccupancy("Bragaw", "West", 
 
                     //Staff Capacity
                     echo "<td class='subHeadersPerArea'> \n";
-                    echo "Staff Capacity Totals";
+                    //Tri-Towers & TOTA grouped together
+                    $totalStaffPerSegment = $listRead->totalStaffCapacityByArea($universityHousingBuildings,$area);
+                    echo $totalStaffPerSegment;
                     echo "</td> \n";
                     //End Staff Capacity
 
@@ -535,7 +576,9 @@ $universityHousingBuildings['Bragaw'] = new buildingOccupancy("Bragaw", "West", 
 
                     //Staff Capacity
                     echo "<td class='subHeadersPerArea'> \n";
-                    echo "Staff Capacity Totals";
+                    //West Campus
+                        $totalStaffPerSegment = $listRead->totalStaffCapacityByArea($universityHousingBuildings,$area);
+                        echo $totalStaffPerSegment;
                     echo "</td> \n";
                     //End Staff Capacity
 
@@ -789,9 +832,9 @@ $universityHousingBuildings['Bragaw'] = new buildingOccupancy("Bragaw", "West", 
             //New foreach
 
 
-                //Get totals
+                //Get  complete totals for west central and east
                 //New Row
-                echo "<tr>";
+                echo "<tr class='complete-totals'>";
 
                 echo "<td>";
                 echo "TOTAL";
@@ -824,7 +867,10 @@ $universityHousingBuildings['Bragaw'] = new buildingOccupancy("Bragaw", "West", 
 
                 //Staff Capacity Total
                 echo "<td>";
-                echo "Staff Capacity Total";
+                //Overall totals
+                echo $completeTotalStaffAssigned;
+
+
                 echo "</td>";
                 //End Staff Capacity Total
 
@@ -840,16 +886,8 @@ $universityHousingBuildings['Bragaw'] = new buildingOccupancy("Bragaw", "West", 
             //This takes the total ASSIGNED STUDENTS and DIVIDES the TOTAL MAXIMUM POSSIBLE people can
             //be in a particular building.
             echo $listRead->createPercentage($totalStudentsAssigned, $totalBuildingCapacity, 2);
-
-
-
                 echo "</td>";
                 //End Total BUILDING CAPACITY UTILIZED (%)
-
-
-
-
-
 
             echo "</tr>";//End New Row
             //End Get Totals

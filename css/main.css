@@ -1,27 +1,36 @@
 
-#left{
+/*Instructions*/
+#instructions{
 
 }
-#middle{
-
-}
-
 /*Main Grid*/
-#right{
-
+#main{
+    width: 100%;
 }
 .bold{
     font-weight:bold;
+}
+.complete-totals{
+font-weight: bold;
+    font-size: medium;
+    background-color: #DEDEE3; /*Light gray*/
+}
+
+/*Footer*/
+#footer{
 
 }
 
 /*Table Header*/
-#right th{
+#main th{
 font-family: "Arial Narrow", Arial, sans-serif;
 text-align: center;
+color: #000000;                 /*Font Color is black*/
+background-color: #DEDEE3; /*Light gray*/
+
 }
 /*Table Data*/
-#right td{
+#main td{
 text-align: center;
 }
 

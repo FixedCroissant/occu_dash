@@ -1,0 +1,52 @@
+.display-details{
+
+}
+#chart{
+    float: right;
+    margin-top:-15%;
+    margin-right: 30%;
+}
+
+.small {
+    font-size: xx-large;
+    margin-left: 325px;
+}
+
+thead{
+    background-color: #CC0000;
+    color: #FFFFFF;
+}
+td{
+font-size: x-small;
+text-align:center;
+font-family: "Arial Narrow", Arial, sans-serif;
+}
+
+
+
+
+
+
+/****
+ *MEDIA QUERIES
+ ***/
+
+/*When the window opens up, lets set it to 800 width*/
+@media only screen
+and (min-width: 713px)
+and (max-width: 1024px)
+ {
+
+    #chart{
+        margin-left:500px;
+        margin-top: 10px;
+    }
+
+    .small {
+       font-size: xx-large;
+        margin-left: 250px;
+    }
+
+
+
+}

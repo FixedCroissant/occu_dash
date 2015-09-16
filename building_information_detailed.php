@@ -11,7 +11,15 @@ include('classes/buildingOccupancydetail.php');
 //Create new buildingOccupancy object.
 //Sets an initial classification of student based on the classification entered...
 
-$myBuildingOccupancydetail = new buildingOccupancydetail("East","M","fr",15);
+//Load information from the link.
+$campus = $_GET['campus'];
+$area= $_GET['area'];
+$complexArea = $_GET['complex'];
+$pulledBuilding=$_GET['building'];
+
+$myBuildingOccupancydetail = new buildingOccupancydetail($campus,"","M","fr",15);
+//Working Object called $myBuildingOccupancydetail...
+//$myBuildingOccupancydetail = new buildingOccupancydetail("East","","M","fr",15);
 
 
 //Get genders
@@ -19,7 +27,7 @@ $male= $myBuildingOccupancydetail->getMale();
 $female=$myBuildingOccupancydetail->getFemale();
 
 //Set classifications
-$myBuildingOccupancydetail->setClassification("NFR",25  );
+$myBuildingOccupancydetail->setClassification("NFR",19);
 $myBuildingOccupancydetail->setClassification("SO",10);
 $myBuildingOccupancydetail->setClassification("JR",20);
 $myBuildingOccupancydetail->setClassification("SR",30);
@@ -62,12 +70,65 @@ $genders = array("male"=>$male,"female"=>$female);
     </title>
     <!--Internal Stylesheet-->
     <link rel="stylesheet" type="text/css" href="css/detailed_student_information.css">
+    <!--load the necessary google charts API-->
     <!--Google Charts API-->
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
     <!--Google Chart Separate File-->
-    <script type="text/javascript" src="scripts/drawChart.js"></script>
-</head>
+    <script type='text/javascript' src='scripts/drawChart.js'></script>
+    </head>
 <div id="container">
+    <?php
+    //Write the necessary JavaScript to provide the bar chart
+    echo "<script type='text/javascript'>\n";
+    //encode information into json as javascript
+    //echo  "var stuff=json_encode($classifications)";
+    echo "var ar=". json_encode($classifications).";";
+    echo "</script>\n";
+    ?>
+
+
+    <a href='' class='small' onclick='window.close();' >Close Window </a><img src="images/close_window.png"/>
+    <br/>
+    <br/>
+
+    <table id ="selected_building_overview_information" name="selected_building_overview_information" border="1" width="700px">
+        <thead>
+        <th>
+            Campus
+        </th>
+        <th>
+            Area (if any)
+        </th>
+        <th>
+            Complex (if any)
+        </th>
+        <th>
+            Building
+        </th>
+
+        </thead>
+        <tbody>
+        <?php
+        echo "<tr>";
+        echo "<td>";
+        echo $campus;
+        echo "</td>";
+        echo "<td>";
+        echo "$area";
+        echo "</td>";
+        echo "<td>";
+        echo "$complexArea";
+        echo "</td>";
+        echo "<td>";
+        echo $pulledBuilding;
+        echo "</td>";
+        echo "</tr>";
+
+        ?>
+        </tbody>
+</table>
+
+
     <table id="gender_student_information" name="gender_student_information" border="1" width="700px;" class="display-details">
         <thead>
         <th>

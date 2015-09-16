@@ -50,6 +50,7 @@ class buildingOccupancy {
                                                     // total building capacity based on the area that is provided. (Areas are: Southeast, Northeast, TriTowers
                                                     //TOTA.
                                                     //This really only applies to Residence Halls.
+    var $totalSearchedAreaTotalStaffCapacity;      //Provides the total of staffing per segment area (Avent Ferry Complex, or Southeast, or Wood, or Northeast).
 
 
 
@@ -250,6 +251,35 @@ class buildingOccupancy {
     }
 
 
+    function totalStaffCapacityByArea($arrayOfObjects,$areaProvided){
+
+        //Temporary Array Value
+        $tempArray = array();
+
+        //Easy way to search for all the keys inside the array.
+        //Array Name: $arrayofObjects turned into $key...
+        foreach($arrayOfObjects as $key => $value)
+        {
+            //Get the Buildings Areas (Southeast, Northeast, TriTowers, TOTA)
+            $area = $arrayOfObjects[$key]->getLocalizedBuildingArea();
+
+            $mykey = $key;
+
+            //echo $mykey;
+            if($area==$areaProvided) {
+                //Get the Total Staff Capacity fro the area specifically looked into...
+                $totalStaffCapacityForSearchedArea= $arrayOfObjects[$mykey]->getStaffCapacity();
+                //Add the amount in TotalBuildingCapacity Element to the temporary array created.
+                $tempArray[]= $totalStaffCapacityForSearchedArea;
+            }else{
+                //echo "<br/>";
+                //echo "Item doesn't exist.";
+            }
+
+            $arrayTotal=array_sum($tempArray);
+        }
+        return $this->totalSearchedAreaTotalStaffCapacity=$arrayTotal;
+    }
 
 
 
@@ -305,6 +335,21 @@ class buildingOccupancy {
     }
 
 
+    function totalStaffAssigned($arrayOfObjects){
+        //Temporary Array Value
+        $tempArray = array();
+
+        foreach($arrayOfObjects as $group){
+            $tempArray[] = ($group->getStaffCapacity());
+            //var_dump($group->getBuildingStudentsAssigned());
+        }
+
+        $arrayTotal =  array_sum($tempArray);
+
+        //Sum the array values and return the value in the function.
+        return $this->totalPossibleBuildingCapacity=$arrayTotal;
+
+    }
 
 
 
@@ -449,6 +494,12 @@ class buildingOccupancy {
     function getBuildingTotalCapacity(){
         return $this->buildingTotalPossibleOccupancy;
     }
+
+
+
+
+
+
 
     function getStaffCapacity(){
         return $this->staffCapacity;
