@@ -7,34 +7,13 @@
  * Time: 9:54 AM
  */
 
+//Specify the location of the original class that's being extended.
+require_once('buildingOccupancy.php');
 
-class buildingOccupancydetail
+class buildingOccupancydetail extends buildingOccupancy
 {
 
-    //Variables
-    var $buildingName;  //building name.
-    var $buildingArea;
-    var $buildingStudentsAssigned;
-    var $buildingTotalPossibleResidentOccupancy;        //Specifically for Residents
-    var $buildingTotalPossibleOccupancy;                //The maximum amount the building can hold.
-    var $complex;                                       //If a location is grouped, for instance AFC-A & AFC-B is a part of Avent Ferry Complex... the complex will be called Avent Ferry Complex.
-
-    var $providedComplexByBuilding;
-
-    var $campus;
-
-    var $residentOccupancyPercentage;
-    var $staffCapacity;
-    var $totalBuildingCapacityPercentage;
-
-    //Boolean Flag to stop printing the area
-    var $area_AlreadyPrinted;
-
-    //Totals
-    var $studentsAssignedtotalsByArea;
-    var $totalPossibleResidentOccupancy;
-    var $totalPossibleBuildingCapacity;             //This provides everything, regardless of whether it is within Southeast, Northeast, etc.
-    var $totalSearchedAreaTotalBuildingCapacity;
+    //Variables for buildingOccupancyDetail Extension.
 
     //New additions for buildingOccupancydetail.php
     //Detailed People
@@ -69,13 +48,6 @@ class buildingOccupancydetail
         //$this->setTempClassification($temp_classification);
         $this->setClassification($classification,$classificationAmount);
     }
-
-
-
-    function setBuildingName($providedBuildingName){
-        $this->buildingName=$providedBuildingName;
-    }
-
 
 
 
@@ -149,10 +121,12 @@ class buildingOccupancydetail
 
     }
 
+    //Get the Number of Males
     function getMale(){
         return $this->male;
     }
 
+    //Get the Number of Males
     function getFemale(){
         return $this->female;
     }
