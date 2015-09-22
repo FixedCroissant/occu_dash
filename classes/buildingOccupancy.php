@@ -39,6 +39,9 @@ class buildingOccupancy {
     var $staffCapacity;
     var $totalBuildingCapacityPercentage;
 
+    var $totalSearched_StudentAssignments_ByCampusArea;     /*Student assignments based on campus area, east/west*/
+    var $totalSearched_StudentAssignments_ByComplexArea;    /*Student assignments based on complex area.*/
+
     //Boolean Flag to stop printing the area
     var $area_AlreadyPrinted;
 
@@ -67,6 +70,8 @@ class buildingOccupancy {
         $this->setMainCampusArea($buildingName);
     }
 
+
+
     function setMainCampusArea($buildingLocation){
         //Check Avent Ferry Complex.
         if($buildingLocation=="AFC - A"||$buildingLocation=="AFC - B"||$buildingLocation=="AFC - E"||$buildingLocation=="AFC - F"){
@@ -88,6 +93,23 @@ class buildingOccupancy {
         if ($buildingLocation=="North" ||$buildingLocation=="Watauga"){
             $this->campus="East";
         }
+
+        //Check Tri-Towers
+        if ($buildingLocation=="Bowen" ||$buildingLocation=="Carroll"||$buildingLocation=="Metcalf"){
+            $this->campus="Central";
+        }
+        //Check TOTA
+        if ($buildingLocation=="Tucker" ||$buildingLocation=="Owen"||$buildingLocation=="Turlington"||$buildingLocation=="Alexander"){
+            $this->campus="Central";
+        }
+
+
+
+
+
+
+
+
     }
     //Setter
     function setBuildingName($newBuildingName){
@@ -125,6 +147,23 @@ class buildingOccupancy {
             $newAREA = "Northeast";
             $this->buildingArea=$newAREA;
         }
+        //Wolf Ridge Apartments
+        if($buildingNameProvided=="WR Grove"){
+            $newAREA="Wolf Ridge";
+            $this->buildingArea=$newAREA;
+        }
+
+        //Wolf Village Apartments
+        if($buildingNameProvided=="Wolf Vlg A"){
+            $newArea = "Wolf Village";
+            $this->buildingArea=$newArea;
+
+        }
+
+
+
+
+
     }
     function getTotalStudentsAssignedByArea($areaGiven){
       if($areaGiven=="Southeast"){
@@ -186,6 +225,98 @@ class buildingOccupancy {
         }
         return $this->totalSearchedAreaTotalBuildingCapacity=$arrayTotal;
     }
+
+
+    function getStudentsAssignedByCampus($arrayOfObjects,$campusProvided){
+        //Temporary Array Value
+        $tempArray = array();
+
+        //Easy way to search for all the keys inside the array.
+        //Array Name: $arrayofObjects turned into $key...
+        foreach($arrayOfObjects as $key => $value)
+        {
+            //Get the Campus Area (East,Central, Etc)
+            $area = $arrayOfObjects[$key]->getMainCampusArea();
+
+            $mykey = $key;
+
+            //echo $mykey;
+            if($area==$campusProvided) {
+                //Get the Total Building Capacity fro the area specifically looked into...
+                $totalAssignedStudentsByArea= $arrayOfObjects[$mykey]->getBuildingStudentsAssigned();
+                //Add the amount in TotalBuildingCapacity Element to the temporary array created.
+                $tempArray[]= $totalAssignedStudentsByArea;
+            }else{
+                //echo "<br/>";
+                //echo "Item doesn't exist.";
+            }
+
+            $arrayTotal=array_sum($tempArray);
+        }
+        return $this->totalSearched_StudentAssignments_ByCampusArea=$arrayTotal;
+    }
+
+
+    function getStudentsAssignedByComplexName($arrayOfObjects,$complexName){
+        //Temporary Array Value
+        $tempArray = array();
+
+        //Easy way to search for all the keys inside the array.
+        //Array Name: $arrayofObjects turned into $key...
+        foreach($arrayOfObjects as $key => $value)
+        {
+            //Get the Complex Name ( AFC, Tri Towers, TOTA, West)
+            $area = $arrayOfObjects[$key]->getComplex();
+            $mykey = $key;
+
+            //echo $mykey;
+            if($area==$complexName) {
+                //Get the Total Building Capacity fro the area specifically looked into...
+                $totalAssignedStudentsByArea= $arrayOfObjects[$mykey]->getBuildingStudentsAssigned();
+                //Add the amount in TotalBuildingCapacity Element to the temporary array created.
+                $tempArray[]= $totalAssignedStudentsByArea;
+            }else{
+                //echo "<br/>";
+                //echo "Item doesn't exist.";
+            }
+
+            $arrayTotal=array_sum($tempArray);
+        }
+        return $this->totalSearched_StudentAssignments_ByComplexArea=$arrayTotal;
+    }
+
+
+
+
+
+    function getTotalPossibleResidentsByCampus($arrayOfObjects,$campusProvided){
+        //Temporary Array Value
+        $tempArray = array();
+
+        //Easy way to search for all the keys inside the array.
+        //Array Name: $arrayofObjects turned into $key...
+        foreach($arrayOfObjects as $key => $value)
+        {
+            //Get the Campus Name (East, Central, West)
+            $area = $arrayOfObjects[$key]->getMainCampusArea();
+            $mykey = $key;
+
+            //echo $mykey;
+            if($area==$campusProvided) {
+                //Get the Total Building Capacity fro the area specifically looked into...
+                $totalPossibleResidentOccupancyByCampus= $arrayOfObjects[$mykey]->getBuildingTotalOccupancy_Resident();
+                //Add the amount in TotalBuildingCapacity Element to the temporary array created.
+                $tempArray[]= $totalPossibleResidentOccupancyByCampus;
+            }else{
+                //echo "<br/>";
+                //echo "Item doesn't exist.";
+            }
+
+            $arrayTotal=array_sum($tempArray);
+        }
+        return $this->totalSearched_StudentAssignments_ByComplexArea=$arrayTotal;
+    }
+
 
 
     function getTotalPossibleResidentOccupancyByBuilding($arrayOfObjects,$areaProvided){
@@ -281,13 +412,42 @@ class buildingOccupancy {
         return $this->totalSearchedAreaTotalStaffCapacity=$arrayTotal;
     }
 
+    function totalStaffCapacityByCampus($arrayOfObjects,$campusProvided){
+
+        //Temporary Array Value
+        $tempArray = array();
+
+        //Easy way to search for all the keys inside the array.
+        //Array Name: $arrayofObjects turned into $key...
+        foreach($arrayOfObjects as $key => $value)
+        {
+            //Get the Buildings Areas (Southeast, Northeast, TriTowers, TOTA)
+            $area = $arrayOfObjects[$key]->getMainCampusArea();
+
+            $mykey = $key;
 
 
+            if($area==$campusProvided) {
+                //Get the Total Staff Capacity fro the area specifically looked into...
+                $totalStaffCapacityForSearchedArea= $arrayOfObjects[$mykey]->getStaffCapacity();
+                //Add the amount in TotalBuildingCapacity Element to the temporary array created.
+                $tempArray[]= $totalStaffCapacityForSearchedArea;
+            }else{
+                //echo "<br/>";
+                //echo "Item doesn't exist.";
+            }
+
+            $arrayTotal=array_sum($tempArray);
+        }
+        return $this->totalSearchedAreaTotalStaffCapacity=$arrayTotal;
+    }
 
 
-
-
-    //Complete Totals
+    /**
+     * This method provides the total number of students assigned based on an array of buildings provided.
+     * @param array $arrayOfObjects
+     * @return number
+     */
     function totalStudentsAssigned($arrayOfObjects){
         //Temporary Array Value
         $tempArray = array();
@@ -303,6 +463,13 @@ class buildingOccupancy {
         return $this->studentsAssignedtotalsByArea=$arrayTotal;
     }
 
+
+    /**
+     * This method provides the total number of possible residents based on an array of buildings provided.
+     * The pamater ($arrayOfObjects) is the list buildings
+     * @param array $arrayOfObjects
+     * @return number
+     */
     function totalStudentsPossibleResidents($arrayOfObjects ){
         //Temporary Array Value
         $tempArray = array();
@@ -318,7 +485,11 @@ class buildingOccupancy {
         return $this->studentsAssignedtotalsByArea=$arrayTotal;
     }
 
-
+    /**
+     * This method provides the total building capacity of the maximum amount of residents of the particular building.
+     * @param $arrayOfObjects
+     * @return number
+     */
     function totalBuildingCapacity($arrayOfObjects ){
         //Temporary Array Value
         $tempArray = array();
@@ -334,6 +505,11 @@ class buildingOccupancy {
         return $this->totalPossibleBuildingCapacity=$arrayTotal;
     }
 
+    /**
+     * This method provides the total staff (RAs, RDs, AD, CDs) assigned on campus.
+     * @param $arrayOfObjects
+     * @return number
+     */
 
     function totalStaffAssigned($arrayOfObjects){
         //Temporary Array Value
@@ -360,7 +536,7 @@ class buildingOccupancy {
     function setCampusAreaBasedonBuilding($buildingLocation){
         //Check Avent Ferry Complex.
         if($buildingLocation=="AFC - A"){
-            $this->campus="East";
+            $this->campus="East";                       //East is the only one that is being specified for the campus area. All other rows are hard-coded their campus (Central/West/WR Apartments)in the table.
         }
         //Check Avent Ferry Complex.
         if($buildingLocation=="AFC - B"||$buildingLocation=="AFC - E"||$buildingLocation=="AFC - F"){
@@ -372,9 +548,7 @@ class buildingOccupancy {
         }
         //Check Quad, Bagwell, Becton & Berry
         if ($buildingLocation=="Bagwell"){
-            $this->campus="&nbsp;";         //By adding a space for Bagwell, the first sub-category
-                                            //of QUAD, it allows me to keep the table data and not have my
-                                            //columns messed up.
+            $this->campus=" ";
         }
 
         if ($buildingLocation=="Becton"){
@@ -442,6 +616,68 @@ class buildingOccupancy {
         }
         //End West Campus
 
+        //Start Apartments
+        //WR Grove
+        if ($buildingLocation=="WR Grove"){
+            $this->campus=" ";
+        }
+        //WR Innovation
+        if ($buildingLocation=="WR Innovat"){
+            $this->campus=" ";
+        }
+        //WR Lakeview
+        if ($buildingLocation=="WR Lakeview"){
+            $this->campus=" ";
+        }
+        //WR Plaza
+        if ($buildingLocation=="WR Plaza"){
+            $this->campus=" ";
+        }
+        //WR Tower
+        if ($buildingLocation=="WR Tower"){
+            $this->campus=" ";
+        }
+        //WR Valley
+        if ($buildingLocation=="WR Valley"){
+            $this->campus=" ";
+        }
+        //End Wolf Ridge Apartments
+
+        //Start Wolf Village Apartments
+        // Wolf Village A
+        if ($buildingLocation=="Wolf Vlg A"){
+            $this->campus=" ";
+        }
+        // Wolf Village B
+        if ($buildingLocation=="Wolf Vlg B"){
+            $this->campus=" ";
+        }
+        // Wolf Village C
+        if ($buildingLocation=="Wolf Vlg C"){
+            $this->campus=" ";
+        }
+        // Wolf Village D
+        if ($buildingLocation=="Wolf Vlg D"){
+            $this->campus=" ";
+        }
+        // Wolf Village E
+        if ($buildingLocation=="Wolf Vlg E"){
+            $this->campus=" ";
+        }
+        // Wolf Village F
+        if ($buildingLocation=="Wolf Vlg F"){
+            $this->campus=" ";
+        }
+        // Wolf Village G
+        if ($buildingLocation=="Wolf Vlg G"){
+            $this->campus=" ";
+        }
+        // Wolf Village H
+        if ($buildingLocation=="Wolf Vlg H"){
+            $this->campus=" ";
+        }
+        //End Wolf Village Apartments
+
 
 
 
@@ -467,62 +703,6 @@ class buildingOccupancy {
 
     function setBuildingTotalCapacity($newCapacityLevel){
         $this->buildingTotalPossibleOccupancy=$newCapacityLevel;
-    }
-
-    function getMainCampusArea(){
-        return $this->campus;
-    }
-
-    function getBuildingName(){
-        return $this->buildingName;
-    }
-    function getLocalizedBuildingArea(){
-        return $this->buildingArea;
-    }
-
-    function _toString(){
-        return $this->buildingArea;
-
-    }
-
-    function getBuildingStudentsAssigned(){
-        return $this->buildingStudentsAssigned;
-    }
-    function getBuildingTotalOccupancy_Resident(){
-        return $this->buildingTotalPossibleResidentOccupancy;
-    }
-    function getBuildingTotalCapacity(){
-        return $this->buildingTotalPossibleOccupancy;
-    }
-
-
-
-
-
-
-
-    function getStaffCapacity(){
-        return $this->staffCapacity;
-    }
-
-    function getComplex(){
-        return $this->complex;
-    }
-
-
-    function setComplex($buildingProvided){
-        if($buildingProvided=="AFC - A"){
-            $this->complex="Avent Ferry Complex";
-        }
-        if($buildingProvided=="AFC - B"){
-            $this->complex="Avent Ferry Complex";
-        }
-        if($buildingProvided=="AFC - E"){
-            $this->complex="Avent Ferry Complex";
-        }
-        if($buildingProvided=="AFC - F"){
-            $this->complex="Avent Ferry Complex";
-        }
     }
 
     function setComplexBasedonBuilding($buildingNameProvided){
@@ -563,6 +743,19 @@ class buildingOccupancy {
         }
         //END WEST CAMPUS
 
+        //APARTMENTS
+        //Start Apartments
+        else if($buildingNameProvided=="WR Grove"){
+            $value = "Wolf Ridge";
+            $this->providedComplexByBuilding=$value;
+        }
+
+        else if($buildingNameProvided=="Wolf Vlg A"){
+            $value = "Wolf Village";
+            $this->providedComplexByBuilding=$value;
+        }
+        //END Apartments
+
 
 
         else{
@@ -570,6 +763,217 @@ class buildingOccupancy {
         }
 
     }
+
+    function setComplex($buildingProvided){
+        if($buildingProvided=="AFC - A"){
+            $this->complex="Avent Ferry Complex";
+        }
+        if($buildingProvided=="AFC - B"){
+            $this->complex="Avent Ferry Complex";
+        }
+        if($buildingProvided=="AFC - E"){
+            $this->complex="Avent Ferry Complex";
+        }
+        if($buildingProvided=="AFC - F"){
+            $this->complex="Avent Ferry Complex";
+        }
+
+        //Set Wood
+        //Wood - A
+        if($buildingProvided=="Wood - A"){
+            $this->complex="Wood";
+        }
+        //Wood - B
+        if($buildingProvided=="Wood - B"){
+            $this->complex="Wood";
+        }
+
+        //Set QUAD
+        //Bagwell
+        if($buildingProvided=="Bagwell"){
+            $this->complex="Quad";
+        }
+
+        //Becton
+        if($buildingProvided=="Becton"){
+            $this->complex="Quad";
+        }
+        //Berry
+        if($buildingProvided=="Berry"){
+            $this->complex="Quad";
+        }
+        //Gold
+        if($buildingProvided=="Gold"){
+            $this->complex="Quad";
+        }
+        //Welch
+        if($buildingProvided=="Welch"){
+            $this->complex="Quad";
+        }
+        //Syme
+        if($buildingProvided=="Syme"){
+            $this->complex="Quad";
+        }
+        //Watauga
+        if($buildingProvided=="Watauga"){
+            $this->complex="Quad";
+        }
+        //North
+        if($buildingProvided=="North"){
+            $this->complex="Quad";
+        }
+
+
+        //Set Tri-Towers
+        //Bowen
+        if($buildingProvided=="Bowen"){
+            $this->complex="Tri Towers";
+        }
+        //Carroll
+        if($buildingProvided=="Carroll"){
+            $this->complex="Tri Towers";
+        }
+        //Metcalf
+        if($buildingProvided=="Metcalf"){
+            $this->complex="Tri Towers";
+        }
+
+        //Set TOTA
+        //Tucker
+        if($buildingProvided=="Tucker"){
+            $this->complex="TOTA";
+        }
+        //Owen
+        if($buildingProvided=="Owen"){
+            $this->complex="TOTA";
+        }
+        //Turlington
+        if($buildingProvided=="Turlington"){
+            $this->complex="TOTA";
+        }
+        //Alexander
+        if($buildingProvided=="Alexander"){
+            $this->complex="TOTA";
+        }
+        //Set West
+        //Lee
+        if($buildingProvided=="Lee"){
+            $this->complex="West";
+        }
+        //Sullivan
+        if($buildingProvided=="Sullivan"){
+            $this->complex="West";
+        }
+        //Bragaw
+        if($buildingProvided=="Bragaw"){
+            $this->complex="West";
+        }
+
+        //End West Complex
+
+        //Set Wolf Ridge Complex
+        //WR Grove
+        if($buildingProvided=="WR Grove"){
+            $this->complex="Wolf Ridge";
+        }
+        //WR Innovat
+        if($buildingProvided=="WR Innovat"){
+            $this->complex="Wolf Ridge";
+        }
+        //WR Lakeview
+        if($buildingProvided=="WR Lakeview"){
+            $this->complex="Wolf Ridge";
+        }
+        //WR Plaza
+        if($buildingProvided=="WR Plaza"){
+            $this->complex="Wolf Ridge";
+        }
+        //WR Plaza
+        if($buildingProvided=="WR Tower"){
+            $this->complex="Wolf Ridge";
+        }
+        //WR Valley
+        if($buildingProvided=="WR Valley"){
+            $this->complex="Wolf Ridge";
+        }
+        //End Wolf Ridge Complex
+
+        //Set Wolf Village Complex
+        //Wolf Village A
+        if($buildingProvided=="Wolf Vlg A"){
+            $this->complex="Wolf Village";
+        }
+        //Wolf Village B
+        if($buildingProvided=="Wolf Vlg B"){
+            $this->complex="Wolf Village";
+        }
+        //Wolf Village C
+        if($buildingProvided=="Wolf Vlg C"){
+            $this->complex="Wolf Village";
+        }
+        //Wolf Village D
+        if($buildingProvided=="Wolf Vlg D"){
+            $this->complex="Wolf Village";
+        }
+        //Wolf Village E
+        if($buildingProvided=="Wolf Vlg E"){
+            $this->complex="Wolf Village";
+        }
+        //Wolf Village F
+        if($buildingProvided=="Wolf Vlg F"){
+            $this->complex="Wolf Village";
+        }
+        //Wolf Village G
+        if($buildingProvided=="Wolf Vlg G"){
+            $this->complex="Wolf Village";
+        }
+        //Wolf Village H
+        if($buildingProvided=="Wolf Vlg H"){
+            $this->complex="Wolf Village";
+        }
+        //End Wolf Village
+    }
+
+    function _toString(){
+        return $this->buildingArea;
+
+    }
+
+    function getBuildingStudentsAssigned(){
+        return $this->buildingStudentsAssigned;
+    }
+    function getBuildingTotalOccupancy_Resident(){
+        return $this->buildingTotalPossibleResidentOccupancy;
+    }
+    function getBuildingTotalCapacity(){
+        return $this->buildingTotalPossibleOccupancy;
+    }
+
+    function getMainCampusArea(){
+        return $this->campus;
+    }
+
+    function getBuildingName(){
+        return $this->buildingName;
+    }
+    function getLocalizedBuildingArea(){
+        return $this->buildingArea;
+    }
+
+
+
+    function getStaffCapacity(){
+        return $this->staffCapacity;
+    }
+
+    function getComplex(){
+        return $this->complex;
+    }
+
+
+
+
+
     function getComplexBasedonBuilding(){
         return $this->providedComplexByBuilding;
     }
