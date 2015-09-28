@@ -6,16 +6,17 @@
  * Time: 8:47 AM
  */
 
-class readAssignments {
+class studentAssignments {
 
     //Variables
     var $buildingAssignment;
     var $buildingName;
     var $buildingGroup;
+    var $staffCapacity;
 
 
 
-    function readAssignments($buildingName="",$studentsAssigned){
+    function studentAssignments($buildingName="",$studentsAssigned){
         //Set building name
         $this->setBuildingName($buildingName);
         //Set students assigned
@@ -31,18 +32,32 @@ class readAssignments {
         $this->buildingName=$buildingName;
     }
 
+    function setStaffCapacity($staffAtBuilding){
+        $this->staffCapacity=$staffAtBuilding;
+    }
+
+
     function createGroup($buildingName){
-        if($buildingName=="AFC - A"){
+        //Set AFC
+        if(preg_match("/AFC/",$buildingName)){
             $this->buildingGroup="Avent Ferry Complex";
         }
-        if($buildingName=="AFC - B"){
-            $this->buildingGroup="Avent Ferry Complex";
+        //Set TriTowers
+        if($buildingName=="Carroll"||$buildingName=="Bragaw"||$buildingName=="Bowen"){
+            $this->buildingGroup="TriTowers";
         }
-        if($buildingName=="AFC - E"){
-            $this->buildingGroup="Avent Ferry Complex";
+        //Set Apartments
+        //Check Wolf Ridge
+        if(preg_match("/WR/",$buildingName)){
+            $this->buildingGroup="Wolf Ridge";
         }
-        if($buildingName=="AFC - F"){
-            $this->buildingGroup="Avent Ferry Complex";
+        //Check Wolf Village
+        if(preg_match("/Wolf Vlg /",$buildingName)){
+            $this->buildingGroup="Wolf Village";
+        }
+        //Set Wood.
+        if(preg_match("/Wood/",$buildingName)){
+            $this->buildingGroup="Wood";
         }
 
     }
