@@ -1321,42 +1321,9 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
 
                         //Add Pop-Up file---10-20-2015
 
-                        include('includes/pop-up-test.php');
+                        include('includes/configure_pop_up_for_specified_building_area.php');
 
                         //End Pop-Up file -- 10-20-2015
-
-                        ?>
-
-                <!--Temporarily Comment out 10-20-2015-->
-                        <script style='text/javascript'>
-                        /*    var pulledCampustemp;
-                            var pulledCampustemp ='<?php // echo $campus?>';
-                            //for testing and debugging
-                            //console.log(pulledCampusTest);
-                            var pulledBuildingtemp;
-                            var pulledBuildingtemp = '<?php // echo $pulledBuilding?>';
-
-                            var TEMP_TEMP;
-                            var lengthOFBUILDING_ARRAY  = pulledBuildingArray.length;
-
-                            //Set the campus area....
-                            setCampus(pulledCampustemp);
-
-                            //Set the building pulled
-                            setBuilding(pulledBuildingtemp);
-
-                            //Get the building in the JS Array.
-                            TEMP_TEMP=getBuilding(pulledBuildingtemp);
-
-                            //Find out the current size of the array.
-
-                            //Temporarily comment out as it is moved online.
-                            //console.log(pulledBuildingtemp);
-                            //console.log(lengthOFBUILDING_ARRAY);
-                        */
-                        </script>
-                <!--End Temporarily Commenting out the above Javascript-->
-                    <?php
 
                     //Use this separate file to provide the correct building needed in the link popup.
                         include('includes/detailedBuilding_pulledBuilding.php');
