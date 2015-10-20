@@ -3,10 +3,23 @@
  * User: jjwill10
  * Date: 9/14/2015
  * Time: 9:51 AM
- * Description:
+ * Description: This file provides the pop-up or new-tab of a certain building's gender and classification status. 
  */
 //Retrieve the buildingOccupancydetail Class.
 include('classes/buildingOccupancydetail.php');
+
+
+//Read the classification information from the database view...
+//DEVELOPMENT
+//Reading the fake PS_NC_HIS_PP2_VW
+//include('read_classification_data.php');
+
+//PRODUCTION
+//Reading view PS_NC_HIS_PPE_VW
+//This view provides the "CURRENT TERM" for the effective term and will automatically update as the date changes
+//into a new term period. As of 10/9/2015, it is currently showing 2158, Fall 2015.
+include('read_classification_data.php');
+
 
 //Create new buildingOccupancy object.
 //Sets an initial classification of student based on the classification entered...
@@ -17,9 +30,25 @@ $area= $_GET['area'];
 $complexArea = $_GET['complex'];
 $pulledBuilding=$_GET['building'];
 
-$myBuildingOccupancydetail = new buildingOccupancydetail($campus,"","M","fr",15);
+
+
+//$myBuildingOccupancydetail = new buildingOccupancydetail($campus,"","M","fr",15);
+
+
+
+
 //Working Object called $myBuildingOccupancydetail...
 //$myBuildingOccupancydetail = new buildingOccupancydetail("East","","M","fr",15);
+
+
+
+
+/*
+ * STATIC DATA
+ * COMMENTED OUT ON 10 09 2015 @ 9:37 AM
+ */
+
+/*
 
 
 //Get genders
@@ -61,7 +90,16 @@ $classifications = array("fr"=>$fr,"nfr"=>$nfr,"so"=>$so,"jr"=>$jr,"sr"=>$sr,"a1
 
 //Create an Array and add the genders to the array.
 $genders = array("male"=>$male,"female"=>$female);
+
+
+*/
+
 ?>
+
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -170,7 +208,6 @@ $genders = array("male"=>$male,"female"=>$female);
         </th>
         </thead>
         <tbody>
-
             <?php
                     //end adding the classifications to the array.
                     foreach($classifications as $key=> $studentsCLASSIFICATIONS){
@@ -187,19 +224,9 @@ $genders = array("male"=>$male,"female"=>$female);
 
                         echo "</tr>";
                     }
-
-
-
-
-
             ?>
-
-
-
         </tbody>
-
     </table>
-
 
     <!--Chart-->
     <div id="chart">

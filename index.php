@@ -27,19 +27,21 @@ $totalHousingPicture = array();
 
 //create a new object.
 
-
 //Create an Array that will be my collection of buildingOccupancy objects.
 
 $universityHousingBuildings = array("AFC_A" => "", "AFC_B" => "", "AFC_E" => "", "AFC_F" => "");
 
-
+//read Database  Data
+include('index_READ_DATA.php');
 
 
 //Avent Ferry
+/*
 $universityHousingBuildings['AFC_A'] = new buildingOccupancy("AFC - A", "Southeast", 98, 108, "", "3", 111);
 $universityHousingBuildings['AFC_B'] = new buildingOccupancy("AFC - B", "Southeast", 112, 114, "", "3", 117);
 $universityHousingBuildings['AFC_E'] = new buildingOccupancy("AFC - E", "Southeast", 198, 216, "", "6", 222);
 $universityHousingBuildings['AFC_F'] = new buildingOccupancy("AFC - F", "Southeast", 115, 150, "", "5", 155);
+
 //Wood Residence Hall
 $universityHousingBuildings['Wood_A'] = new buildingOccupancy("Wood - A", "Southeast", 207, 280, "", "7", 287);
 $universityHousingBuildings['Wood_B'] = new buildingOccupancy("Wood - B", "Southeast", 67, 177, "", "6", 183);
@@ -71,7 +73,7 @@ $universityHousingBuildings['North'] = new buildingOccupancy("North", "Northeast
 
 //Start of Central
 //TriTowers
-$universityHousingBuildings['Bowen'] = new buildingOccupancy("Bowen", "Central", 295, 304, "", "8", 312);
+$universityHousingBuildings['Bowen'] = new buildingOccupancy("Bowen", "Central", 295, 304, " ", "8", 312);
 $universityHousingBuildings['Carroll'] = new buildingOccupancy("Carroll", "Central", 331, 342, "", "9", 351);
 $universityHousingBuildings['Metcalf'] = new buildingOccupancy("Metcalf", "Central", 383, 396, "", "12", 408);
 //End of TriTowers
@@ -81,6 +83,8 @@ $universityHousingBuildings['Owen'] = new buildingOccupancy("Owen", "Central", 3
 $universityHousingBuildings['Turlington'] = new buildingOccupancy("Turlington", "Central", 144, 156, "", "5", 161);
 $universityHousingBuildings['Alexander'] = new buildingOccupancy("Alexander", "Central", 157, 160, "", "5", 165);
 //End of TOTA
+
+
 
 //End of Central
 //Start of West Campus
@@ -108,7 +112,7 @@ $universityHousingBuildings['Wolf Vlg E'] = new buildingOccupancy("Wolf Vlg E", 
 $universityHousingBuildings['Wolf Vlg F'] = new buildingOccupancy("Wolf Vlg F", "Wolf Village", 138, 160, "", "2", 162);
 $universityHousingBuildings['Wolf Vlg G'] = new buildingOccupancy("Wolf Vlg G", "Wolf Village", 53, 124, "", "6", 130);
 $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", "Wolf Village", 117, 144, "", "2", 146);
-
+*/
 
 //End Wolf Village Apartments
 
@@ -123,6 +127,8 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
 <!DOCTYPE html>
 <html>
 <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
     <title>NC State Housing-Assignments & Occupancy Outlook</title>
     <!--Internal Stylesheet-->
     <link rel="stylesheet" type="text/css" href="css/main.css">
@@ -133,6 +139,11 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
     <!--Javascript Imports-->
     <script src="scripts/autoHide.js"></script>
     <script src="scripts/jQueryRotate.js"></script>
+    <!--StickyHeader Import-->
+    <script src="scripts/jquery.stickytableheaders.min.js"></script>
+
+    <!--JavaScript needs to do the pop-up windows for the gender and classification break downs.-->
+    <script src="scripts/popUpForDetailedList.js"></script>
     <!--End Javascript Imports-->
     <!--Favorite Icon-->
     <link rel="icon" type="image/png" href="images/favicon.ico">
@@ -140,6 +151,14 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
     <!--End Google Fonts Import-->
 </head>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Allow for column headers to consistently stay at the top of the webpage.
+        $("#mainTABLE").stickyTableHeaders();
+    });
+
+</script>
+
 
 <!--Main Container-->
 <div id="container">
@@ -152,7 +171,35 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
     </div>
     <!--Main inside the over arching container-->
     <div id="main">
-        <table class="pure-table pure-table-horizontal" width="100%;">
+        <div id="controls">
+            <script>
+                function ShowAll() {
+                    // A $( document ).ready() block.
+                    $( document ).ready(function() {
+                        $(".auto-hide").show(600);
+
+                        //Add darker color to the row
+                        $(".expand_SUBROW").addClass("light-grey");
+                    });
+                }
+                function HideAll() {
+                    // A $( document ).ready() block.
+                    $( document ).ready(function() {
+                        $(".auto-hide").hide(600);
+
+                        //Remove the darker color and bolding to the row.
+                        $(".expand_SUBROW").removeClass("light-grey");
+                    });
+                }
+            </script>
+            <p>
+                <!--Add controls to show everything that is current hidden-->
+                <img src="images/plus.png " title="Expand All"/> <a href ="#" onclick="ShowAll();">Expand All</a>
+                <img src="images/minus.jpg" title="Collpase All"/> <a href ="#" onclick="HideAll();">Collapse All</a><br/>
+
+            </p>
+        </div>
+        <table id="mainTABLE" class="pure-table pure-table-horizontal" width="100%;">
             <thead>
             <th>
                 Campus
@@ -190,6 +237,18 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
             <?php
             //Set boolean to state whether or not the area sub-category has already printed.
             $area_NotAlreadyPrinted = true;
+
+
+
+            //test
+            //var_dump($universityHousingBuildings);
+
+            //end test
+
+
+
+
+
 
             foreach ($universityHousingBuildings as $listRead) {
                 //First Building and Data Elements//
@@ -229,15 +288,14 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
                 //HeaderRow for EAST
                 if ($campus != " ") {
                     //New Row
-                    echo "<tr>\n";
+                    echo "<tr class='expand_SUBROW'>\n";
                     //Campus
-                    echo "<td>";
+                    echo "<td style=''>";
                     //Add Arrow
-                    echo "<img src='images/arrow.png' style='margin-left:-10px;' class='initialArrow' id='arrowFirst-east_Group'/> ";
+                    echo "<img src='images/arrow.png' style='margin-left:-70px;' class='initialArrow' id='arrowFirst-east_Group'/> ";
                     //End Add Arrow
 
                     echo $campus;               //East
-                    echo " test";
                     echo "&nbsp;";            //If I don't specify the campus area, at the very least leave a blank space.
                     //close datacell
                     echo "</td>\n";
@@ -256,7 +314,7 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
 
                     //Create an area for under "Building", it will be a " " [space]
                     echo "<td>";
-                    echo " ";
+                    echo "";
                     echo "</td>\n";
                     //End Create an area for under "Building", it will be a " " [space]
 
@@ -300,23 +358,23 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
 
                     //Create a summation of Southeast & Northeast.
                     $totalBuildingCapacity_EAST_CAMPUS = ($totalBuildingCapacity_SE+$totalBuildingCapacity_NE);
-
                     echo $totalBuildingCapacity_EAST_CAMPUS;
-
-
-
-
                     echo "</td>";
                     //End total building capacity for East Campus...
 
 
+                    echo "<td>";
+                    $eastCampusTotalBuildingPercentage = $listRead->createPercentage($studentsAssigned_ByCampus_EAST,$totalBuildingCapacity_EAST_CAMPUS, 2);
 
+                    echo $eastCampusTotalBuildingPercentage;
+
+                    echo "</td>";
                     //create 1 new table blanks for a new row.
-                    for ($x = 0; $x < 1; $x++) {
-                        echo "<td>";
-                        echo "&nbsp;";
-                        echo "</td>\n";
-                    }
+                    //for ($x = 0; $x < 1; $x++) {
+                    //    echo "<td>";
+                    //    echo "&nbsp;";
+                    //    echo "</td>\n";
+                   // }
                     //drop down the row...
                     echo "</tr>\n";
 
@@ -338,6 +396,8 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
 
 //Southeast
                 if ($area != " " && $area_NotAlreadyPrinted && $pulledBuilding == "AFC - A") {
+
+
                     //Check area...
                     echo "<td> \n";
 
@@ -379,16 +439,35 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
 
                     //Add Link to pull detailed report about Gender & Classification Information
 
-                    echo "<script style='text/javascript'>";
-                    echo "function openforSoutheast(){
-                                var myWindow = window.open('building_information_detailed.php?campus=$campus&area=$area&complex=$complexArea&building=$pulledBuildingforDetailedLink', '_blank','resizable=no, menubar=no,toolbar=no,width=715, height=900');
-                            }
-                    </script>";
+                    //echo "<script style='text/javascript'>";
+                    //echo "function openforSoutheast(){
+                    //            var myWindow = window.open('building_information_detailed.php?campus=$campus&area=$area&complex=$complexArea&building=$pulledBuildingforDetailedLink', '_blank','resizable=no, menubar=no,toolbar=yes,width=715, height=900');
+                    //        }
+                    //</script>";
 
-                    echo "<a href='#' target='blank' onclick='return openforSoutheast();'>";
+                    ?>
+
+                    <script style='text/javascript'>
+                        var pulledCampus;
+                        var pulledArea;
+                        var pulledComplex;
+                        var pulledBuilding;
+                        pulledCampus ="<?php echo $campus?>";
+                        pulledArea="<?php echo $area?>";
+                        pulledComplex="<?php echo $complexArea?>";
+                        pulledBuilding="<?php echo $pulledBuilding?>";
+                    </script>
+
+                    <!--Need to create a function that tallies up numbers for Southeast Area-->
+                    <!--Commented out on 10 14 2015-->
+                    <!--<a href='#' target='blank' onclick='return openforBuildingInformation(pulledCampus,pulledArea,pulledComplex,pulledBuilding);'>-->
+
+                        <?php
                     //temporarily comment out.
                     echo $area;
-                    echo "</a>";
+
+                    //Temporarily comment out...
+                    //echo "</a>";
 
 
                     //Setboolean to false
@@ -420,15 +499,15 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
                     echo "<td class='subHeadersPerArea'> \n";
 
                     //Provide a Total Number of those staying in SouthEast, NorthEast, etc.
-                    $totalPossibleResidentOccupancyByBuilding = $listRead->getTotalPossibleResidentOccupancyByBuilding($universityHousingBuildings, $area);
-                    echo $totalPossibleResidentOccupancyByBuilding;
+                    $totalPossibleResidentOccupancyByArea = $listRead->getTotalPossibleResidentOccupancyByArea($universityHousingBuildings, $area);
+                    echo $totalPossibleResidentOccupancyByArea;
                     //new
                     echo "</td> \n";
                     //End Total Possible Resident Occupancy
 
                     //Total Resident Occupancy %
                     echo "<td class='subHeadersPerArea'> \n";
-                    echo $listRead->createPercentage($studentsAssigned, $totalPossibleResidentOccupancyByBuilding, 2);
+                    echo $listRead->createPercentage($studentsAssigned, $totalPossibleResidentOccupancyByArea, 2);
                     echo "</td> \n";
                     //End Total Resident Occupancy %
 
@@ -467,7 +546,7 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
 
 
                     //drop down the row...
-                    echo "</tr>\n";
+                     echo "</tr>\n";
                     $area_NotAlreadyPrinted = true;
 
 
@@ -526,7 +605,7 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
                     //End provide Students Assigned for the Area
                     //Provide Total Possible Resident Occupancy
                     echo "<td class='subHeadersPerArea'>";
-                    $totalPossibleResidentOccupancyByBuilding = $listRead->getTotalPossibleResidentOccupancyByBuilding($universityHousingBuildings, $area);
+                    $totalPossibleResidentOccupancyByBuilding = $listRead->getTotalPossibleResidentOccupancyByArea($universityHousingBuildings, $area);
                     echo $totalPossibleResidentOccupancyByBuilding;
                     echo "</td>";
                     //End Total Possible Resident Occupancy
@@ -568,11 +647,14 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
                 }//end printing of the area "Northeast, etc"
 
 //TriTowers & TOTA Grouped Together
-                if ($area != " " && $area_NotAlreadyPrinted && $pulledBuilding == "Bowen") {
+              if ($area != " " && $area_NotAlreadyPrinted && $pulledBuilding == "Bowen") {
+
+                  echo "<tr class='expand_SUBROW'>";
+
                     //Check campus
                     echo "<td>";
                     //Add Arrow
-                    echo "<img src='images/arrow.png' title='click to expand and collapse data' class='initialArrow' id='arrowFirst-central_Group'/> ";
+                    echo "<img src='images/arrow.png'  title='click to expand and collapse data' style='margin-left: -58px;' class='initialArrow' id='arrowFirst-central_Group'/> ";
                     //End Add Arrow
                     echo "Central";
                     echo "</td>";
@@ -582,7 +664,7 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
 
                     //Check Area
                     //echo $area;           //Don't need to repeat
-
+                    echo " ";
                     //Setboolean to false
                     $area_NotAlreadyPrinted = false;
 
@@ -600,7 +682,7 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
                     //This is where the BUILDING HEADER is located, UNDER CENTRAL CAMPUS.
                     for ($x = 0; $x < 1; $x++) {
                         echo "<td> \n";
-                        echo "&nbsp;";
+                        echo " ";
                         echo "</td> \n";
 
                     }
@@ -615,8 +697,8 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
                     //End provide Students Assigned for the Area
                     //Provide Total Possible Resident Occupancy
                     echo "<td class='subHeadersPerArea'> \n";
-                    $totalPossibleResidentOccupancyByBuilding = $listRead->getTotalPossibleResidentOccupancyByBuilding($universityHousingBuildings, $area);
-                    echo $totalPossibleResidentOccupancyByBuilding;
+                            $totalPossibleResidentOccupancyByBuilding = $listRead->getTotalPossibleResidentOccupancyByArea($universityHousingBuildings, $area);
+                            echo $totalPossibleResidentOccupancyByBuilding;
                     echo "</td> \n";
                     //End Total Possible Resident Occupancy
 
@@ -674,10 +756,11 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
 
 //West Campus
                 if ($area != " " && $area_NotAlreadyPrinted && $pulledBuilding == "Lee") {
+                    echo "<tr class='expand_SUBROW'>";
                     //Check campus
                     echo "<td>";
                     //Add Arrow
-                    echo "<img src='images/arrow.png' style='margin-left:-10px;' class='initialArrow' id='arrowFirst-west_Group'/> ";
+                    echo "<img src='images/arrow.png' style='margin-left:-68px;' class='initialArrow' id='arrowFirst-west_Group'/> ";
                     //End Add Arrow
 
                     echo "West";      //Specifically State "West" Campus & the area will be "West as well
@@ -712,7 +795,7 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
                     //End provide Students Assigned for the Area
                     //Provide Total Possible Resident Occupancy
                     echo "<td class='subHeadersPerArea'> \n";
-                    $totalPossibleResidentOccupancyByBuilding = $listRead->getTotalPossibleResidentOccupancyByBuilding($universityHousingBuildings, $area);
+                    $totalPossibleResidentOccupancyByBuilding = $listRead->getTotalPossibleResidentOccupancyByArea($universityHousingBuildings, $area);
                     echo $totalPossibleResidentOccupancyByBuilding;
                     echo "</td> \n";
                     //End Total Possible Resident Occupancy
@@ -773,10 +856,11 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
 //Wolf Ridge Apartments
 
                 if ($area != " " && $area_NotAlreadyPrinted && $pulledBuilding == "WR Grove") {
+                    echo "<tr class='expand_SUBROW'>";
                     //Check campus
                     echo "<td>";
                     //Add Arrow
-                    echo "<img src='images/arrow.png' style='margin-left:-10px;' class='initialArrow' id='arrowFirst-apartments'/> ";
+                    echo "<img src='images/arrow.png' style='margin-left:-30px;' class='initialArrow' id='arrowFirst-apartments'/> ";
                     //End Add Arrow
                     echo "Apartments";
 
@@ -839,10 +923,10 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
                     echo "<td class='subHeadersPerArea'> \n";
 
                     //Total for Wolf Ridge:
-                    $totalPossibleResidentOccupancyByBuilding_WolfRidge = $listRead->getTotalPossibleResidentOccupancyByBuilding($universityHousingBuildings, $area);
+                    $totalPossibleResidentOccupancyByBuilding_WolfRidge = $listRead->getTotalPossibleResidentOccupancyByArea($universityHousingBuildings, $area);
 
                     //Total for Wolf Village:
-                    $totalPossibleResidentOccupancyByBuilding_WolfVillage=$listRead->getTotalPossibleResidentOccupancyByBuilding($universityHousingBuildings, "Wolf Village");
+                    $totalPossibleResidentOccupancyByBuilding_WolfVillage=$listRead->getTotalPossibleResidentOccupancyByArea($universityHousingBuildings, "Wolf Village");
 
                     //Summation of WolfRidge & WolfVillage for Total Possible Resident Occupancy.
                     $totalPossibleResidentOccupancy_ApartmentsWR_WV=($totalPossibleResidentOccupancyByBuilding_WolfRidge+$totalPossibleResidentOccupancyByBuilding_WolfVillage);
@@ -859,28 +943,56 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
 
                     //Total Resident Occupancy %
                     echo "<td class='subHeadersPerArea'> \n";
-                    echo $listRead->createPercentage($studentsAssigned, $totalPossibleResidentOccupancyByBuilding, 2);
+
+                    //Total Percentage of the Resident Occupancy for Wolf Ridge and Wolf Village Apartments
+                    $percentageResidentOccupancy_Wolf_Ridge_And_Wolf_Village = ($listRead->createPercentage($studentsAssigned_ALL_APARTMENTS,  $totalPossibleResidentOccupancy_ApartmentsWR_WV, 2));
+
+                    //Check if 100%, and re-format the value.
+                        if($percentageResidentOccupancy_Wolf_Ridge_And_Wolf_Village="1.00%"){
+                            //Shorten the string to just "1".
+                            $newPERCENTAGE_WOLF_RIDGE_WOLF_VILLAGE_RESIDENT_OCCUPANCY = (substr($percentageResidentOccupancy_Wolf_Ridge_And_Wolf_Village,0,1)."00%");
+
+                            echo $newPERCENTAGE_WOLF_RIDGE_WOLF_VILLAGE_RESIDENT_OCCUPANCY;
+
+                        }else{
+                            echo $percentageResidentOccupancy_Wolf_Ridge_And_Wolf_Village;
+
+                        }
+
+
+
+
+
                     echo "</td> \n";
                     //End Total Resident Occupancy %
 
                     //Staff Capacity
                     echo "<td class='subHeadersPerArea'> \n";
-                    //West Campus
-                    $totalStaffPerSegment = $listRead->totalStaffCapacityByArea($universityHousingBuildings,$area);
-                    echo $totalStaffPerSegment;
+
+                   //Wolf Ridge Apartments
+                    $totalStaff_WolfRidge_Apartments = $listRead->totalStaffCapacityByArea($universityHousingBuildings,$area);
+                    $totalStaff_WolfVillage_Apartments = $listRead->totalStaffCapacityByArea($universityHousingBuildings,"Wolf Village");
+
+                    $totalStaff_For_WolfRidge_And_Wolf_Village = ($totalStaff_WolfRidge_Apartments+$totalStaff_WolfVillage_Apartments);
+
+                    //Display the Total Staff Assigned for the Wolf Ridge & Wolf Village Apartments.
+                    echo $totalStaff_For_WolfRidge_And_Wolf_Village;
+
+
                     echo "</td> \n";
                     //End Staff Capacity
 
                     //Total Building Capacity
                     echo "<td class='subHeadersPerArea'> \n";
-                    // echo "total bldg capacity";
-                    //getting everything in array
-                    //$totalPossibleBuildingOccupancy = $listRead->totalBuildingCapacity($universityHousingBuildings, $area);
-                    //echo "hi".$totalPossibleBuildingOccupancy;
+                    //The Total Building Capacity for both Wolf Ridge
+                    //and Wolf Village Apartments.
 
-                    //new
                     $totalPossibleBuildingOccupancyBasedOnArea = $listRead->totalBuildingCapacityByArea($universityHousingBuildings, $area);
-                    echo $totalPossibleBuildingOccupancyBasedOnArea;
+                    $totalPossibleBuildingOccupancyBasedOnArea_WV= $listRead->totalBuildingCapacityByArea($universityHousingBuildings, "Wolf Village");
+
+                    $totalPossibleBuildingOccupancy_WolfRidge_WolfVillageTogether = ($totalPossibleBuildingOccupancyBasedOnArea+$totalPossibleBuildingOccupancyBasedOnArea_WV);
+
+                    echo $totalPossibleBuildingOccupancy_WolfRidge_WolfVillageTogether;
                     //end new
 
                     echo "</td> \n";
@@ -1020,69 +1132,62 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
 
                     /*Subtotals for TRI-Towers, TOTA & WEST AREAS OF CAMPUS*/
 
+                    //BUILDING
                     //Add blank for Building Sub Header
                     echo "<td>";
-                    echo "";
+                    echo "&nbsp; ";
                     echo "</td>";
+
+                    //Students Assigned
+                    echo "<td>";
+                            //Subtotals for the complexes....
+                            //Complexes being AFC/QUAD/Tri-Towers/WR or WV
+
+                            //The array name is universityHousingBuildings...
+                            //Get the students assigned based on the complex they reside in... (i.e. student assignments for Tri-Towers, TOTA & West Campus
+                            $studentsAssigned_ByComplex = $listRead->getStudentsAssignedByComplexName($universityHousingBuildings,$complexArea);
+                            echo $studentsAssigned_ByComplex;
+                    echo "</td>";
+
 
                     echo "<td>";
-                    //Subtotals for the complexes....
-                    //Complexes being AFC/QUAD/Tri-Towers/WR or WV
-
-                    //The array name is universityHousingBuildings...
-                    //Get the students assigned based on the complex they reside in... (i.e. student assignments for Tri-Towers, TOTA & West Campus
-                    $studentsAssigned_ByComplex = $listRead->getStudentsAssignedByComplexName($universityHousingBuildings,$complexArea);
-                    echo $studentsAssigned_ByComplex;
-
-                    echo "hello there!";
+                    //Total possible resident occupancy for complexes
+                    $totalPossibleResidentOccupancyByComplex = $listRead->getTotalPossibleResidentOccupancyByComplex($universityHousingBuildings, $complexArea);
+                    echo $totalPossibleResidentOccupancyByComplex;
                     echo "</td>";
+                    //End total possible resident occupancy for complexes
 
 
-                    echo "<td>";
-                    //Total possible resident occupancy for Wolf Ridge & Wolf Village Apartment Complexes.
-                    $totalPossibleResidentOccupancyByBuilding = $listRead->getTotalPossibleResidentOccupancyByBuilding($universityHousingBuildings, $area);
-                    echo $totalPossibleResidentOccupancyByBuilding;
-                    echo "</td>";
-                    //End total possible resident occupancy for WR & WV Apartment Complexes...
-
-
-                    //Resident Occupancy Percentage for WR & WV.
+                    //Resident Occupancy Percentage for complex (Avent Ferry Complex, Wood, etc).
                     echo "<td>";
                     //Below function creates a percentage....
-                    //Parameter One Is the Assigned value, in this case $studentsAssigned_ByComplex, and the other is
-                    //the OccupancyByBuilding...
-                    echo $listRead->createPercentage($studentsAssigned_ByComplex, $totalPossibleResidentOccupancyByBuilding, 2);
+                    echo $listRead->createPercentage($studentsAssigned_ByComplex, $totalPossibleResidentOccupancyByComplex, 2);
                     echo "</td>";
 
-                    //Staff Capacity for Wolf Ridge & Wolf Village Apartments
+                    //Staff Capacity for individual complexes
                     echo "<td>";
-                    //Staff for Wolf Ridge & Wolf Village
-                    $totalStaffPerSegment = $listRead->totalStaffCapacityByArea($universityHousingBuildings,$area);
-                    echo $totalStaffPerSegment;
+                    //Staff
+                    $totalStaffPerComplex = $listRead->totalStaffCapacityByComplex($universityHousingBuildings,$complexArea);
+                    echo $totalStaffPerComplex;
                     echo "</td>";
-                    //End Staff Capacity for Wolf Ridge & Wolf Village Apartments
+                    //End Staff Capacity for individual complexes
 
-                    //Total Building Capacity for Wolf Ridge & Wolf Village Apartment
+                    //Total Building Capacity for individual complexes
+
                     echo "<td>";
-                    $totalPossibleBuildingOccupancyBasedOnArea = $listRead->totalBuildingCapacityByArea($universityHousingBuildings, $area);
-                    echo $totalPossibleBuildingOccupancyBasedOnArea;
+                    $totalPossibleBuildingOccupancyBasedOnComplex = $listRead->totalBuildingCapacityByComplex($universityHousingBuildings,$complexArea);
+                    echo $totalPossibleBuildingOccupancyBasedOnComplex;
                     echo "</td>";
-                    //End total building capacity for Wolf Ridge & Wolf Village Apartments
+                    //End total building capacity for individual complexes
 
 
-                    //Total Building Percentage for Wolf Ridge & Wolf Village
+                    //Total Building Percentage for complex (e.g. AFC, Wood, TOTA, etc.)
                     echo "<td>";
                     //echo "total building percentage...";
                     //echo "<br/>";
-                    echo $listRead->createPercentage($studentsAssigned_ByComplex, $totalPossibleBuildingOccupancyBasedOnArea, 2);
+                    echo $listRead->createPercentage($studentsAssigned_ByComplex, $totalPossibleBuildingOccupancyBasedOnComplex, 2);
                     echo "</td>";
-
-
-                    //End Total Building Percentage for Wolf Ridge & Wolf Village
-
-
-
-
+                    //End Total Building Percentage for Buildings
 
                     echo "</tr>";
                 }//Close IF statement that specifically looks for the top Row that indicates the correct building to show
@@ -1199,9 +1304,71 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
                     //End Complexes
                     echo "\n</td>\n";
 
+
+
                     //Building
                     echo "<td>\n";
-                    echo $pulledBuilding;
+                    //echo 'testtesttest'.$pulledBuilding;
+
+                    //test
+
+                    //Temporary comment out ..
+                    //echo "test test test";
+                    //Add the clickable link for detailed information about the building..
+                        //Add necessary Javascript Below
+
+
+
+                        //Add Pop-Up file---10-20-2015
+
+                        include('includes/pop-up-test.php');
+
+                        //End Pop-Up file -- 10-20-2015
+
+                        ?>
+
+                <!--Temporarily Comment out 10-20-2015-->
+                        <script style='text/javascript'>
+                        /*    var pulledCampustemp;
+                            var pulledCampustemp ='<?php // echo $campus?>';
+                            //for testing and debugging
+                            //console.log(pulledCampusTest);
+                            var pulledBuildingtemp;
+                            var pulledBuildingtemp = '<?php // echo $pulledBuilding?>';
+
+                            var TEMP_TEMP;
+                            var lengthOFBUILDING_ARRAY  = pulledBuildingArray.length;
+
+                            //Set the campus area....
+                            setCampus(pulledCampustemp);
+
+                            //Set the building pulled
+                            setBuilding(pulledBuildingtemp);
+
+                            //Get the building in the JS Array.
+                            TEMP_TEMP=getBuilding(pulledBuildingtemp);
+
+                            //Find out the current size of the array.
+
+                            //Temporarily comment out as it is moved online.
+                            //console.log(pulledBuildingtemp);
+                            //console.log(lengthOFBUILDING_ARRAY);
+                        */
+                        </script>
+                <!--End Temporarily Commenting out the above Javascript-->
+                    <?php
+
+                    //Use this separate file to provide the correct building needed in the link popup.
+                        include('includes/detailedBuilding_pulledBuilding.php');
+                    //end separate file
+
+                    //Display the Pulled Building in the link.
+                        echo $pulledBuilding;
+                        echo "test test";
+
+                    //End adding the clickable link....
+
+
                     echo "\n</td>\n";
                     //Students Assigned
                     echo "<td>\n";
@@ -1235,6 +1402,9 @@ $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy("Wolf Vlg H", 
             }//close foreach
 
 
+            /**
+             *  TOTALS
+             */
             //New foreach
 
 
