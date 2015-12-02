@@ -7,6 +7,9 @@
  * Description:
  */
 
+/**
+ * @class Class buildingOccupancy
+ */
 class buildingOccupancy {
 
 
@@ -158,6 +161,16 @@ class buildingOccupancy {
             $newArea = "Wolf Village";
             $this->buildingArea=$newArea;
 
+        }
+
+        //Fraternity & Sorority Life
+        if($buildingNameProvided=="Grk Vlg-01"){
+            $newArea = "Greek";
+            $this->buildingArea=$newArea;
+        }
+        if($buildingNameProvided=="Grk Vlg-01"){
+            $newArea = "Greek";
+            $this->buildingArea=$newArea;
         }
 
 
@@ -319,7 +332,7 @@ class buildingOccupancy {
 
 
 
-    function getTotalPossibleResidentOccupancyByBuilding($arrayOfObjects,$areaProvided){
+    function getTotalPossibleResidentOccupancyByArea($arrayOfObjects,$areaProvided){
 
         //Temporary Array Value
         $tempArray = array();
@@ -329,6 +342,7 @@ class buildingOccupancy {
         foreach($arrayOfObjects as $key => $value)
         {
             //Get the Buildings Areas (Southeast, Northeast, TriTowers, TOTA)
+            //Provides the specific area, but NOT the complex the person is located.
             $area = $arrayOfObjects[$key]->getLocalizedBuildingArea();
 
             $mykey = $key;
@@ -349,7 +363,36 @@ class buildingOccupancy {
         return $this->totalSearchedAreaTotalBuildingCapacity=$arrayTotal;
     }
 
+    function getTotalPossibleResidentOccupancyByComplex($arrayOfObjects,$complexProvided){
 
+        //Temporary Array Value
+        $tempArray = array();
+
+        //Easy way to search for all the keys inside the array.
+        //Array Name: $arrayofObjects turned into $key...
+        foreach($arrayOfObjects as $key => $value)
+        {
+            //Get the Complex Area (if any) AFC, Wood, etc.
+            //Provides the specific area, but NOT the complex the person is located.
+            $area = $arrayOfObjects[$key]->getComplex();
+
+            $mykey = $key;
+
+            //echo $mykey;
+            if($area==$complexProvided) {
+                //Get the Total Building Capacity fro the area specifically looked into...
+                $totalPossibleResidentsWithResidents= $arrayOfObjects[$mykey]->getBuildingTotalOccupancy_Resident();
+                //Add the amount in TotalBuildingCapacity Element to the temporary array created.
+                $tempArray[]= $totalPossibleResidentsWithResidents;
+            }else{
+                //echo "<br/>";
+                //echo "Item doesn't exist.";
+            }
+
+            $arrayTotal=array_sum($tempArray);
+        }
+        return $this->totalSearchedAreaTotalBuildingCapacity=$arrayTotal;
+    }
 
     function totalBuildingCapacityByArea($arrayOfObjects,$areaProvided){
 
@@ -373,6 +416,35 @@ class buildingOccupancy {
                 $tempArray[]= $totalBuildingCapacityForSearchedArea;
             }else{
                 //echo "<br/>";
+                //echo "Item doesn't exist.";
+            }
+
+            $arrayTotal=array_sum($tempArray);
+        }
+        return $this->totalSearchedAreaTotalBuildingCapacity=$arrayTotal;
+    }
+    function totalBuildingCapacityByComplex($arrayOfObjects,$complexProvided){
+
+        //Temporary Array Value
+        $tempArray = array();
+
+        //Easy way to search for all the keys inside the array.
+        //Array Name: $arrayofObjects turned into $key...
+        foreach($arrayOfObjects as $key => $value)
+        {
+            //Get the Complex area that the building is in (e.g. Avent Ferry Complex or Wood).
+            $area = $arrayOfObjects[$key]->getComplex();
+
+            $mykey = $key;
+
+            //echo $mykey;
+            if($area==$complexProvided) {
+                //Get the Total Building Capacity fro the area specifically looked into...
+                $totalBuildingCapacityForSearchedArea= $arrayOfObjects[$mykey]->getBuildingTotalCapacity();
+                //Add the amount in TotalBuildingCapacity Element to the temporary array created.
+                $tempArray[]= $totalBuildingCapacityForSearchedArea;
+            }else{
+                 //echo "<br/>";
                 //echo "Item doesn't exist.";
             }
 
@@ -441,6 +513,36 @@ class buildingOccupancy {
         }
         return $this->totalSearchedAreaTotalStaffCapacity=$arrayTotal;
     }
+
+    function totalStaffCapacityByComplex($arrayOfObjects,$complexProvided){
+
+        //Temporary Array Value
+        $tempArray = array();
+
+        //Easy way to search for all the keys inside the array.
+        //Array Name: $arrayofObjects turned into $key...
+        foreach($arrayOfObjects as $key => $value)
+        {
+            //Get the Complex area, like Avent Ferry Complex or Wood, or TOTA, etc.
+            $area = $arrayOfObjects[$key]->getComplex();
+
+            $mykey = $key;
+
+            if($area==$complexProvided) {
+                //Get the Total Staff Capacity fro the area specifically looked into...
+                $totalStaffCapacityForSearchedArea= $arrayOfObjects[$mykey]->getStaffCapacity();
+                //Add the amount in TotalBuildingCapacity Element to the temporary array created.
+                $tempArray[]= $totalStaffCapacityForSearchedArea;
+            }else{
+                //echo "<br/>";
+                //echo "Item doesn't exist.";
+            }
+
+            $arrayTotal=array_sum($tempArray);
+        }
+        return $this->totalSearchedAreaTotalStaffCapacity=$arrayTotal;
+    }
+
 
 
     /**
@@ -629,6 +731,7 @@ class buildingOccupancy {
         if ($buildingLocation=="WR Lakeview"){
             $this->campus=" ";
         }
+
         //WR Plaza
         if ($buildingLocation=="WR Plaza"){
             $this->campus=" ";
@@ -677,6 +780,18 @@ class buildingOccupancy {
             $this->campus=" ";
         }
         //End Wolf Village Apartments
+
+        //Start Fraternity & Sorority Life
+        if ($buildingLocation=="Grk Vlg-01"){
+            $this->campus="Greek";
+        }
+        //Everything out side of the First Grk Vlg-01 building will add a new sub-row if we put anything other than a " " [SPACE] IN THE
+        //campus area.
+
+        else if ($buildingLocation=="Grk Vlg-02"||$buildingLocation=="Grk Vlg-03"||$buildingLocation=="Grk Vlg-04"||$buildingLocation=="Grk Vlg-05"){
+            $this->campus=" ";
+        }
+
 
 
 
@@ -932,6 +1047,20 @@ class buildingOccupancy {
             $this->complex="Wolf Village";
         }
         //End Wolf Village
+
+        //Start Fraternity & Sorority Life
+        if($buildingProvided=="Grk Vlg-01"){
+            $this->complex="Greek";
+        }
+        else if ($buildingProvided=="Grk Vlg-02"){
+            $this->campus="Greek";
+        }
+        else if ($buildingProvided=="Grk Vlg-03"){
+            $this->campus="Greek";
+        }
+        else if ($buildingProvided=="Grk Vlg-04"){
+            $this->campus="Greek";
+        }
     }
 
     function _toString(){
@@ -961,7 +1090,6 @@ class buildingOccupancy {
     }
 
 
-
     function getStaffCapacity(){
         return $this->staffCapacity;
     }
@@ -970,20 +1098,24 @@ class buildingOccupancy {
         return $this->complex;
     }
 
-
-
-
-
     function getComplexBasedonBuilding(){
         return $this->providedComplexByBuilding;
     }
 
-
+    /**
+     * @param $numberOne
+     * @param $numberTwo
+     * @param $decimalPlaces
+     * @return string
+     * Description: Creates a percentage based on the two parameters given
+     * and will provide a decimal output given the final parameter, $decimalPlaces,
+     * to the given number provided.
+     */
     function createPercentage($numberOne,$numberTwo,$decimalPlaces){
-        //Create a percentage
+        //Create a temporary percentage between two numbers.
         $percentage= ($numberOne/$numberTwo);
 
         //Use number_format function within PHP.
-        return number_format($percentage,$decimalPlaces,".",",")."%";
+        return number_format($percentage*100,$decimalPlaces).'%';
     }
 }

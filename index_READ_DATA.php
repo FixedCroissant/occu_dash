@@ -23,10 +23,10 @@ include('classes/queryRead.php');
 include('log-on/psdb_PROD.php');
 */
 
-//Temporary
+//READ 3 DIFFERENT VIEWS.
 include('read_data_testing.php');
 //Above is pulling from 3 different Oracle views.
-//end temporary
+
 
 
 //Comment out
@@ -264,7 +264,8 @@ foreach($studentAssignmentCollection as $collection){
            }
            if($building=="WR Lakevw"){
                //Set WR Lakevw to WR Lakeview
-               $building="WR Lakeview";
+               //DEVELOPMENT ONLY.
+               $building="WR Lakeview";               
 
                $universityHousingBuildings['WR_Lakevw'] = new buildingOccupancy($building, "Wolf Ridge",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
            }
@@ -305,6 +306,8 @@ foreach($studentAssignmentCollection as $collection){
                $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy($building, "Wolf Village",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
            }
            //end test
+
+
 
 
 }//close foreach

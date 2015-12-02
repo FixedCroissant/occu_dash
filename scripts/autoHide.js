@@ -190,11 +190,153 @@ $( document ).ready(function() {
 
 
     /*
-    ROTATIONS
+    END ROTATIONS
      */
 
     //Create clicks for Areas
 
+
+    //EAST Campus
+    $( "img#arrowFirst-east_Group" ).click(function() {
+        if(clicks==0){
+            //Show sub category rows
+            $(".building-elements-EastGroup").show(200);  //animate 2-milliseconds
+            clicks++;        //increment the clicks.
+
+        }else{
+            //Hide sub category rows after more one click on the element.
+            $(".building-elements-EastGroup").hide(200);  //animate 2-milliseconds
+            //Also Hide AFC Complex
+            $(".building-elements-afc").hide(200);  //animate 2-milliseconds
+            //Also Hide Wood Complex Too
+            $(".building-elements-wood").hide(200);
+
+            clicks=0;        //reset the clicks.
+        }
+    });
+    //End EAST Campus
+
+    //Central  Campus
+    $( "img#arrowFirst-central_Group" ).click(function() {
+        if(clicks==0){
+            //Show sub category rows
+                //Show Central Group (Tri-Towers & TOTA)
+            $(".building-elements-CentralGroup").show(200);  //animate 2-milliseconds
+            clicks++;        //increment the clicks.
+
+
+
+        }else{
+            //Hide Central Group (Tri-Towers & TOTA)
+            $(".building-elements-CentralGroup").hide(200);  //animate 2-milliseconds
+
+            //Hide specifics for Tri-Towers
+            //Building  BOWEN,
+            // BUILDING CARROLL
+            // BUILDING METCALF
+
+            $(".building-elements-tritowers").hide(200);
+            // /Hide specifics for TOTA
+            $(".building-elements-tota").hide(200);
+
+
+
+
+            clicks=0;        //reset the clicks.
+        }
+    });
+    //End CENTRAL Campus
+
+    //West Campus
+    $( "img#arrowFirst-west_Group" ).click(function() {
+        if(clicks==0){
+            //Show sub category rows
+            //Show West Campus Group (Lee, Sullivan & Bragaw)
+            $(".building-elements-West").show(200);  //animate 2-milliseconds
+
+            clicks++;        //increment the clicks.
+
+        }else{
+            //Hide West Campus Buildings
+            $(".building-elements-West").hide(200);  //animate 2-milliseconds
+
+            //Hide specifics for West Group
+            //Hide Lee
+
+            //Hide Sullivan
+
+            //Hide Bragaw
+
+
+
+
+            clicks=0;        //reset the clicks.
+        }
+    });
+     //End West Campus
+
+    //Wolf Ridge Apartments (Individual Group)
+    //Set the collapse and fold of the buildings contained within the Wolf Ridge property.
+    $( "img#arrowFirst-wolf_ridge").click(function() {
+        if(clicks==0){
+            //Show sub category rows
+            //Show Wolf Ridge Individual Buildings
+            $(".building-elements-apartment_wolf_ridge").show(200);  //animate 2-milliseconds
+
+            clicks++;        //increment the clicks.
+
+        }else{
+            //Hide Wolf Ridge Individual Buildings
+            $(".building-elements-apartment_wolf_ridge").hide(200);  //animate 2-milliseconds
+
+            clicks=0;        //reset the clicks.
+        }
+    });
+    //Apartment Group
+    $( "img#arrowFirst-apartments").click(function() {
+        if(clicks==0){
+            //Show sub category rows
+            //Show Wolf Ridge Grouping
+                $(".building-elements-apartment_WolfRidge").show(200);  //animate 2-milliseconds
+            //Show Wolf Village Grouping
+                $(".building-elements-WolfVillage").show(200);  //animate 2-milliseconds
+
+            clicks++;        //increment the clicks.
+        }
+        //Hide Segments for Wolf Ridge & Wolf Village items.
+        else{
+            //Hide Wolf Ridge Individual Buildings
+            $(".building-elements-apartment_WolfRidge").hide(200);  //animate 2-milliseconds
+            //Show Wolf Village Grouping
+            $(".building-elements-WolfVillage").hide(200);  //animate 2-milliseconds
+
+            clicks=0;        //reset the clicks.
+        }
+    });
+
+
+
+
+
+
+    //End Wolf Ridge Apartments
+    //Wolf Village Apartments (Individual Group)
+    $( "img#arrowFirst-wolf_village").click(function() {
+        if(clicks==0){
+            //Show sub category rows
+            //Show Wolf Ridge Individual Buildings
+            $(".building-elements-apartment_wolf_village").show(200);  //animate 2-milliseconds
+
+            clicks++;        //increment the clicks.
+
+        }else{
+            //Hide Wolf Ridge Individual Buildings
+            $(".building-elements-apartment_wolf_village").hide(200);  //animate 2-milliseconds
+
+            clicks=0;        //reset the clicks.
+        }
+    });
+    //End Wolf Village Apartments
     //Southeast
     $( "img#arrowFirst-southeast_Group" ).click(function() {
         if(clicks==0){
@@ -216,11 +358,7 @@ $( document ).ready(function() {
             clicks=0;        //reset the clicks.
         }
     });
-
     //End South east
-
-
-
 
 
     //North
@@ -237,9 +375,6 @@ $( document ).ready(function() {
 
             //Hide Quad
             $(".building-elements-quad").hide(200);  //animate 2-milliseconds
-
-
-
             clicks=0;        //reset the clicks.
         }
     });
@@ -306,7 +441,7 @@ $( document ).ready(function() {
     //Create a click for TriTowers
     $( "img#arrowFirst-tritowers" ).click(function() {
 
-        if(clicks==0){
+        if(clicks==1){
             //Show sub category rows
             $(".building-elements-tritowers").show(200);
             clicks++;        //increment the clicks.
@@ -314,14 +449,14 @@ $( document ).ready(function() {
         }else{
             //Hide sub category rows after more one click on the element.
             $(".building-elements-tritowers").hide(200);
-            clicks=0;        //reset the clicks.
+            clicks=1;        //reset the clicks.
         }
     });
 
     //Create a click for TOTA
     $( "img#arrowFirst-tota" ).click(function() {
 
-        if(clicks==0){
+        if(clicks==1){
             //Show sub category rows
             $(".building-elements-tota").show(200);
             clicks++;        //increment the clicks.
@@ -329,7 +464,7 @@ $( document ).ready(function() {
         }else{
             //Hide sub category rows after more one click on the element.
             $(".building-elements-tota").hide(200);
-            clicks=0;        //reset the clicks.
+            clicks=1;        //reset the clicks.
         }
     });
 

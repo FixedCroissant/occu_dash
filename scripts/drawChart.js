@@ -39,7 +39,7 @@ function drawChart() {
 
     // Set chart options
     var options = {'title':'Classifications of Students',
-        'width':500,
+        'width':550,
         'height':450,
 
     animation:{

@@ -37,13 +37,26 @@ class buildingOccupancydetail extends buildingOccupancy
     var $temp_classification;
     //End classification of students.
 
-    //buildingArea
-    function buildingOccupancydetail($buildingArea="",$buildingName="",$gender="",$classification="",$classificationAmount=""){
+    /**
+     * This function allows for the creation of detailed occupancy information. Specifically looking for the the classification and the gender of those
+     * assigned a room at NC State.
+     * @param string $buildingCampus        create a campus Area that can be associated with the building, i.e. East, Center West or Apartments.
+     * @param string $buildingArea          create a area that can be associated with the building, i.e. Southeast, Northeast,
+     * @param string $buildingName          creates a building with the appropriate building name, i.e. Bagwell/Bragaw, etc.
+     * @param string $gender                creates a set gender (either M or F)
+     * @param int    $genderAmount          provides the amount of the stated gender.
+     * @param string $classification        creates a classification for the particular student, i.e., Sr/Jr/Fr/Nfr, etc.
+     * @param int $classificationAmount     provides the amount of those of a particular classification, i.e. Juniors are 10, Seniors are 5, etc.
+     * @return void
+     */
+
+    function buildingOccupancydetail($buildingArea="",$buildingName="",$gender="",$genderAmount="",$classification="",$classificationAmount=""){
         //Set buildingName
         $this->setBuildingName($buildingName);
 
         //Set gender (male or female)
-        $this->setGender($gender,15);
+        $this->setGender($gender,$genderAmount);
+
         //setClassification
         //$this->setTempClassification($temp_classification);
         $this->setClassification($classification,$classificationAmount);
