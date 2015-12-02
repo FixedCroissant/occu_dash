@@ -527,8 +527,6 @@ include('index_READ_DATA.php');
                                             //new
                                             $totalPossibleBuildingOccupancyBasedOnArea = $listRead->totalBuildingCapacityByArea($universityHousingBuildings, $area);
                                             
-                                            echo "HI!!!!";
-
                                             echo $totalPossibleBuildingOccupancyBasedOnArea;
                                             //end new
                                             echo "</td> \n";

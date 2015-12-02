@@ -260,13 +260,17 @@ while($row = oci_fetch_array($STID_TOTAL_BUILDING_CAPACITY, OCI_ASSOC+OCI_RETURN
     //[CAPACITY OF BUILDING],[ASSIGNED STUDENTS PER BUILDING],[ASSIGNED STAFF PER BUILDING]
     //EXAMPLE: $collectionOfData['Lee'] = [750,730,8]
         //DEVELOPMENT BELOW...
-        $collectionOfData [$row['BUILDING']] =  array($row['CAPACITY'],$prior_assigned_students_value,$prior_assigned_staff_value);
+        ////Added Staff Capacity to the total building capacity. [12-02-2015-3:21pm]
+        $collectionOfData [$row['BUILDING']] =  array($row['CAPACITY']+$prior_assigned_staff_value,$prior_assigned_students_value,$prior_assigned_staff_value);
+
+
+
     //END DEVELOPMENT
     //PRODUCTION
     //The below array element is used in production environment under NC State's system, as the fields in the PeopleSoft view are different than the fields
     //created through my DEV system.
-
-        //$collectionOfData [$row['BUILDING']] =  array($row['COUNT1'],$prior_assigned_students_value,$prior_assigned_staff_value);
+         //Added Staff Capacity to the total building capacity. [12-02-2015-3:21pm] 
+        //$collectionOfData [$row['BUILDING']] =  array($row['COUNT1']+$prior_assigned_staff_value,$prior_assigned_students_value,$prior_assigned_staff_value);
     //END PRODUCTION
 }
 
