@@ -40,6 +40,11 @@ class buildingOccupancy {
 
     var $residentOccupancyPercentage;
     var $staffCapacity;
+
+    //New 12-03-2015
+    var $staffOccupancy;
+
+
     var $totalBuildingCapacityPercentage;
 
     var $totalSearched_StudentAssignments_ByCampusArea;     /*Student assignments based on campus area, east/west*/
@@ -61,13 +66,17 @@ class buildingOccupancy {
 
 
     //Create Construction for Building Occupancy...
-    function buildingOccupancy ($buildingName="", $buildingArea="",$buildingStudentsAssigned="",$buildingTotalPossibleOccupancy="",$residentOccupancyPercentage="",$staffCapacity="0",$totalBuildingCapacity="",$totalBuildingCapacityPercentage="",$complex="",$campus=""){
+    function buildingOccupancy ($buildingName="", $buildingArea="",$buildingStudentsAssigned="",$buildingTotalPossibleOccupancy="",$residentOccupancyPercentage="",$staffCapacity="0",$staffOccupancy="0",$totalBuildingCapacity="",$totalBuildingCapacityPercentage="",$complex="",$campus=""){
         $this->setBuildingName($buildingName);  //Set the building Name default to AFC-A.
         $this->setBuildingArea($buildingArea);  // Set the area by default to SE.
         $this->setBuildingStudentsAssigned($buildingStudentsAssigned); //Set initially by default, buildingNumber assigned to 0.
         $this->setBuildingResidentTotalOccupancy($buildingTotalPossibleOccupancy);  //Set the buildingTotal (maximum possible occupancy) initially by default to 0.
         $this->setResidencyOccupancyPercentageInitial($residentOccupancyPercentage);
         $this->setStaffCapacity($staffCapacity);
+        //New field 12-03-2015
+        //Set Housing Staff (RA) Occupancy.
+        $this->setStaffOccupancy($staffOccupancy);
+
         $this->setBuildingTotalCapacity($totalBuildingCapacity);
         $this->setComplex($buildingName);                   //Use the building name to assign the Complex Area.
         $this->setMainCampusArea($buildingName);
@@ -454,6 +463,9 @@ class buildingOccupancy {
     }
 
 
+
+    /*STAFF CAPACITY FUNCTIONS*/
+
     function totalStaffCapacityByArea($arrayOfObjects,$areaProvided){
 
         //Temporary Array Value
@@ -543,6 +555,115 @@ class buildingOccupancy {
         return $this->totalSearchedAreaTotalStaffCapacity=$arrayTotal;
     }
 
+    /*END STAFF CAPACITY FUNCTIONS*/
+
+
+    /**
+     * STAFF OCCUPANCY FUNCTIONS
+     * ADDED 12 03 2015 at 3:59PM.
+     */
+
+    //Staff Occupancy by Particular Area
+    function totalStaffOccupancyByArea($arrayOfObjects,$areaProvided){
+
+        //Temporary Array Value
+        $tempArray = array();
+
+        //Easy way to search for all the keys inside the array.
+        //Array Name: $arrayofObjects turned into $key...
+        foreach($arrayOfObjects as $key => $value)
+        {
+            //Get the Buildings Areas (Southeast, Northeast, TriTowers, TOTA)
+            $area = $arrayOfObjects[$key]->getLocalizedBuildingArea();
+
+            $mykey = $key;
+
+            //echo $mykey;
+            if($area==$areaProvided) {
+                //Get the Total Staff Capacity fro the area specifically looked into...
+                $totalStaffCapacityForSearchedArea= $arrayOfObjects[$mykey]->getStaffOccupancy();
+                //Add the amount in TotalBuildingCapacity Element to the temporary array created.
+                $tempArray[]= $totalStaffCapacityForSearchedArea;
+            }else{
+                //echo "<br/>";
+                //echo "Item doesn't exist.";
+            }
+
+            $arrayTotal=array_sum($tempArray);
+        }
+        return $this->totalSearchedAreaTotalStaffCapacity=$arrayTotal;
+    }
+
+    //Staff Occupancy Searched By Campus
+    function totalStaffOccupancyByCampus($arrayOfObjects,$campusProvided){
+
+        //Temporary Array Value
+        $tempArray = array();
+
+        //Easy way to search for all the keys inside the array.
+        //Array Name: $arrayofObjects turned into $key...
+        foreach($arrayOfObjects as $key => $value)
+        {
+            //Get the Buildings Areas (Southeast, Northeast, TriTowers, TOTA)
+            $area = $arrayOfObjects[$key]->getMainCampusArea();
+
+            $mykey = $key;
+
+
+            if($area==$campusProvided) {
+                //Get the Total Staff Capacity fro the area specifically looked into...
+                $totalStaffCapacityForSearchedArea= $arrayOfObjects[$mykey]->getStaffOccupancy();
+                //Add the amount in TotalBuildingCapacity Element to the temporary array created.
+                $tempArray[]= $totalStaffCapacityForSearchedArea;
+            }else{
+                //echo "<br/>";
+                //echo "Item doesn't exist.";
+            }
+
+            $arrayTotal=array_sum($tempArray);
+        }
+        return $this->totalSearchedAreaTotalStaffCapacity=$arrayTotal;
+    }
+
+    //Staff Occupancy Searched by Complex
+    function totalStaffOccupancyByComplex($arrayOfObjects,$complexProvided){
+
+        //Temporary Array Value
+        $tempArray = array();
+
+        //Easy way to search for all the keys inside the array.
+        //Array Name: $arrayofObjects turned into $key...
+        foreach($arrayOfObjects as $key => $value)
+        {
+            //Get the Complex area, like Avent Ferry Complex or Wood, or TOTA, etc.
+            $area = $arrayOfObjects[$key]->getComplex();
+
+            $mykey = $key;
+
+            if($area==$complexProvided) {
+                //Get the Total Staff Capacity fro the area specifically looked into...
+                $totalStaffCapacityForSearchedArea= $arrayOfObjects[$mykey]->getStaffOccupancy();
+                //Add the amount in TotalBuildingCapacity Element to the temporary array created.
+                $tempArray[]= $totalStaffCapacityForSearchedArea;
+            }else{
+                //echo "<br/>";
+                //echo "Item doesn't exist.";
+            }
+
+            $arrayTotal=array_sum($tempArray);
+        }
+        return $this->totalSearchedAreaTotalStaffCapacity=$arrayTotal;
+    }
+
+
+    /**
+     * END STAFF OCCUPANCY FUNCTIONS. 
+     * ADDED 12 03 2015 at 3:59PM.
+     */
+
+
+
+
 
 
     /**
@@ -628,9 +749,6 @@ class buildingOccupancy {
         return $this->totalPossibleBuildingCapacity=$arrayTotal;
 
     }
-
-
-
     //End Complete Total Functions
 
 
@@ -812,9 +930,21 @@ class buildingOccupancy {
         $this->residentOccupancyPercentage=$temporaryPercentageValue;
     }
 
+    //This function sets the total allocated amount of housing staff rooms
+    //in a given building.
     function setStaffCapacity($newStaffCapacity){
         $this->staffCapacity=$newStaffCapacity;
     }
+
+    //This is a new function....    
+    //New Function created 12/3/2015 to set up 
+    //the occupancy (or amount used) of the Staff Rooms available.
+    function setStaffOccupancy($newStaffOccupancy){
+        $this->staffOccupancy=$newStaffOccupancy;
+    }
+    //End New function
+
+
 
     function setBuildingTotalCapacity($newCapacityLevel){
         $this->buildingTotalPossibleOccupancy=$newCapacityLevel;
@@ -1092,6 +1222,10 @@ class buildingOccupancy {
 
     function getStaffCapacity(){
         return $this->staffCapacity;
+    }
+
+    function getStaffOccupancy(){
+        return $this->staffOccupancy;
     }
 
     function getComplex(){

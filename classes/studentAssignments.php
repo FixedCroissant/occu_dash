@@ -17,6 +17,8 @@ class studentAssignments {
     var $buildingStudentResidentCapacity;
     var $buildingCapacity;
     var $staffCapacity;
+    /*New field added on 12_03_2015.*/
+    var $staffOccupancy;
     var $buildingOrder;
 
 
@@ -252,6 +254,12 @@ class studentAssignments {
         $this->staffCapacity=$staffAtBuilding;
     }
 
+    function setStaffOccupancy($newStaffOccupancyLevel){
+        $this->staffOccupancy=$newStaffOccupancyLevel;
+    }
+
+
+
 
     function createGroup($buildingName){
         //Set AFC
@@ -305,6 +313,11 @@ class studentAssignments {
 
     function getStaffAssignments(){
         return $this->staffCapacity;
+    }
+
+    /*New function created 12_03_2015*/
+    function getStaffOccupancy(){
+        return $this->staffOccupancy;
     }
 
     function getResidentAssignments(){

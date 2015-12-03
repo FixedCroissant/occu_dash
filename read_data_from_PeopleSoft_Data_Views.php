@@ -74,7 +74,12 @@ if($myTERM=='None'){
         //BUILDING - the building name
         //COUNT1 - the count of students assigned to the particular  building.
         //STRM - the term needed to provide information.
+        //ON 12 - 3 - 2015, THIS QUERY WAS CHANGED TO LOOK AT DV1's ps_nc_his_blcts_vw
+        //OLD
         //$assignedStaffQuery = "SELECT BUILDING,COUNT1,STRM FROM PS_NC_HIS_STFCT_VW WHERE STRM=:termNEEDED";
+        //NEW
+        $assignedStaffQuery = "SELECT BUILDING,COUNT1,STRM FROM PS_NC_HIS_BLCTS_VW WHERE STRM=:termNEEDED";
+
 //END PRODUCTION
 
 //End Staff Assignments
@@ -97,6 +102,40 @@ if($myTERM=='None'){
 
 
 //End total building amounts...
+
+
+
+//Read total staff occupancy..
+//In production fields are:
+//strm = term/semester
+//building = [building name]
+//count1 = [total count of the building]
+
+//DEVELOPMENT
+    //DEVELOPMENT VIEW IS CALLED
+    //ASSIGNED_STAFF_VIEW.
+
+    $totalStaffOccupancyQuery = "SELECT BUILDING, STAFF_ASSIGNED, STRM FROM ASSIGNED_STAFF_VIEW WHERE STRM=:termNEEDED";
+//END DEVELOPMENT
+//PRODUCTION
+    //PRODUCTION VIEW IS CALLED
+    //PS_NC_HIS_BLCTS_VW
+    //CURRENTLY ONLY IN DV1.
+
+      //Below provides me information that is the beds, however this information is currently
+      //being displayed under the header  "TOTAL STAFF OCCUPANCY", THIS SHOULD BE ASSIGNMENT OF STAFF
+     //INFORMATION, NOT EMPTY BEDS.
+       //OLD 
+      //$totalStaffOccupancyQuery = "SELECT BUILDING,COUNT1,STRM FROM PS_NC_HIS_BLCTS_VW WHERE STRM=:termNEEDED";
+      //NEW
+    //$totalStaffOccupancyQuery = "SELECT BUILDING,COUNT1,STRM FROM  PS_NC_HIS_STFCT_VW WHERE STRM=:termNEEDED";
+
+//END PRODUCTION
+
+
+//End total total staff assigned to a particular building for a particular term.
+
+
 
 
 /**
@@ -143,9 +182,22 @@ while($row = oci_fetch_array($STID_ASSIGNED_STUDENTS, OCI_ASSOC+OCI_RETURN_NULLS
     //var_dump ($row);
     //assign to the array...
     //DEVELOPMENT
-        $collectionOfData [$row['BUILDING']] =  array(0,$row['ASSIGNED'],0);
+        //$collectionOfData [$row['BUILDING']] =  array(0,$row['ASSIGNED'],0,0);
+
+    //Above collection of data now has to encompass the Staff Occupancy
+    //So old is:  $collectionOfData [$row['BUILDING']] =  array(0,$row['ASSIGNED'],0);
+    //New        
+        //The last 0 is for STAFF OCCUPANCY #.
+        //FIRST NUMBER :  BUILDING CAPACITY (QUERY #3) + STAFF ALLOCATED (After revision made on 12/2/2015.)
+        //SECOND NUMBER : ASSIGNED STUDENTS (QUERY #1)
+        //THIRD NUMBER :  STAFF CAPACITY NUMBER (QUERY #2)
+        //FOURTH NUMBER : STAFF OCCUPIED NUMBER (QUERY #4)
+        $collectionOfData [$row['BUILDING']] =  array(0,$row['ASSIGNED'],0,0)
+;
+    //END Development    
+
     //PRODUCTION
-        //$collectionOfData [$row['BUILDING']] =  array(0,$row['COUNT1'],0);
+        //$collectionOfData [$row['BUILDING']] =  array(0,$row['COUNT1'],0,0);
 
 }
 
@@ -160,19 +212,19 @@ while($row = oci_fetch_array($STID_ASSIGNED_STUDENTS, OCI_ASSOC+OCI_RETURN_NULLS
 $assignedStaffParse = $assignmentsConnection->queryParse($connection,$assignedStaffQuery);
 
 //GetSTID use for execution of the query.
-$STID_ASSIGNED_STAFF = $assignmentsConnection->getSTID();
+$STID_STAFF_CAPACITY = $assignmentsConnection->getSTID();
 
 //BIND THE TERM THAT WE ARE LOOKING FOR....
-oci_bind_by_name($STID_ASSIGNED_STAFF,'termNEEDED',$myTERM);
+oci_bind_by_name($STID_STAFF_CAPACITY,'termNEEDED',$myTERM);
 
 
 //Query 002
 //Staff Assigned
-$assignmentsConnection->queryExecute($STID_ASSIGNED_STAFF);
+$assignmentsConnection->queryExecute($STID_STAFF_CAPACITY);
 
 //Display a table....
 //Comment out 10-01-2015
-//$assignmentsConnection->createTableDisplay($STID_ASSIGNED_STAFF);
+//$assignmentsConnection->createTableDisplay($STID_STAFF_CAPACITY);
 
 //get old data
 
@@ -191,7 +243,7 @@ $assignmentsConnection->queryExecute($STID_ASSIGNED_STAFF);
 
 //Get information from the view and update the information in the
 //array.
-while($row = oci_fetch_array($STID_ASSIGNED_STAFF, OCI_ASSOC+OCI_RETURN_NULLS)){
+while($row = oci_fetch_array($STID_STAFF_CAPACITY, OCI_ASSOC+OCI_RETURN_NULLS)){
     //var_dump ($row);
     //assign to the array...
     //$collectionOfData[$row['BUILDING']] = $row['STAFF'];
@@ -207,7 +259,7 @@ while($row = oci_fetch_array($STID_ASSIGNED_STAFF, OCI_ASSOC+OCI_RETURN_NULLS)){
       //Add Staff Members to the array
     //While keeping the assigned values.
     //DEVELOPMENT
-        $collectionOfData [$row['BUILDING']] =  array(0,$prior_assigned_students_value,$row['STAFF']);
+        $collectionOfData [$row['BUILDING']] =  array(0,$prior_assigned_students_value,$row['STAFF'],0);
     //END DEVELOPMENT
     //PRODUCTION
         //$collectionOfData [$row['BUILDING']] =  array(0,$prior_assigned_students_value,$row['COUNT1']);
@@ -261,8 +313,10 @@ while($row = oci_fetch_array($STID_TOTAL_BUILDING_CAPACITY, OCI_ASSOC+OCI_RETURN
     //EXAMPLE: $collectionOfData['Lee'] = [750,730,8]
         //DEVELOPMENT BELOW...
         ////Added Staff Capacity to the total building capacity. [12-02-2015-3:21pm]
-        $collectionOfData [$row['BUILDING']] =  array($row['CAPACITY']+$prior_assigned_staff_value,$prior_assigned_students_value,$prior_assigned_staff_value);
-
+       
+        //Temp comment out 149pm @ 12-3-2015
+       $collectionOfData [$row['BUILDING']] =  array($row['CAPACITY']+$prior_assigned_staff_value,$prior_assigned_students_value,$prior_assigned_staff_value,0);
+        
 
 
     //END DEVELOPMENT
@@ -281,6 +335,21 @@ while($row = oci_fetch_array($STID_TOTAL_BUILDING_CAPACITY, OCI_ASSOC+OCI_RETURN
 /**
  * END QUERY #3 FOR TOTAL CAPACITY OF BUILDING
  */
+
+
+
+//Use the include file to read from DV1 view of PS view.
+include('read_data_from_PeopleSoft_Data_View_Tables_DV1_Staff_Occupancy.php');
+//End Include
+
+
+
+
+
+
+
+
+
 
 /**
  * END ALL QUERIES TO LOOK UP INFORMATION

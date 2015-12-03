@@ -351,7 +351,16 @@ include('index_READ_DATA.php');
 
                                             //Total staff occupancy, new space for a field created on 11 09 2015.
                                             echo "<td>";
-                                            echo "--";
+                                            //echo "East Campus Staff Occupancy --";
+                                            
+                                            $staffOccupancy_EAST_CAMPUS=$listRead->totalStaffOccupancyByCampus($universityHousingBuildings,"East");
+
+                                            //Let us know the staff occupancy of east campus.    
+                                            echo $staffOccupancy_EAST_CAMPUS;
+
+
+
+
                                             echo "</td>\n";
                                             //End new field created regarding new staff occupancy.
 
@@ -516,7 +525,16 @@ include('index_READ_DATA.php');
                                             //Total Staff Occupancy new field reserved.
                                             //Total staff occupancy, new space for a field created on 11 09 2015.
                                             echo "<td>";
-                                            echo "--";
+                                            
+                                            //To Do.
+                                            //$totalStaffPerSegmentAssigned = $listRead->    
+                                             //OLD.   
+                                             //$totalStaffPerSegment = $listRead->totalStaffCapacityByArea($universityHousingBuildings,$area);
+                                            //New -- Added 12/03/2015
+                                            $totalStaffPerSegmentBEDS = $listRead->totalStaffOccupancyByArea($universityHousingBuildings,$area);
+
+                                            //New name totalStaffOccuapncyByArea
+                                            echo $totalStaffPerSegmentBEDS;
                                             echo "</td>\n";
                                             //End new field created regarding new staff occupancy.
 
@@ -633,8 +651,10 @@ include('index_READ_DATA.php');
                                             //Total Staff Occupancy new field reserved.
                                             //Total staff occupancy, new space for a field created on 11 09 2015.
                                             echo "<td>";
-                                            echo "--";
-
+                                            //Staff Occupancy
+                                            //This should be coming from 
+                                            $totalStaffPerSegmentBEDS = $listRead->totalStaffOccupancyByArea($universityHousingBuildings,$area);
+                                            echo $totalStaffPerSegmentBEDS;
                                             echo "</td>\n";
                                             //End new field created regarding new staff occupancy.
                                             //END NEW FIELD ADDED
@@ -744,7 +764,9 @@ include('index_READ_DATA.php');
                                             //Total Staff Occupancy new field reserved.
                                             //Total staff occupancy, new space for a field created on 11 09 2015.
                                             echo "<td>";
-                                            echo "--";
+
+                                            $totalStaffPerSegmentBEDS = $listRead->totalStaffOccupancyByArea($universityHousingBuildings,$area);
+                                            echo $totalStaffPerSegmentBEDS;
 
                                             echo "</td>\n";
                                             //End new field created regarding new staff occupancy.
@@ -855,7 +877,13 @@ include('index_READ_DATA.php');
                                                             //Total Staff Occupancy new field reserved.
                                                             //Total staff occupancy, new space for a field created on 11 09 2015.
                                                             echo "<td>";
-                                                                echo "--";
+
+                                                            $totalStaffPerSegmentBEDS = $listRead->totalStaffOccupancyByArea($universityHousingBuildings,$area);
+                                                            echo $totalStaffPerSegmentBEDS;
+
+
+
+                                                                //echo "West Campus Staff Occupancy --";
                                                             echo "</td>\n";
                                                             //End new field created regarding new staff occupancy.
                                                             //END NEW FIELD ADDED
@@ -1052,7 +1080,20 @@ include('index_READ_DATA.php');
                                                                     //Total Staff Occupancy new field reserved.
                                                                     //Total staff occupancy, new space for a field created on 11 09 2015.
                                                                     echo "<td>";
-                                                                    echo "--";
+
+                                                                    //OCCUPANCY
+                                                                    //Wolf Ridge Apartments
+                                                                    $totalStaff_WolfRidge_Apartments_BEDS = $listRead->totalStaffOccupancyByArea($universityHousingBuildings,$area);
+                                                                    $totalStaff_WolfVillage_Apartments_BEDS = $listRead->totalStaffOccupancyByArea($universityHousingBuildings,"Wolf Village");
+
+                                                                    $totalStaff_For_WolfRidge_And_Wolf_VillageBEDS = ($totalStaff_WolfRidge_Apartments_BEDS+$totalStaff_WolfVillage_Apartments_BEDS);
+
+                                                                    //Display the Total Staff Assigned for the Wolf Ridge & Wolf Village Apartments.
+                                                                    //BEDS ONLY.
+                                                                    echo $totalStaff_For_WolfRidge_And_Wolf_VillageBEDS;    
+
+                                                                    //END OCCUPANCY
+                                                                    //echo "Apartments Staff Occupancy --";
                                                                     echo "</td>\n";
                                                                     //End new field created regarding new staff occupancy.
                                                                     //END NEW FIELD ADDED
@@ -1265,9 +1306,11 @@ include('index_READ_DATA.php');
                                             //Total Staff Occupancy new field reserved.
                                             //Total staff occupancy, new space for a field created on 11 09 2015.
                                             echo "<td>";
-
-                                            echo "--";
-
+                                            //Subcomplexs are located here...
+                                            //E.g. Avent ferry Complex, Wood, Quad, Tri Towers, TOTA, West, Wolf Ridge, Wolf Village     
+                                            //Occupancy Rates
+                                            $totalStaffPerComplexBED_AMOUNT = $listRead->totalStaffOccupancyByComplex($universityHousingBuildings,$complexArea);
+                                            echo $totalStaffPerComplexBED_AMOUNT;
                                             echo "</td>\n";
                                             //End new field created regarding new staff occupancy.
 
@@ -1464,9 +1507,10 @@ include('index_READ_DATA.php');
                                             //Total Staff Occupancy new field reserved.
                                             //Total staff occupancy, new space for a field created on 11 09 2015.
                                             echo "<td>";
+                                            //Below provides the number of
+                                            //beds available    
+                                            echo $listRead->getStaffOccupancy();
 
-
-                                            echo "--";
 
                                             echo "</td>\n";
                                             //End new field created regarding new staff occupancy.

@@ -71,8 +71,14 @@ foreach ($collectionOfData as $key=>$value) {
     //Assigned Students
     $assignedRooms=$collectionOfData[$key][1];
 
-    //Staff Members
+    //Staff Members Assigned
     $staffAssigned=$collectionOfData[$key][2];
+
+
+    //Staff Beds available
+    //New Element added on 12_3_2015 @ 3:47pm.
+    $staffBedsTotal=$collectionOfData[$key][3];
+
 
     //Total Possible Resident Occupancy
     $resident_capacity_Of_Building = ($totalCapacityOfBuilding-$staffAssigned);
@@ -91,6 +97,11 @@ foreach ($collectionOfData as $key=>$value) {
         $studentAssignments->createGroup($building_NAME);
         //Set Staff Amount
         $studentAssignments->setStaffCapacity($staffAssigned);
+
+        //Set Staff Capacity (Beds)
+        //Fix This
+        $studentAssignments->setStaffOccupancy($staffBedsTotal);
+
 
         //Set Order number
         $myOrderNumber=$studentAssignments->getBuildingOrder();
@@ -137,8 +148,17 @@ foreach($studentAssignmentCollection as $collection){
     $completebuildingCapacity = $collection->getBuildingCapacity();
     //Get Assignment Numbers...
     $assignedResidents = $collection->getResidentAssignments();
-    //Get Staff
-    $assignedStaff = $collection->getStaffAssignments();
+    //Get Staff Capacity
+    $staffCapacity = $collection->getStaffAssignments();
+
+    //Get Staff Occupancy
+    //Create new function....
+    $staffOccupancy = $collection ->getStaffOccupancy(); /*TO DO CREATE THIS.*/ /*Created new function on 12/3/2015, 1:24pm*/
+
+
+
+
+
 
     //echo $building . $residentbuildingCapacity . $completebuildingCapacity. $buildingGROUP . $assignedResidents;
 
@@ -151,62 +171,62 @@ foreach($studentAssignmentCollection as $collection){
 
     //Start AFC
     if($building=="AFC - A") {
-    $universityHousingBuildings['AFC_A'] = new buildingOccupancy($building, "Southeast", $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+    $universityHousingBuildings['AFC_A'] = new buildingOccupancy($building, "Southeast", $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
 
     }
      else if($building=="AFC - B") {
-        $universityHousingBuildings['AFC_B'] = new buildingOccupancy($building, "Southeast", $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+        $universityHousingBuildings['AFC_B'] = new buildingOccupancy($building, "Southeast", $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
      }
      else  if($building=="AFC - E") {
-    $universityHousingBuildings['AFC_E'] = new buildingOccupancy($building, "Southeast", $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+    $universityHousingBuildings['AFC_E'] = new buildingOccupancy($building, "Southeast", $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
     }
      else if($building=="AFC - F") {
-    $universityHousingBuildings['AFC_F'] = new buildingOccupancy($building, "Southeast", $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+    $universityHousingBuildings['AFC_F'] = new buildingOccupancy($building, "Southeast", $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
     }
     //End Avent Ferry Complex
     //Start Wood
      else  if($building=="Wood - A") {
-        $universityHousingBuildings['Wood_A'] = new buildingOccupancy($building, "Southeast", $assignedResidents,$residentbuildingCapacity, " ", $assignedStaff,$completebuildingCapacity);
+        $universityHousingBuildings['Wood_A'] = new buildingOccupancy($building, "Southeast", $assignedResidents,$residentbuildingCapacity, " ", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
     }
      else  if($building=="Wood - B") {
-        $universityHousingBuildings['Wood_B'] = new buildingOccupancy($building, "Southeast", $assignedResidents,$residentbuildingCapacity, " ", $assignedStaff,$completebuildingCapacity);
+        $universityHousingBuildings['Wood_B'] = new buildingOccupancy($building, "Southeast", $assignedResidents,$residentbuildingCapacity, " ", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
     }
     //End Wood
     //Start QUAD
 
      else if($building=="Bagwell") {
-            $universityHousingBuildings['Bagwell'] = new buildingOccupancy($building, "Northeast", $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
-    }
+            $universityHousingBuildings['Bagwell'] = new buildingOccupancy($building, "Northeast", $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
+        }
 
 
         else if($building=="Becton") {
-               $universityHousingBuildings['Becton'] = new buildingOccupancy($building, "Northeast", $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['Becton'] = new buildingOccupancy($building, "Northeast", $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
        }
 
         else if($building=="Berry") {
-          $universityHousingBuildings['Berry'] = new buildingOccupancy($building, "Northeast", $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+          $universityHousingBuildings['Berry'] = new buildingOccupancy($building, "Northeast", $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
        }
        //End QUAD
 
        //Triad
        //Gold
         else if($building=="Gold"){
-               $universityHousingBuildings['Gold'] = new buildingOccupancy($building, "Northeast",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['Gold'] = new buildingOccupancy($building, "Northeast",  $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
        //Welch
        else if($building=="Welch"){
-               $universityHousingBuildings['Welch'] = new buildingOccupancy($building, "Northeast",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['Welch'] = new buildingOccupancy($building, "Northeast",  $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
        //Syme
        else    if($building=="Syme"){
-               $universityHousingBuildings['Syme'] = new buildingOccupancy($building, "Northeast",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['Syme'] = new buildingOccupancy($building, "Northeast",  $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
        //Nortauga
        else    if($building=="Watauga"){
-               $universityHousingBuildings['Watauga'] = new buildingOccupancy($building, "Northeast", $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['Watauga'] = new buildingOccupancy($building, "Northeast", $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
        else    if($building=="North"){
-               $universityHousingBuildings['North'] = new buildingOccupancy($building, "Northeast", $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['North'] = new buildingOccupancy($building, "Northeast", $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
        //End of Northeast
 
@@ -215,27 +235,27 @@ foreach($studentAssignmentCollection as $collection){
        //Start of Central
        //TriTowers
            if($building=="Bowen"){
-               $universityHousingBuildings['Bowen'] = new buildingOccupancy($building, "Central",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['Bowen'] = new buildingOccupancy($building, "Central",  $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
            if($building=="Carroll"){
-               $universityHousingBuildings['Carroll'] = new buildingOccupancy($building, "Central",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['Carroll'] = new buildingOccupancy($building, "Central",  $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
            if($building=="Metcalf"){
-               $universityHousingBuildings['Metcalf'] = new buildingOccupancy($building, "Central",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['Metcalf'] = new buildingOccupancy($building, "Central",  $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
        //End of TriTowers
        //Start of TOTA
            if($building=="Tucker"){
-           $universityHousingBuildings['Tucker'] = new buildingOccupancy($building, "Central",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+           $universityHousingBuildings['Tucker'] = new buildingOccupancy($building, "Central",  $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
                }
            if($building=="Owen"){
-               $universityHousingBuildings['Owen'] = new buildingOccupancy($building, "Central",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['Owen'] = new buildingOccupancy($building, "Central",  $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
            if($building=="Turlington"){
-               $universityHousingBuildings['Turlington'] = new buildingOccupancy($building, "Central",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['Turlington'] = new buildingOccupancy($building, "Central",  $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
            if($building=="Alexander"){
-               $universityHousingBuildings['Alexander'] = new buildingOccupancy($building, "Central",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['Alexander'] = new buildingOccupancy($building, "Central",  $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
        //End of TOTA
 
@@ -244,66 +264,66 @@ foreach($studentAssignmentCollection as $collection){
        //End of Central
        //Start of West Campus
            if($building=="Lee"){
-               $universityHousingBuildings['Lee'] = new buildingOccupancy($building, "West",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['Lee'] = new buildingOccupancy($building, "West",  $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
            if($building=="Sullivan"){
-               $universityHousingBuildings['Sullivan'] = new buildingOccupancy($building, "West",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['Sullivan'] = new buildingOccupancy($building, "West",  $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
            if($building=="Bragaw"){
-               $universityHousingBuildings['Bragaw'] = new buildingOccupancy($building, "West",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['Bragaw'] = new buildingOccupancy($building, "West",  $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
        //End West Campus
 
        //Start Apartments
        //Wolf Ridge Apartments
            if($building=="WR Grove"){
-               $universityHousingBuildings['WR_Grove'] = new buildingOccupancy($building, "Wolf Ridge",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['WR_Grove'] = new buildingOccupancy($building, "Wolf Ridge",  $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
            if($building=="WR Innovat"){
-               $universityHousingBuildings['WR_Innovat'] = new buildingOccupancy($building, "Wolf Ridge",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['WR_Innovat'] = new buildingOccupancy($building, "Wolf Ridge",  $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
            if($building=="WR Lakevw"){
                //Set WR Lakevw to WR Lakeview
                //DEVELOPMENT ONLY.
                $building="WR Lakeview";               
 
-               $universityHousingBuildings['WR_Lakevw'] = new buildingOccupancy($building, "Wolf Ridge",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['WR_Lakevw'] = new buildingOccupancy($building, "Wolf Ridge",  $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
            if($building=="WR Plaza"){
-               $universityHousingBuildings['WR_Plaza'] = new buildingOccupancy($building, "Wolf Ridge",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['WR_Plaza'] = new buildingOccupancy($building, "Wolf Ridge",  $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
            if($building=="WR Tower"){
-               $universityHousingBuildings['WR_Tower'] = new buildingOccupancy($building, "Wolf Ridge",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['WR_Tower'] = new buildingOccupancy($building, "Wolf Ridge",  $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
            if($building=="WR Valley"){
-               $universityHousingBuildings['WR_Valley'] = new buildingOccupancy($building, "Wolf Ridge",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['WR_Valley'] = new buildingOccupancy($building, "Wolf Ridge",  $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
        //End Wolf Ridge Apartments
 
        //Start Wolf Village Apartments
            if($building=="Wolf Vlg A"){
-               $universityHousingBuildings['Wolf Vlg A'] = new buildingOccupancy($building, "Wolf Village", $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['Wolf Vlg A'] = new buildingOccupancy($building, "Wolf Village", $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
            if($building=="Wolf Vlg B"){
-               $universityHousingBuildings['Wolf Vlg B'] = new buildingOccupancy($building, "Wolf Village", $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['Wolf Vlg B'] = new buildingOccupancy($building, "Wolf Village", $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
            if($building=="Wolf Vlg C"){
-               $universityHousingBuildings['Wolf Vlg C'] = new buildingOccupancy($building, "Wolf Village",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['Wolf Vlg C'] = new buildingOccupancy($building, "Wolf Village",  $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
            if($building=="Wolf Vlg D"){
-               $universityHousingBuildings['Wolf Vlg D'] = new buildingOccupancy($building, "Wolf Village",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['Wolf Vlg D'] = new buildingOccupancy($building, "Wolf Village",  $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
            if($building=="Wolf Vlg E"){
-               $universityHousingBuildings['Wolf Vlg E'] = new buildingOccupancy($building, "Wolf Village",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['Wolf Vlg E'] = new buildingOccupancy($building, "Wolf Village",  $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
            if($building=="Wolf Vlg F"){
-               $universityHousingBuildings['Wolf Vlg F'] = new buildingOccupancy($building, "Wolf Village",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['Wolf Vlg F'] = new buildingOccupancy($building, "Wolf Village",  $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
            if($building=="Wolf Vlg G"){
-               $universityHousingBuildings['Wolf Vlg G'] = new buildingOccupancy($building, "Wolf Village", $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['Wolf Vlg G'] = new buildingOccupancy($building, "Wolf Village", $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
            if($building=="Wolf Vlg H"){
-               $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy($building, "Wolf Village",  $assignedResidents,$residentbuildingCapacity, "", $assignedStaff,$completebuildingCapacity);
+               $universityHousingBuildings['Wolf Vlg H'] = new buildingOccupancy($building, "Wolf Village",  $assignedResidents,$residentbuildingCapacity, "", $staffCapacity,$staffOccupancy,$completebuildingCapacity);
            }
            //end test
 
@@ -312,4 +332,6 @@ foreach($studentAssignmentCollection as $collection){
 
 }//close foreach
 
+
+//var_dump($studentAssignmentCollection);
 //End Connect to Oracle Database
