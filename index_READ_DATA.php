@@ -24,7 +24,7 @@ include('log-on/psdb_PROD.php');
 */
 
 //READ 3 DIFFERENT VIEWS.
-include('read_data_testing.php');
+include('read_data_from_PeopleSoft_Data_Views.php');
 //Above is pulling from 3 different Oracle views.
 
 

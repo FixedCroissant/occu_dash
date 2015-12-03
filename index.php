@@ -79,7 +79,11 @@ include('index_READ_DATA.php');
     <!--Internal Stylesheet-->
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <!--Using new PURE CSS for this project-->
+    <!--Not working on 12-2-2015 in the afternoon->
     <link rel="stylesheet" href="https://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <!--Hosted above file-->
+    <link rel="stylesheet" type="text/css" href="css/pure-min.css">
+
 
     <!--Datatable colReorder Extension CSS-->
     <link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.3.0/css/colReorder.dataTables.min.css">
@@ -175,43 +179,43 @@ include('index_READ_DATA.php');
         <table id="mainTABLE" class="pure-table pure-table-horizontal" width="100%;">
             <thead>
             <th>
-                Campus
+                <span title='The Area of Campus the building is located.'>Campus</span>
             </th>
             <th>
-                Area
+                <span title=''>Area</span>
             </th>
             <th>
-                Complex
+                <span title=''>Complex</span>
             </th>
             <th>
-                Building
+                <span title='The specific building this row contains assignment information.'>Building</span>
             </th>
             <th>
-                Total Residence Occupancy <br/>
+                <span title='Total Students Assigned for a given term'>Total Residents Occupancy</span> <br/>
                 (Billable Beds)
                  <!--OLD Students Assigned-->
             </th>
             <th>
-                 Total Resident Capacity
+                 <span title='The maximum amount the building can house when taking out staff members.'>Total Resident Capacity</span>
                 <!--OLD Total Possible Resident Occupancy-->
             </th>
             <th>
-                Total Resident Capacity %
+                <span title='This number represents "Total Residents Occupancy" column divided by the "Total Resident Capacity" column'>Total Resident Capacity %</span>
                 <!-- OLD Total Resident Occupancy %-->
             </th>
             <th>
 
-                Staff Capacity
+                <span title='This number represents how many spaces are allocated for housing staff members.'>Staff Capacity</span>
             </th>
             <!--New Column and Field added-->
             <th>
-                Total Staff Occupancy
+                <span title='This number represents how many rooms are assigned for housing staff members.'>Total Staff Occupancy</span>
             </th>
             <th>
-                Total Bldg Capacity
+                <span title='This number represents the maximum amount the building can house, including housing staff members'>Total Bldg Capacity</span>
             </th>
             <th>
-                Total Bldg Capacity %
+                <span title='This number represents "Total Residents Occupancy" column divided by the "Total Bldg Capacity" column'>Total Bldg Capacity %</span>
             </th>
             </thead>
             <tbody>

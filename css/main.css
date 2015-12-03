@@ -1,24 +1,36 @@
 
 /*Instructions*/
+/*HAS UH LOGO*/
 #instructions{
-
+    height:250px;
 }
 /*Main Grid*/
 #main{
     width: 100%;
+    padding-bottom: 150px;
+    font-size: small;
 }
 .bold{
     font-weight:bold;
 }
+.light-grey{
+    background-color: #DBDEE2;
+    font-weight: bold;
+}
+
 .complete-totals{
-font-weight: bold;
-    font-size: medium;
+    font-weight: bold;
+    font-size: small;
     background-color: #DEDEE3; /*Light gray*/
 }
 
 /*Footer*/
 #footer{
-
+    text-align:center;
+    background-color: #CC0000;
+    color: #FFFFFF;
+    font-size: small;
+    font-family: "Arial Narrow", Arial, sans-serif;
 }
 
 /*Table Header*/
@@ -27,13 +39,28 @@ font-family: "Arial Narrow", Arial, sans-serif;
 text-align: center;
 color: #000000;                 /*Font Color is black*/
 background-color: #DEDEE3; /*Light gray*/
-
+font-size: medium;
 }
 /*Table Data*/
 #main td{
 text-align: center;
+font-family: 'Source Sans Pro', sans-serif;
 }
 
+/*Sub-Headers being Southeast, Northeast, Tri-Towers, TOTA & West
 .subHeadersPerArea{
-    font-weight:bold;
+
+}*/
+
+/*Links for the building pop-up for the individual detailed area for each building.*/
+/*Specific class used within the building column.*/
+.link:hover {
+    font-weight: bold;
+    font-style: italic;
+}
+/*Used for the column titles shown in the main table*/
+.no-link {
+    font-size: medium;
+    text-decoration: none;
+    color: black;
 }
