@@ -1,0 +1,27 @@
+#content{
+    margin-top: 20px;
+}
+#information {
+    margin-top: 100px;
+}
+
+#information p {
+    font-family: "Arial Narrow", Arial, sans-serif;
+
+}
+
+/*Main Div encapsulating the entire portion of the settings page.*/
+#content{
+    margin: 5px;        /*Provide a little spacing between the content of the page and the sides of the browser window.*/
+}
+.NC_StateNice{
+    border: 1px solid black;
+    padding: 10px;
+    margin-bottom:2px;
+    margin-left: 20px;
+    width: 100px;
+    font-weight: bold;
+    font-family: Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Tahoma,sans-serif;
+    color: #FFFFFF;                 /*White*/
+    background-color: #CC0000;      /*Wolfpack Red*/
+}

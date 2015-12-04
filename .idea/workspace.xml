@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="75506fb7-effd-4493-8f2c-4d7010a65029" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/change.php" afterPath="$PROJECT_DIR$/settings/change.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Occupancy_Dashboard.iws" />
@@ -28,92 +28,43 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/index.php">
+      <file leaf-file-name="updateTable.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings/processing/updateTable.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.42024013" vertical-offset="2441" max-vertical-offset="12835">
-              <caret line="163" column="103" selection-start-line="163" selection-start-column="103" selection-end-line="163" selection-end-column="103" />
+            <state vertical-scroll-proportion="-9.527273" vertical-offset="37" max-vertical-offset="2584">
+              <caret line="33" column="11" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="11" />
               <folding>
-                <element signature="e#13135#21378#0#PHP" expanded="false" />
-                <element signature="e#21421#21533#0#PHP" expanded="false" />
-                <element signature="e#31275#37640#0#PHP" expanded="false" />
-                <element signature="e#32818#33086#0#PHP" expanded="false" />
-                <element signature="e#37790#45216#0#PHP" expanded="false" />
-                <element signature="e#45358#53833#0#PHP" expanded="false" />
-                <element signature="e#54103#71192#0#PHP" expanded="false" />
-                <element signature="e#72421#84244#0#PHP" expanded="false" />
-                <element signature="e#73140#75734#0#PHP" expanded="false" />
-                <element signature="e#73398#75734#0#PHP" expanded="false" />
-                <element signature="e#73769#75734#0#PHP" expanded="false" />
-                <element signature="e#84524#98121#0#PHP" expanded="false" />
-                <element signature="e#87513#87540#0#PHP" expanded="false" />
-                <element signature="e#87986#91861#0#PHP" expanded="false" />
-                <element signature="e#88384#88631#0#PHP" expanded="false" />
-                <element signature="e#88699#89201#0#PHP" expanded="false" />
-                <element signature="e#89275#89568#0#PHP" expanded="false" />
-                <element signature="e#89636#89972#0#PHP" expanded="false" />
-                <element signature="e#90047#90333#0#PHP" expanded="false" />
-                <element signature="e#90462#90912#0#PHP" expanded="false" />
-                <element signature="e#91117#91669#0#PHP" expanded="false" />
-                <element signature="e#91715#91861#0#PHP" expanded="false" />
-                <element signature="e#98872#99101#0#PHP" expanded="false" />
-                <marker date="1449232906641" expanded="true" signature="76403:76419" placeholder="..." />
-                <marker date="1449232906641" expanded="true" signature="102283:102329" placeholder="..." />
-                <marker date="1449232906641" expanded="true" signature="102699:102745" placeholder="..." />
+                <element signature="e#6#282#0#PHP" expanded="true" />
+                <element signature="n#setYears#0;n#!!top" expanded="false" />
+                <element signature="e#1152#3460#0#PHP" expanded="false" />
+                <element signature="e#1242#3460#0#PHP" expanded="false" />
+                <element signature="e#1332#3460#0#PHP" expanded="false" />
+                <element signature="e#1423#3460#0#PHP" expanded="false" />
+                <element signature="e#1516#3460#0#PHP" expanded="false" />
+                <element signature="e#1609#3460#0#PHP" expanded="false" />
+                <element signature="e#1703#3460#0#PHP" expanded="false" />
+                <element signature="e#1796#3460#0#PHP" expanded="false" />
+                <element signature="e#1889#3460#0#PHP" expanded="false" />
+                <element signature="e#1982#3460#0#PHP" expanded="false" />
+                <element signature="e#5225#5250#0#HTML" expanded="true" />
+                <marker date="1449241631994" expanded="true" signature="4641:4675" placeholder="..." />
+                <marker date="1449241631994" expanded="true" signature="4652:4675" placeholder="..." />
+                <marker date="1449241631994" expanded="true" signature="4796:4893" placeholder="..." />
+                <marker date="1449241631994" expanded="true" signature="5029:5042" placeholder="..." />
+                <marker date="1449241631994" expanded="true" signature="5173:5230" placeholder="..." />
+                <marker date="1449241631994" expanded="true" signature="5206:5230" placeholder="..." />
+                <marker date="1449241631994" expanded="true" signature="6169:6279" placeholder="UPDATE occu_..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="read_data_from_PeopleSoft_Data_Views.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/read_data_from_PeopleSoft_Data_Views.php">
+      <file leaf-file-name="change.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/settings/change.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="5950">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <marker date="1449230832775" expanded="true" signature="1388:1465" placeholder="SELECT BUILD..ASSIGNED_VIEW_TEST..." />
-                <marker date="1449230832775" expanded="true" signature="2085:2157" placeholder="SELECT BUILD..STAFF_VIEW_TEST..." />
-                <marker date="1449230832775" expanded="true" signature="3071:3155" placeholder="SELECT BUILD..TOTAL_BUILDING_VIEW_TEST..." />
-                <marker date="1449230832775" expanded="true" signature="3620:3705" placeholder="SELECT BUILD..ASSIGNED_STAFF_VIEW..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="buildingOccupancy.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/classes/buildingOccupancy.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.3818183" vertical-offset="3274" max-vertical-offset="12512">
-              <caret line="767" column="56" selection-start-line="767" selection-start-column="56" selection-end-line="767" selection-end-column="56" />
-              <folding>
-                <element signature="e#6#108#0#PHP" expanded="true" />
-                <element signature="n#buildingOccupancy#0;n#buildingOccupancy#0;n#!!top" expanded="false" />
-                <element signature="n#setMainCampusArea#0;n#buildingOccupancy#0;n#!!top" expanded="false" />
-                <element signature="n#setBuildingName#0;n#buildingOccupancy#0;n#!!top" expanded="false" />
-                <element signature="n#setBuildingArea#0;n#buildingOccupancy#0;n#!!top" expanded="false" />
-                <element signature="n#setBuildingAreaBasedonBuilding#0;n#buildingOccupancy#0;n#!!top" expanded="false" />
-                <element signature="n#getTotalStudentsAssignedByArea#0;n#buildingOccupancy#0;n#!!top" expanded="false" />
-                <element signature="n#totalPossibleResidents#0;n#buildingOccupancy#0;n#!!top" expanded="false" />
-                <element signature="n#getStudentsAssignedByBuilding#0;n#buildingOccupancy#0;n#!!top" expanded="false" />
-                <element signature="n#getStudentsAssignedByCampus#0;n#buildingOccupancy#0;n#!!top" expanded="false" />
-                <element signature="n#getStudentsAssignedByComplexName#0;n#buildingOccupancy#0;n#!!top" expanded="false" />
-                <element signature="n#getTotalPossibleResidentsByCampus#0;n#buildingOccupancy#0;n#!!top" expanded="false" />
-                <element signature="n#getTotalPossibleResidentOccupancyByArea#0;n#buildingOccupancy#0;n#!!top" expanded="false" />
-                <element signature="e#12913#13837#0#PHP" expanded="false" />
-                <element signature="n#getTotalPossibleResidentOccupancyByComplex#0;n#buildingOccupancy#0;n#!!top" expanded="false" />
-                <element signature="n#totalBuildingCapacityByArea#0;n#buildingOccupancy#0;n#!!top" expanded="false" />
-                <element signature="n#totalBuildingCapacityByComplex#0;n#buildingOccupancy#0;n#!!top" expanded="false" />
-                <element signature="e#16632#17470#0#PHP" expanded="false" />
-                <element signature="n#totalStaffCapacityByArea#0;n#buildingOccupancy#0;n#!!top" expanded="false" />
-                <element signature="n#totalStaffCapacityByCampus#0;n#buildingOccupancy#0;n#!!top" expanded="false" />
-                <element signature="n#totalStaffCapacityByComplex#0;n#buildingOccupancy#0;n#!!top" expanded="false" />
-                <element signature="n#totalStaffOccupancyByArea#0;n#buildingOccupancy#0;n#!!top" expanded="false" />
-                <element signature="n#totalStaffOccupancyByCampus#0;n#buildingOccupancy#0;n#!!top" expanded="false" />
-                <element signature="n#totalStaffOccupancyByComplex#0;n#buildingOccupancy#0;n#!!top" expanded="false" />
-                <element signature="n#totalStudentsAssigned#0;n#buildingOccupancy#0;n#!!top" expanded="false" />
-                <element signature="n#totalStudentsPossibleResidents#0;n#buildingOccupancy#0;n#!!top" expanded="false" />
-                <element signature="n#totalBuildingCapacity#0;n#buildingOccupancy#0;n#!!top" expanded="false" />
-              </folding>
+            <state vertical-scroll-proportion="0.2384" vertical-offset="820" max-vertical-offset="1938">
+              <caret line="63" column="172" selection-start-line="63" selection-start-column="172" selection-end-line="63" selection-end-column="172" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -147,6 +98,8 @@
         <option value="$PROJECT_DIR$/css/main.css" />
         <option value="$PROJECT_DIR$/classes/buildingOccupancy.php" />
         <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/settings/processing/updateTable.php" />
+        <option value="$PROJECT_DIR$/settings/change.php" />
       </list>
     </option>
   </component>
@@ -200,6 +153,38 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="occu_dash" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Occupancy_Dashboard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="occu_dash" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="settings" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Occupancy_Dashboard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="occu_dash" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="settings" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="processing" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -356,9 +341,9 @@
             <element signature="e#91117#91669#0#PHP" expanded="false" />
             <element signature="e#91715#91861#0#PHP" expanded="false" />
             <element signature="e#98872#99101#0#PHP" expanded="false" />
-            <marker date="1449232906641" expanded="true" signature="76403:76419" placeholder="..." />
-            <marker date="1449232906641" expanded="true" signature="102283:102329" placeholder="..." />
-            <marker date="1449232906641" expanded="true" signature="102699:102745" placeholder="..." />
+            <marker date="1449232906641" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1449232906641" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1449232906641" expanded="true" signature="-1:-1" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -466,9 +451,9 @@
             <element signature="e#91117#91669#0#PHP" expanded="false" />
             <element signature="e#91715#91861#0#PHP" expanded="false" />
             <element signature="e#98872#99101#0#PHP" expanded="false" />
-            <marker date="1449232906641" expanded="true" signature="76403:76419" placeholder="..." />
-            <marker date="1449232906641" expanded="true" signature="102283:102329" placeholder="..." />
-            <marker date="1449232906641" expanded="true" signature="102699:102745" placeholder="..." />
+            <marker date="1449232906641" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1449232906641" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1449232906641" expanded="true" signature="-1:-1" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -692,22 +677,57 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.42024013" vertical-offset="2441" max-vertical-offset="12835">
+          <caret line="163" column="103" selection-start-line="163" selection-start-column="103" selection-end-line="163" selection-end-column="103" />
+          <folding>
+            <element signature="e#13135#21378#0#PHP" expanded="false" />
+            <element signature="e#21421#21533#0#PHP" expanded="false" />
+            <element signature="e#31275#37640#0#PHP" expanded="false" />
+            <element signature="e#32818#33086#0#PHP" expanded="false" />
+            <element signature="e#37790#45216#0#PHP" expanded="false" />
+            <element signature="e#45358#53833#0#PHP" expanded="false" />
+            <element signature="e#54103#71192#0#PHP" expanded="false" />
+            <element signature="e#72421#84244#0#PHP" expanded="false" />
+            <element signature="e#73140#75734#0#PHP" expanded="false" />
+            <element signature="e#73398#75734#0#PHP" expanded="false" />
+            <element signature="e#73769#75734#0#PHP" expanded="false" />
+            <element signature="e#84524#98121#0#PHP" expanded="false" />
+            <element signature="e#87513#87540#0#PHP" expanded="false" />
+            <element signature="e#87986#91861#0#PHP" expanded="false" />
+            <element signature="e#88384#88631#0#PHP" expanded="false" />
+            <element signature="e#88699#89201#0#PHP" expanded="false" />
+            <element signature="e#89275#89568#0#PHP" expanded="false" />
+            <element signature="e#89636#89972#0#PHP" expanded="false" />
+            <element signature="e#90047#90333#0#PHP" expanded="false" />
+            <element signature="e#90462#90912#0#PHP" expanded="false" />
+            <element signature="e#91117#91669#0#PHP" expanded="false" />
+            <element signature="e#91715#91861#0#PHP" expanded="false" />
+            <element signature="e#98872#99101#0#PHP" expanded="false" />
+            <marker date="1449232906641" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1449232906641" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1449232906641" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/read_data_from_PeopleSoft_Data_Views.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5950">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1449230832775" expanded="true" signature="1388:1465" placeholder="SELECT BUILD..ASSIGNED_VIEW_TEST..." />
-            <marker date="1449230832775" expanded="true" signature="2085:2157" placeholder="SELECT BUILD..STAFF_VIEW_TEST..." />
-            <marker date="1449230832775" expanded="true" signature="3071:3155" placeholder="SELECT BUILD..TOTAL_BUILDING_VIEW_TEST..." />
-            <marker date="1449230832775" expanded="true" signature="3620:3705" placeholder="SELECT BUILD..ASSIGNED_STAFF_VIEW..." />
+            <marker date="1449230832775" expanded="true" signature="-1:-1" placeholder="SELECT BUILD..ASSIGNED_VIEW_TEST..." />
+            <marker date="1449230832775" expanded="true" signature="-1:-1" placeholder="SELECT BUILD..STAFF_VIEW_TEST..." />
+            <marker date="1449230832775" expanded="true" signature="-1:-1" placeholder="SELECT BUILD..TOTAL_BUILDING_VIEW_TEST..." />
+            <marker date="1449230832775" expanded="true" signature="-1:-1" placeholder="SELECT BUILD..ASSIGNED_STAFF_VIEW..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/classes/buildingOccupancy.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.3818183" vertical-offset="3274" max-vertical-offset="12512">
+        <state vertical-scroll-proportion="0.5077187" vertical-offset="3274" max-vertical-offset="12512">
           <caret line="767" column="56" selection-start-line="767" selection-start-column="56" selection-end-line="767" selection-end-column="56" />
           <folding>
             <element signature="e#6#108#0#PHP" expanded="true" />
@@ -741,38 +761,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
+    <entry file="file://$PROJECT_DIR$/settings/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42024013" vertical-offset="2441" max-vertical-offset="12835">
-          <caret line="163" column="103" selection-start-line="163" selection-start-column="103" selection-end-line="163" selection-end-column="103" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="651">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings/processing/updateTable.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.527273" vertical-offset="37" max-vertical-offset="2584">
+          <caret line="33" column="11" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="11" />
           <folding>
-            <element signature="e#13135#21378#0#PHP" expanded="false" />
-            <element signature="e#21421#21533#0#PHP" expanded="false" />
-            <element signature="e#31275#37640#0#PHP" expanded="false" />
-            <element signature="e#32818#33086#0#PHP" expanded="false" />
-            <element signature="e#37790#45216#0#PHP" expanded="false" />
-            <element signature="e#45358#53833#0#PHP" expanded="false" />
-            <element signature="e#54103#71192#0#PHP" expanded="false" />
-            <element signature="e#72421#84244#0#PHP" expanded="false" />
-            <element signature="e#73140#75734#0#PHP" expanded="false" />
-            <element signature="e#73398#75734#0#PHP" expanded="false" />
-            <element signature="e#73769#75734#0#PHP" expanded="false" />
-            <element signature="e#84524#98121#0#PHP" expanded="false" />
-            <element signature="e#87513#87540#0#PHP" expanded="false" />
-            <element signature="e#87986#91861#0#PHP" expanded="false" />
-            <element signature="e#88384#88631#0#PHP" expanded="false" />
-            <element signature="e#88699#89201#0#PHP" expanded="false" />
-            <element signature="e#89275#89568#0#PHP" expanded="false" />
-            <element signature="e#89636#89972#0#PHP" expanded="false" />
-            <element signature="e#90047#90333#0#PHP" expanded="false" />
-            <element signature="e#90462#90912#0#PHP" expanded="false" />
-            <element signature="e#91117#91669#0#PHP" expanded="false" />
-            <element signature="e#91715#91861#0#PHP" expanded="false" />
-            <element signature="e#98872#99101#0#PHP" expanded="false" />
-            <marker date="1449232906641" expanded="true" signature="76403:76419" placeholder="..." />
-            <marker date="1449232906641" expanded="true" signature="102283:102329" placeholder="..." />
-            <marker date="1449232906641" expanded="true" signature="102699:102745" placeholder="..." />
+            <element signature="e#6#282#0#PHP" expanded="true" />
+            <element signature="n#setYears#0;n#!!top" expanded="false" />
+            <element signature="e#1152#3460#0#PHP" expanded="false" />
+            <element signature="e#1242#3460#0#PHP" expanded="false" />
+            <element signature="e#1332#3460#0#PHP" expanded="false" />
+            <element signature="e#1423#3460#0#PHP" expanded="false" />
+            <element signature="e#1516#3460#0#PHP" expanded="false" />
+            <element signature="e#1609#3460#0#PHP" expanded="false" />
+            <element signature="e#1703#3460#0#PHP" expanded="false" />
+            <element signature="e#1796#3460#0#PHP" expanded="false" />
+            <element signature="e#1889#3460#0#PHP" expanded="false" />
+            <element signature="e#1982#3460#0#PHP" expanded="false" />
+            <element signature="e#5225#5250#0#HTML" expanded="true" />
+            <marker date="1449241631994" expanded="true" signature="4641:4675" placeholder="..." />
+            <marker date="1449241631994" expanded="true" signature="4652:4675" placeholder="..." />
+            <marker date="1449241631994" expanded="true" signature="4796:4893" placeholder="..." />
+            <marker date="1449241631994" expanded="true" signature="5029:5042" placeholder="..." />
+            <marker date="1449241631994" expanded="true" signature="5173:5230" placeholder="..." />
+            <marker date="1449241631994" expanded="true" signature="5206:5230" placeholder="..." />
+            <marker date="1449241631994" expanded="true" signature="6169:6279" placeholder="UPDATE occu_..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings/change.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2384" vertical-offset="820" max-vertical-offset="1938">
+          <caret line="63" column="172" selection-start-line="63" selection-start-column="172" selection-end-line="63" selection-end-column="172" />
+          <folding />
         </state>
       </provider>
     </entry>
