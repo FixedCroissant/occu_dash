@@ -159,7 +159,9 @@ include('index_READ_DATA.php');
                 <img src="images/plus.png " title="Expand All"/> <a href ="#" onclick="ShowAll();">Expand All</a>
                 <img src="images/minus.jpg" title="Collapse All"/> <a href ="#" onclick="HideAll();">Collapse All</a>
                 <!--Add link to the FSL report-->
-                <img src="images/report.png" title="FSL Report"/> <a href = "FSL.php">FSL Report</a>
+                <!--removed link to FSL report until the data is available-->
+                <!--
+                <img src="images/report.png" title="FSL Report"/> <a href = "FSL.php">FSL Report</a>-->
                 <!--Add a link to Nightly Reports-->
                 <!--Commented out on 11-30-2015 @ 9:32 am, until it is ready to go reliably-->
                 <!--<img src="images/cresent_moon_red_sm.png" title="Nightly Reports"><a href="http://localhost/apps/development/occu_dash/nightly_exports/exports/">Nightly Reports</a><br/>-->
