@@ -273,7 +273,9 @@ include('index_READ_DATA.php');
                                         $totalStudentsAssigned = $listRead->totalStudentsAssigned($universityHousingBuildings);
                                         $totalPossibleResidents = $listRead->totalStudentsPossibleResidents($universityHousingBuildings);
                                         $totalResidencyPossiblePercentage = $listRead->createPercentage($totalStudentsAssigned, $totalPossibleResidents, 2);
-                                        $completeTotalStaffAssigned = $listRead->totalStaffAssigned($universityHousingBuildings);
+                                        $completeTotalStaffAssigned = $listRead->totalStaffAssigned($universityHousingBuildings);    /*PULLS INFORMATION FROM NC_HIS_STFCT_VW, STAFF PEOPLE IN BEDS. */
+
+                                        $completeTotalStaffCapacity = $listRead->totalStaffCapacity($universityHousingBuildings);   /*New variable added 12,4,2015.*/
                                         $totalBuildingCapacity= $listRead->totalBuildingCapacity($universityHousingBuildings);
 
                                         /***********************************************
@@ -1510,13 +1512,8 @@ include('index_READ_DATA.php');
                                             //Below provides the number of
                                             //beds available    
                                             echo $listRead->getStaffOccupancy();
-
-
                                             echo "</td>\n";
                                             //End new field created regarding new staff occupancy.
-
-
-
 
                                             //Total Building Capacity
                                             echo "<td>\n";
@@ -1532,9 +1529,8 @@ include('index_READ_DATA.php');
                                         }//close else statement
                                     }//close foreach
 
-
                                     /**
-                                     *  TOTALS
+                                     *  TOTALS AMOUNTS LISTED BELOW ...
                                      */
                                     //New foreach
 
@@ -1579,12 +1575,13 @@ include('index_READ_DATA.php');
                                     echo "</td>";
                                     //End Staff Capacity Total
 
-
                                     //STAFF OCCUPANCY NEW VALUE
                                     //NOVEMBER 09 2015
+                                    //ADDED TOTAL VALUE on 12/4/2015...
+                                    //CALCULATES THE TOTAL OF THE ENTIRE TOP COLUMN.
                                     echo "<td>";
                                     //Overall totals of the TOTAL STAFF OCCUPANCY.
-                                    echo "TEMP - TOTAL STAFF OCCUPANCY TOTAL";
+                                    echo $completeTotalStaffCapacity;
                                     echo "</td>";
 
                                     //END -- -- NOVEMBER 09 2015

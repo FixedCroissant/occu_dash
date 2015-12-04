@@ -655,7 +655,6 @@ class buildingOccupancy {
         return $this->totalSearchedAreaTotalStaffCapacity=$arrayTotal;
     }
 
-
     /**
      * END STAFF OCCUPANCY FUNCTIONS. 
      * ADDED 12 03 2015 at 3:59PM.
@@ -685,7 +684,6 @@ class buildingOccupancy {
         //Sum the array values and return the value in the function.
         return $this->studentsAssignedtotalsByArea=$arrayTotal;
     }
-
 
     /**
      * This method provides the total number of possible residents based on an array of buildings provided.
@@ -729,6 +727,33 @@ class buildingOccupancy {
     }
 
     /**
+     * This method provides the total staff (RAs, RDs, AD, CDs) capable on campus for a given semester.
+     * @param $arrayOfObjects
+     * @return number
+     */
+
+    function totalStaffCapacity($arrayOfObjects){
+        //Temporary Array Value
+        $tempArray = array();
+
+        foreach($arrayOfObjects as $group){
+            //While I understand Occupancy is NOT assignment information
+            //getStaffCapacity actually provides ASSIGNMENT information of
+            //housing staff. This is improperly named and likely should be renamed.
+            //So, by using the getStaffOccupancy() method, we are pulling Capacity Column of information.
+            $tempArray[] = ($group->getStaffOccupancy());
+
+            //Below is strictly for testing and debugging.
+            //var_dump($group->getBuildingStudentsAssigned());
+        }
+
+        $arrayTotal =  array_sum($tempArray);
+
+        return $this->totalPossibleBuildingCapacity=$arrayTotal;
+
+    }
+
+    /**
      * This method provides the total staff (RAs, RDs, AD, CDs) assigned on campus.
      * @param $arrayOfObjects
      * @return number
@@ -739,6 +764,7 @@ class buildingOccupancy {
         $tempArray = array();
 
         foreach($arrayOfObjects as $group){
+            //Incorrectly named function getStaffCapcity actually pulls ASSIGNMENT INFORMATION.
             $tempArray[] = ($group->getStaffCapacity());
             //var_dump($group->getBuildingStudentsAssigned());
         }
@@ -749,6 +775,13 @@ class buildingOccupancy {
         return $this->totalPossibleBuildingCapacity=$arrayTotal;
 
     }
+
+
+
+
+
+
+
     //End Complete Total Functions
 
 

@@ -78,7 +78,7 @@ if($myTERM=='None'){
         //OLD
         //$assignedStaffQuery = "SELECT BUILDING,COUNT1,STRM FROM PS_NC_HIS_STFCT_VW WHERE STRM=:termNEEDED";
         //NEW
-        $assignedStaffQuery = "SELECT BUILDING,COUNT1,STRM FROM PS_NC_HIS_BLCTS_VW WHERE STRM=:termNEEDED";
+        //$assignedStaffQuery = "SELECT BUILDING,COUNT1,STRM FROM PS_NC_HIS_BLCTS_VW WHERE STRM=:termNEEDED";
 
 //END PRODUCTION
 
