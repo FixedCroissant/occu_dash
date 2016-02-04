@@ -8,15 +8,15 @@
 
 //For creating dates....
 //For testing purposes...
-$tempMONTH = date_create("2015-01-15");
-$month = date_format($tempMONTH,"n");
+//$tempMONTH = date_create("2015-01-15");
+//$month = date_format($tempMONTH,"n");
 //End for testing purposes....
 
 
 
 // SET THE CURRENT TERM BASED ON TODAY'S DATE
 //Month of current year.
-//$month=date("n");
+$month=date("n");
 //Number/Date of current month in the current year.
 $day=date("j");
 

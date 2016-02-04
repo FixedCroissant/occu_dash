@@ -2,8 +2,10 @@
 /**
  * Created by PhpStorm.
  * User: jjwill10
- * Date: 11/13/2015
+ * Date: 01/26/2016
  * Time: 12:34 PM
+ * Description: File that will automatically pull a copy of the Fall 2016 assignment information and save it within the month/year 
+ * directory that the file copy actually happened.
  */
 
 //REQUIRED FOR EXPORT
@@ -12,14 +14,17 @@ include('simple_html_dom.php');
 //DONE REQUIRED FILES FOR EXPORTING
 
 //LOCATION OF PAGE THAT WE NEED TO SCRAPE INFORMATION FROM.
-$myURL = "http://localhost/apps/development/occu_dash/nightly_exports/reports_to_read_data/Fall/nightly_export_2158_term.php";
+//BELOW IS FOR THE CURRENT TERM BASED ON THE DATE.
+//(i.e. current date 01-26-2016, it is Spring 2016 term.)
+//$myURL = "http://localhost/apps/development/occu_dash/nightly_exports/reports_to_read_data/template/nightly_export_current_term.php";
+
+//Fall 2016 specifically
+$myURL = "https://housing.ncsu.edu/reports/occu_dash/nightly_exports/reports_to_read_data/nightly_export_current_term_Fall_2016.php";
 
 $myFILE= file_get_html($myURL);
 
-
 //header('Content-type: application/ms-excel');
 //header('Content-Disposition: attachment; filename=sample.csv');
-
 
 /**
  * BEGIN FILE STRUCTURE OF CSV FILES
@@ -27,37 +32,32 @@ $myFILE= file_get_html($myURL);
 //Put contents to a file...
 $currentDirectory = getcwd();
 
-
 //Create a Date
-$createdDATE = date_create("2015-11-17");
+//$createdDATE = date_create("2015-11-17");
 //CREATE A MONTH BASED ON THE CREATED DATE ABOVE....
-$formattedDATE_MONTH = date_format($createdDATE,"F");
-$formattedDATE_YEAR  = date_format($createdDATE,"Y");
-
+//$formattedDATE_MONTH = date_format($createdDATE,"F");
+//$formattedDATE_YEAR  = date_format($createdDATE,"Y");
 
 //String representing "YEAR/MONTH"
 //BELOW DOES THE CURRENT YEAR
 //TEMPORARILY COMMENTING OUT FOR TESTING PURPOSES....
-//$year=date("Y");
-$year=$formattedDATE_YEAR;
-
-
+$year=date("Y");
+//$year=$formattedDATE_YEAR;
 
 //BELOW DOES THE CURRENT MONTH
-//$fullMonth=date("F");
+$fullMonth=date("F");
 
 //FOR TESTING PURPOSES ....
-$fullMonth = $formattedDATE_MONTH;
+//$fullMonth = $formattedDATE_MONTH;
 
 //The directory is above
 //$directory = (".."."/"."exports"."/".$year."/".$fullMonth);
 
+//PRODUCTION DIRECTORY
+$mainDirectory = "/home/housing/public_html/reports/occu_dash/nightly_exports";
 
-$mainDirectory = "C:/xampp/htdocs/local/apps/development/occu_dash/nightly_exports";
-
+//PRODUCTION 
 $directory = ($mainDirectory."/"."exports"."/".$year."/".$fullMonth);
-
-
 
 echo $directory;
 
@@ -71,7 +71,7 @@ else{
 
                 //Create Directoy
                 //Year
-                //mkdir(date("Y"));
+                mkdir(date("Y"));
 
 
                 //Check if File Exists
@@ -79,7 +79,8 @@ else{
 
                     //Change to the new directory to write the correct file...
                     chdir($directory);
-                }else{
+                }
+                else{
                     echo $directory;
 
                     //Create Directory...
@@ -91,31 +92,43 @@ else{
                 }
 }
 
-
+//End create year folder.
 /*
  * FILE STRUCTURE OF EXPORTS
  */
 
-//Function used to cleanout the non-breaking spaces...
-//Found on http://stackoverflow.com/posts/17817392/
-function cleanCell(&$contents,$key) {
-    //Contents of Array....
-    $contents = trim($contents);
+				//Function used to cleanout the non-breaking spaces...
+				//Found on http://stackoverflow.com/posts/17817392/
+					function cleanCell(&$contents,$key) {
+										//Contents of Array....
+										$contents = trim($contents);
 
-    //get rid of pesky &nbsp's (aka: non-breaking spaces)
-    $contents = trim($contents,chr(0xC2).chr(0xA0));
-    $contents = str_replace("&nbsp;", "", $contents);
-}
+										//get rid of pesky &nbsp's (aka: non-breaking spaces)
+										$contents = trim($contents,chr(0xC2).chr(0xA0));
+										$contents = str_replace("&nbsp;", "", $contents);
+					}
 
-//Timetamp to put on the date
-$timestampNow = date('Y-m-d_Hi');
-
-
-
-
+				//Timetamp to put on the date
+				$timestampNow = date('Y-m-d_Hi');
 
 //File name
 $fp = fopen("occu_dash_export_".$timestampNow.".csv", "w");
+
+
+//Term and generation of report
+foreach($myFILE->find('div[id=CurrentTerm]') as $element){
+    $td = array();
+    foreach( $element->find('.term-and-file-information') as $row)
+    {
+        $headerTEXT = $row->plaintext;
+        //Trim the above text....
+        $trimmedHEADERTEXT = trim($headerTEXT);
+        $td [] = $trimmedHEADERTEXT;
+    }
+    //Put the information in a csv format...
+    fputcsv($fp, $td);
+}
+//End term and generation of report
 
 //Table Header
 foreach($myFILE->find('thead') as $element){
@@ -282,20 +295,6 @@ echo "Success!";
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /**
  * MONTH INDEX FILE
  */
@@ -311,9 +310,6 @@ $indexInformationforMonthDirectory = '<?php
 $directory = getcwd();
 
 $files = glob($directory.\'\*csv\');
-
-
-
 
 //Make it look a little prettier....
 echo "<!DOCTYPE html>\n";
@@ -354,7 +350,7 @@ fputs($fileIndex,$indexInformationforMonthDirectory);
 //Close the index file.
 fclose($fileIndex);
 
-echo "Success!";
+//echo "Success!";
 
 /*
  * END MONTH INDEX FILE

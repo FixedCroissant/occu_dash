@@ -48,7 +48,7 @@ if(isset($_POST['TERM'])){
 
 }
 //No term set.
-////Automatically provide Fall term based on current date.
+////Automatically provide template term based on current date.
 
 else{
     
@@ -83,8 +83,6 @@ include('index_READ_DATA.php');
     <link rel="stylesheet" href="https://yui.yahooapis.com/pure/0.6.0/pure-min.css">
     <!--Hosted above file-->
     <link rel="stylesheet" type="text/css" href="css/pure-min.css">
-
-
     <!--Datatable colReorder Extension CSS-->
     <link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.3.0/css/colReorder.dataTables.min.css">
     <!--Datatable Button Extension CSS-->

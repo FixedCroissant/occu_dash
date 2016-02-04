@@ -1,19 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
+/** 
  * User: jjwill10
  * Date: 11/13/2015
+ * Updated: 01/26/2016
  * Time: 11:33 AM
- * Description:
+ * Description: File that explicitly looks for the Fall 2016 application term.
  */
-//DEFINE A BASE URL WITHIN THE PAGE.
-define('BASE_URL', 'C:/xampp/htdocs/local/apps/development/occu_dash/');
-
 
 //Retrieve the buildingOccupancy Class.
-include(BASE_URL.'classes/buildingOccupancy.php');
+//Up 2 directories....
+include('../../classes/buildingOccupancy.php');
 //Retrieve the buildingOccupancyDetail class.
-include(BASE_URL.'classes/buildingOccupancydetail.php');
+include('../../classes/buildingOccupancydetail.php');
 
 //Create new buildingOccupancy object.
 $myBuildingOccupancy = new buildingOccupancy();
@@ -24,19 +22,24 @@ $myBuildingOccupancyDetailedItem = new buildingOccupancydetail();
 //Create an array of buildingObjects....
 $totalHousingPicture = array();
 
+//Get term information based on calendar date.
+//Comment out as this report is specifically looking for Fall 2016 data.
+/*include('../../../includes/set_term/provideTERMAUTO.php');*/
+//Note the term we want is called $myTERM. It is also contained within the PHP file above.
+
+
 /*TERM FOR THIS REPORT*/
-/*FALL 2017*/
-$myTERM = 2178;
+/*FALL 2016*/
+$myTERM = 2168;
 
 //create a new object.
 
 //Create an Array that will be my collection of buildingOccupancy objects.
-
 $universityHousingBuildings = array("AFC_A" => "", "AFC_B" => "", "AFC_E" => "", "AFC_F" => "");
 
 //read Database  Data
-include(BASE_URL.'index_READ_DATA.php');
-
+//Up two directories...
+include('../../index_READ_DATA.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -46,27 +49,58 @@ include(BASE_URL.'index_READ_DATA.php');
     <title>NC State Housing-Assignments & Occupancy Outlook - EXPORT DATA</title>
     <!--Internal Stylesheet-->
     <link rel="stylesheet" type="text/css" href="../../../css/main.css">
-    <!--JavaScript needs to do the pop-up windows for the gender and classification break downs.-->
-    <script src="../../../scripts/popUpForDetailedList.js"></script>
-    <!--End Javascript Imports-->
+    <!--Javascript Import-->
+    <!--Import jQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!--Load jQuery datatables-->
+    <!--Add jQuery Datatables to the report 12-04-2015-->
+    <script src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+    <!--Col Reorder jQuery extension-->
+    <!--MUST HAVE THE BELOW FILE FOR THE COLUMN RE-ORDERING TO WORK CORRECTLY-->
+    <script src="https://cdn.datatables.net/colreorder/1.3.0/js/dataTables.colReorder.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            /*Table name is mainTABLE*/
+            var table = $('#mainTABLE').DataTable({
+                dom: 'Bfrtip',
+                "iDisplayLength":150,      /*Default amount to show in the table.*/
+                "bPaginate":false,         /*Turn of Pagination of the table.*/
+                "bSort": false,            /*Disable sorting*/
+                "bFilter": false,           /*Turn of searching*/
+                "bInfo": false,            /*Turn Off Showing 1 of N entries*/
+                colReorder: {
+                    //order: [ 0,1,2,3,9, 7, 8,5, 4, 6,10 ]       /*Important,this is the order that Directors wanted after meeting November 9 2015.*/
+                    order: [ 0,1,2,3,9, 7, 8,5, 4, 6,10 ]
+                }
+            }); //End Datatable Elements
+        });
+    </script>
 </head>
 
 <!--Main Container-->
 <div id="container">
     <?php
-            $todaysDate = "Date of Generation:   ".date("m/d/Y");
+            $todaysDate = "Date of generation:   ".date("m/d/Y");
 
             //Set time zone
             date_default_timezone_set("America/New_York");
-            $todaysTime = "Time of Generation:   ".date("h:i:sa");
-
-
-            echo $todaysDate;
-            echo "<br/>";
-            echo $todaysTime;
+            $todaysTime = "Time of generation:   ".date("h:i:sa");
     ?>
-    <!--Main inside the over arching container-->
+
+
+    <!--Start Report-->
     <div id="main">
+        <div id ='CurrentTerm' style='text-align:center; font-weight:bold;'>
+            <span class="term-and-file-information">
+            <!--Print out information about the Term being looked at ... and when this file was run...-->
+            Term for Report: <?php echo $myTERM;?>
+            <?php echo $todaysDate; ?>
+            <?php echo $todaysTime; ?>
+            </span>
+            <!--Comment Below out as all the Term information is being push up a line along with the generation the report was displayed to the screen.-->
+            <!--<span class="term-information">Current Term: <?php //echo $myTERM?> </span>-->
+        </div>
+
         <table id="mainTABLE" class="pure-table pure-table-horizontal" width="100%;">
             <thead>
             <th>
@@ -82,20 +116,17 @@ include(BASE_URL.'index_READ_DATA.php');
                 Building
             </th>
             <th>
-                Billable Beds
-                <!--OLD Students Assigned-->
+                Total Residents Occupancy<br/>
+                (Billable Beds)
             </th>
             <th>
                 Total Resident Capacity
-                <!--OLD Total Possible Resident Occupancy-->
             </th>
             <th>
                 Total Resident Capacity %
-                <!-- OLD Total Resident Occupancy %-->
             </th>
             <th>
-
-                Staff Capacity
+                Total Staff Capacity
             </th>
             <!--New Column and Field added-->
             <th>
@@ -114,12 +145,24 @@ include(BASE_URL.'index_READ_DATA.php');
             //Set boolean to state whether or not the area sub-category has already printed.
             $area_NotAlreadyPrinted = true;
 
-            if(array_key_exists("Wood_A",$universityHousingBuildings)) {
+            /**
+             * CHECK FOR EMPTY TERM WHEN PULLING DATA.
+             * BY DEFAULT, AFC_A,AFC_B,AFC_C,AFC_E are KEYS in the $universityHousingBuildings array.
+             * The next key in the Array is Wood_A. If there is NO Wood_A, we can safely assume
+             * that there is not completely information being pulled from the PeopleSoft database.
+             */
 
+            //Below for debugging contents of the  array.
+            //var_dump($universityHousingBuildings);
+
+            //End debugging the contents of the array.
+
+            if(array_key_exists("Wood_A",$universityHousingBuildings)){
 
                 foreach ($universityHousingBuildings as $listRead) {
                     //First Building and Data Elements//
                     //Information here....
+
                     $pulledBuilding = $listRead->getBuildingName();
 
                     //Set the campus based on the building we retrieve out of the array.
@@ -133,7 +176,7 @@ include(BASE_URL.'index_READ_DATA.php');
                     $area = $listRead->getLocalizedBuildingArea();
 
                     //Campus TOTALS
-                    $SE_TOTAL_ASSIGNED = '';
+                    $SE_TOTAL_ASSIGNED='';
 
 
                     /******************************************
@@ -144,8 +187,9 @@ include(BASE_URL.'index_READ_DATA.php');
                     $totalStudentsAssigned = $listRead->totalStudentsAssigned($universityHousingBuildings);
                     $totalPossibleResidents = $listRead->totalStudentsPossibleResidents($universityHousingBuildings);
                     $totalResidencyPossiblePercentage = $listRead->createPercentage($totalStudentsAssigned, $totalPossibleResidents, 2);
-                    $completeTotalStaffAssigned = $listRead->totalStaffAssigned($universityHousingBuildings);
-                    $totalBuildingCapacity = $listRead->totalBuildingCapacity($universityHousingBuildings);
+                    $completeTotalStaffAssigned = $listRead->totalStaffAssigned($universityHousingBuildings);    /*PULLS INFORMATION FROM NC_HIS_STFCT_VW, STAFF PEOPLE IN BEDS. */
+                    $completeTotalStaffCapacity = $listRead->totalStaffCapacity($universityHousingBuildings);   /*New variable added 12,4,2015.*/
+                    $totalBuildingCapacity= $listRead->totalBuildingCapacity($universityHousingBuildings);
 
                     /***********************************************
                      * END TOTALS       (USED ON BOTTOM ROW)
@@ -158,7 +202,6 @@ include(BASE_URL.'index_READ_DATA.php');
                         echo "<tr class='expand_SUBROW'>\n";
                         //Campus
                         echo "<td style=''>";
-
                         echo $campus;               //East
                         echo "&nbsp;";            //If I don't specify the campus area, at the very least leave a blank space.
                         //close datacell
@@ -184,7 +227,9 @@ include(BASE_URL.'index_READ_DATA.php');
 
                         //Create an area for under "Students Assigned", it will be the total number of Southeast & Northeast
                         echo "<td>";
-                        $studentsAssigned_ByCampus_EAST = $listRead->getStudentsAssignedByCampus($universityHousingBuildings, $campus);
+                        $studentsAssigned_ByCampus_EAST=$listRead->getStudentsAssignedByCampus($universityHousingBuildings,$campus);
+                        //New value
+                        echo $studentsAssigned_ByCampus_EAST;
 
                         //old value
                         // echo $studentsAssigned_ByCampus_EAST;
@@ -193,21 +238,21 @@ include(BASE_URL.'index_READ_DATA.php');
 
                         //Create an area for under "Total Possible Resident Occupancy", it will be the total number of Southeast & Northeast for total possible Residents.
                         echo "<td>";
-                        $totalPossibleResidentOccupancy_ByCampus_EAST = $listRead->getTotalPossibleResidentsByCampus($universityHousingBuildings, $campus);
+                        $totalPossibleResidentOccupancy_ByCampus_EAST=$listRead->getTotalPossibleResidentsByCampus($universityHousingBuildings,$campus);
                         echo $totalPossibleResidentOccupancy_ByCampus_EAST;
                         echo "</td>\n";
                         //End Create an area for under "Total Possible Resident Occupancy"...
 
                         //Create a percentage for Resident Occupancy for the East Campus
                         echo "<td>";
-                        $ResidentOccupancyPercentage_EAST_CAMPUS = $listRead->createPercentage($studentsAssigned_ByCampus_EAST, $totalPossibleResidentOccupancy_ByCampus_EAST, 2);
+                        $ResidentOccupancyPercentage_EAST_CAMPUS= $listRead->createPercentage($studentsAssigned_ByCampus_EAST,$totalPossibleResidentOccupancy_ByCampus_EAST,2);
                         echo $ResidentOccupancyPercentage_EAST_CAMPUS;
                         echo "</td>\n";
                         //End creating a percentage for Resident Occupancy.
 
                         //Create a percentage for Resident Occupancy for the East Campus
                         echo "<td>";
-                        $staffCapacity_EAST_CAMPUS = $listRead->totalStaffCapacityByCampus($universityHousingBuildings, "East");
+                        $staffCapacity_EAST_CAMPUS=$listRead->totalStaffCapacityByCampus($universityHousingBuildings,"East");
 
                         echo $staffCapacity_EAST_CAMPUS;
 
@@ -217,9 +262,19 @@ include(BASE_URL.'index_READ_DATA.php');
 
                         //Total staff occupancy, new space for a field created on 11 09 2015.
                         echo "<td>";
-                        echo "--";
+                        //echo "East Campus Staff Occupancy --";
+
+                        $staffOccupancy_EAST_CAMPUS=$listRead->totalStaffOccupancyByCampus($universityHousingBuildings,"East");
+
+                        //Let us know the staff occupancy of east campus.
+                        echo $staffOccupancy_EAST_CAMPUS;
+
+
+
+
                         echo "</td>\n";
                         //End new field created regarding new staff occupancy.
+
 
 
                         //Total Building Capacity for East Campus...
@@ -227,18 +282,20 @@ include(BASE_URL.'index_READ_DATA.php');
                         //$totalBuildingCapacity_EAST_CAMPUS=$listRead->totalStaffCapacityByCampus($universityHousingBuildings,"East");
 
                         //(totalBuildingCapacityByArea) must be South East & East
-                        $totalBuildingCapacity_SE = $listRead->totalBuildingCapacityByArea($universityHousingBuildings, "Southeast");
-                        $totalBuildingCapacity_NE = $listRead->totalBuildingCapacityByArea($universityHousingBuildings, "Northeast");
+                        $totalBuildingCapacity_SE=$listRead->totalBuildingCapacityByArea($universityHousingBuildings,"Southeast");
+                        $totalBuildingCapacity_NE=$listRead->totalBuildingCapacityByArea($universityHousingBuildings,"Northeast");
 
                         //Create a summation of Southeast & Northeast.
-                        $totalBuildingCapacity_EAST_CAMPUS = ($totalBuildingCapacity_SE + $totalBuildingCapacity_NE);
+                        $totalBuildingCapacity_EAST_CAMPUS = ($totalBuildingCapacity_SE+$totalBuildingCapacity_NE);
                         echo $totalBuildingCapacity_EAST_CAMPUS;
+
+
                         echo "</td>";
                         //End total building capacity for East Campus...
 
 
                         echo "<td>";
-                        $eastCampusTotalBuildingPercentage = $listRead->createPercentage($studentsAssigned_ByCampus_EAST, $totalBuildingCapacity_EAST_CAMPUS, 2);
+                        $eastCampusTotalBuildingPercentage = $listRead->createPercentage($studentsAssigned_ByCampus_EAST,$totalBuildingCapacity_EAST_CAMPUS, 2);
 
                         echo $eastCampusTotalBuildingPercentage;
 
@@ -268,17 +325,14 @@ include(BASE_URL.'index_READ_DATA.php');
                      * PRINT AREA SUB TOTALS
                      */
 
-//Southeast
+                    //Southeast
                     if ($area != " " && $area_NotAlreadyPrinted && $pulledBuilding == "AFC - A") {
 
 
                         //Check area...
                         echo "<td> \n";
-
-
                         //Check Area
                         //South east area....
-
                         // No link.
                         //echo $area;
 
@@ -289,15 +343,18 @@ include(BASE_URL.'index_READ_DATA.php');
                         //Below is causing problems with the data.
 
 
-                        if ($area != '') {
+                        if($area!=''){
                             //$complexArea="";
-                            $complexArea = 'Area Filter Applied';
-                            $pulledBuildingforDetailedLink = 'Area Filter Applied';
-                        } //Make sure the Southeast Region is properly showing "Avent Ferry Complex".
-                        else if ($area = "Southeast") {
+                            $complexArea='Area Filter Applied';
+                            $pulledBuildingforDetailedLink='Area Filter Applied';
+                        }
+
+                        //Make sure the Southeast Region is properly showing "Avent Ferry Complex".
+                        else if($area="Southeast"){
                             //$complexArea="Avent Ferry Complex";
-                        } else {
-                            $pulledBuilding = $pulledBuilding;
+                        }
+                        else{
+                            $pulledBuilding=$pulledBuilding;
                         }
 
 
@@ -335,6 +392,8 @@ include(BASE_URL.'index_READ_DATA.php');
                         //End skip columns
 
 
+
+
                         //Provide total students assigned for the Area
                         echo "<td class='subHeadersPerArea'> \n";
                         //new
@@ -363,7 +422,7 @@ include(BASE_URL.'index_READ_DATA.php');
 
                         //Read Staff Capacity
                         echo "<td class='subHeadersPerArea'> \n";
-                        $totalStaffPerSegment = $listRead->totalStaffCapacityByArea($universityHousingBuildings, $area);
+                        $totalStaffPerSegment = $listRead->totalStaffCapacityByArea($universityHousingBuildings,$area);
                         echo $totalStaffPerSegment;
                         echo "</td> \n";
                         //End Staff Capacity
@@ -371,7 +430,16 @@ include(BASE_URL.'index_READ_DATA.php');
                         //Total Staff Occupancy new field reserved.
                         //Total staff occupancy, new space for a field created on 11 09 2015.
                         echo "<td>";
-                        echo "--";
+
+                        //To Do.
+                        //$totalStaffPerSegmentAssigned = $listRead->
+                        //OLD.
+                        //$totalStaffPerSegment = $listRead->totalStaffCapacityByArea($universityHousingBuildings,$area);
+                        //New -- Added 12/03/2015
+                        $totalStaffPerSegmentBEDS = $listRead->totalStaffOccupancyByArea($universityHousingBuildings,$area);
+
+                        //New name totalStaffOccuapncyByArea
+                        echo $totalStaffPerSegmentBEDS;
                         echo "</td>\n";
                         //End new field created regarding new staff occupancy.
 
@@ -385,6 +453,7 @@ include(BASE_URL.'index_READ_DATA.php');
 
                         //new
                         $totalPossibleBuildingOccupancyBasedOnArea = $listRead->totalBuildingCapacityByArea($universityHousingBuildings, $area);
+
                         echo $totalPossibleBuildingOccupancyBasedOnArea;
                         //end new
                         echo "</td> \n";
@@ -410,7 +479,7 @@ include(BASE_URL.'index_READ_DATA.php');
 
                     }//end printing of the area "Southeast, etc"
 
-//Northeast
+                    //Northeast
 
 
                     if ($area != " " && $area_NotAlreadyPrinted && $pulledBuilding == "Bagwell") {
@@ -421,6 +490,7 @@ include(BASE_URL.'index_READ_DATA.php');
                         echo "<tr class='auto-hide building-elements-EastGroup'> \n";
 
 
+
                         //Set Campus set to Blank
                         echo "<td>";
                         echo "";
@@ -429,8 +499,6 @@ include(BASE_URL.'index_READ_DATA.php');
 
                         //Check area...
                         echo "<td> \n";
-
-
                         //Check Area
                         echo $area;     //Northeast
 
@@ -472,7 +540,7 @@ include(BASE_URL.'index_READ_DATA.php');
                         //Staff Capacity
                         echo "<td class='subHeadersPerArea'>";
                         //Northeast Staff
-                        $totalStaffPerSegment = $listRead->totalStaffCapacityByArea($universityHousingBuildings, $area);
+                        $totalStaffPerSegment = $listRead->totalStaffCapacityByArea($universityHousingBuildings,$area);
                         echo $totalStaffPerSegment;
                         echo "</td>";
                         //End Staff Capacity
@@ -482,11 +550,16 @@ include(BASE_URL.'index_READ_DATA.php');
                         //Total Staff Occupancy new field reserved.
                         //Total staff occupancy, new space for a field created on 11 09 2015.
                         echo "<td>";
-                        echo "--";
-
+                        //Staff Occupancy
+                        //This should be coming from
+                        $totalStaffPerSegmentBEDS = $listRead->totalStaffOccupancyByArea($universityHousingBuildings,$area);
+                        echo $totalStaffPerSegmentBEDS;
                         echo "</td>\n";
                         //End new field created regarding new staff occupancy.
                         //END NEW FIELD ADDED
+
+
+
 
 
                         //Total Building Capacity
@@ -512,14 +585,13 @@ include(BASE_URL.'index_READ_DATA.php');
                     }//end printing of the area "Northeast, etc"
 
 
-//TriTowers & TOTA Grouped Together
+                    //TriTowers & TOTA Grouped Together
                     if ($area != " " && $area_NotAlreadyPrinted && $pulledBuilding == "Bowen") {
 
                         echo "<tr class='expand_SUBROW'>";
 
                         //Check campus
                         echo "<td>";
-
                         echo "Central";
                         echo "</td>";
 
@@ -575,7 +647,7 @@ include(BASE_URL.'index_READ_DATA.php');
                         //Staff Capacity
                         echo "<td class='subHeadersPerArea'> \n";
                         //Tri-Towers & TOTA grouped together
-                        $totalStaffPerSegment = $listRead->totalStaffCapacityByArea($universityHousingBuildings, $area);
+                        $totalStaffPerSegment = $listRead->totalStaffCapacityByArea($universityHousingBuildings,$area);
                         echo $totalStaffPerSegment;
                         echo "</td> \n";
                         //End Staff Capacity
@@ -584,7 +656,9 @@ include(BASE_URL.'index_READ_DATA.php');
                         //Total Staff Occupancy new field reserved.
                         //Total staff occupancy, new space for a field created on 11 09 2015.
                         echo "<td>";
-                        echo "--";
+
+                        $totalStaffPerSegmentBEDS = $listRead->totalStaffOccupancyByArea($universityHousingBuildings,$area);
+                        echo $totalStaffPerSegmentBEDS;
 
                         echo "</td>\n";
                         //End new field created regarding new staff occupancy.
@@ -628,13 +702,11 @@ include(BASE_URL.'index_READ_DATA.php');
 
                     }//end printing of the area "Southeast, etc"
 
-
                     //West Campus
                     if ($area != " " && $area_NotAlreadyPrinted && $pulledBuilding == "Lee") {
                         echo "<tr class='expand_SUBROW'>";
                         //Check campus
                         echo "<td>";
-
                         echo "West";      //Specifically State "West" Campus & the area will be "West as well
                         echo "</td>";
 
@@ -681,7 +753,7 @@ include(BASE_URL.'index_READ_DATA.php');
                         //Staff Capacity
                         echo "<td class='subHeadersPerArea'> \n";
                         //West Campus
-                        $totalStaffPerSegment = $listRead->totalStaffCapacityByArea($universityHousingBuildings, $area);
+                        $totalStaffPerSegment = $listRead->totalStaffCapacityByArea($universityHousingBuildings,$area);
                         echo $totalStaffPerSegment;
                         echo "</td> \n";
                         //End Staff Capacity
@@ -690,7 +762,13 @@ include(BASE_URL.'index_READ_DATA.php');
                         //Total Staff Occupancy new field reserved.
                         //Total staff occupancy, new space for a field created on 11 09 2015.
                         echo "<td>";
-                        echo "--";
+
+                        $totalStaffPerSegmentBEDS = $listRead->totalStaffOccupancyByArea($universityHousingBuildings,$area);
+                        echo $totalStaffPerSegmentBEDS;
+
+
+
+                        //echo "West Campus Staff Occupancy --";
                         echo "</td>\n";
                         //End new field created regarding new staff occupancy.
                         //END NEW FIELD ADDED
@@ -743,7 +821,6 @@ include(BASE_URL.'index_READ_DATA.php');
                         //Check campus
                         echo "<td>";
                         echo "Apartments";
-
                         echo "</td>";
 
                         //Check area...
@@ -783,7 +860,7 @@ include(BASE_URL.'index_READ_DATA.php');
                         $studentsAssigned_WolfVillage = $listRead->getStudentsAssignedByBuilding($universityHousingBuildings, "Wolf Village");
 
                         //Combined Apartments Assigned value
-                        $studentsAssigned_ALL_APARTMENTS = ($studentsAssigned_WolfRidge + $studentsAssigned_WolfVillage);
+                        $studentsAssigned_ALL_APARTMENTS = ($studentsAssigned_WolfRidge+$studentsAssigned_WolfVillage);
 
 
                         //Print out what is in students Assigned in Wolf Ridge.
@@ -806,10 +883,10 @@ include(BASE_URL.'index_READ_DATA.php');
                         $totalPossibleResidentOccupancyByBuilding_WolfRidge = $listRead->getTotalPossibleResidentOccupancyByArea($universityHousingBuildings, $area);
 
                         //Total for Wolf Village:
-                        $totalPossibleResidentOccupancyByBuilding_WolfVillage = $listRead->getTotalPossibleResidentOccupancyByArea($universityHousingBuildings, "Wolf Village");
+                        $totalPossibleResidentOccupancyByBuilding_WolfVillage=$listRead->getTotalPossibleResidentOccupancyByArea($universityHousingBuildings, "Wolf Village");
 
                         //Summation of WolfRidge & WolfVillage for Total Possible Resident Occupancy.
-                        $totalPossibleResidentOccupancy_ApartmentsWR_WV = ($totalPossibleResidentOccupancyByBuilding_WolfRidge + $totalPossibleResidentOccupancyByBuilding_WolfVillage);
+                        $totalPossibleResidentOccupancy_ApartmentsWR_WV=($totalPossibleResidentOccupancyByBuilding_WolfRidge+$totalPossibleResidentOccupancyByBuilding_WolfVillage);
 
 
                         echo $totalPossibleResidentOccupancy_ApartmentsWR_WV;
@@ -825,34 +902,11 @@ include(BASE_URL.'index_READ_DATA.php');
                         echo "<td class='subHeadersPerArea'> \n";
 
 
-                        //COMMENT OUT ON 11-10-2015
-                        //THIS IS BEING TAKEN CARE OF IN THE
-                        //buildingOccupancy class createPercentage function.
-                        /*
-                        //Check if 100%, and re-format the value.
-                        if($percentageResidentOccupancy_Wolf_Ridge_And_Wolf_Village="1.00%"){
-                            //Shorten the string to just "1".
-                            //$newPERCENTAGE_WOLF_RIDGE_WOLF_VILLAGE_RESIDENT_OCCUPANCY = (substr($percentageResidentOccupancy_Wolf_Ridge_And_Wolf_Village,0,1)."00%");
-
-                            //test - 10-19-2015
-                            $percent_WR_WV=$studentsAssigned_ALL_APARTMENTS/$totalPossibleResidentOccupancy_ApartmentsWR_WV;
-
-                            echo number_format((float)$percent_WR_WV,2,'.','')."%";	//Should output the above number to #XX.XX two decimal places.
-
-                            //end test - 10-19-2015
-
-                            //echo $newPERCENTAGE_WOLF_RIDGE_WOLF_VILLAGE_RESIDENT_OCCUPANCY;
-
-                        }else{
-                            echo $percentageResidentOccupancy_Wolf_Ridge_And_Wolf_Village;
-
-                        }*/
-
                         //comment out on 11-10-2015 @ 9:25am.
                         //$percent_WR_WV=$studentsAssigned_ALL_APARTMENTS/$totalPossibleResidentOccupancy_ApartmentsWR_WV;
 
                         //Create a percentage for APARTMENTS (WOLF RIDGE & WOLF VILLAGE) areas...
-                        $percent_WR_WV = $listRead->createPercentage($studentsAssigned_ALL_APARTMENTS, $totalPossibleResidentOccupancy_ApartmentsWR_WV, 2);
+                        $percent_WR_WV=$listRead->createPercentage($studentsAssigned_ALL_APARTMENTS,$totalPossibleResidentOccupancy_ApartmentsWR_WV, 2);
 
                         echo $percent_WR_WV;
 
@@ -863,10 +917,10 @@ include(BASE_URL.'index_READ_DATA.php');
                         echo "<td class='subHeadersPerArea'> \n";
 
                         //Wolf Ridge Apartments
-                        $totalStaff_WolfRidge_Apartments = $listRead->totalStaffCapacityByArea($universityHousingBuildings, $area);
-                        $totalStaff_WolfVillage_Apartments = $listRead->totalStaffCapacityByArea($universityHousingBuildings, "Wolf Village");
+                        $totalStaff_WolfRidge_Apartments = $listRead->totalStaffCapacityByArea($universityHousingBuildings,$area);
+                        $totalStaff_WolfVillage_Apartments = $listRead->totalStaffCapacityByArea($universityHousingBuildings,"Wolf Village");
 
-                        $totalStaff_For_WolfRidge_And_Wolf_Village = ($totalStaff_WolfRidge_Apartments + $totalStaff_WolfVillage_Apartments);
+                        $totalStaff_For_WolfRidge_And_Wolf_Village = ($totalStaff_WolfRidge_Apartments+$totalStaff_WolfVillage_Apartments);
 
                         //Display the Total Staff Assigned for the Wolf Ridge & Wolf Village Apartments.
                         echo $totalStaff_For_WolfRidge_And_Wolf_Village;
@@ -877,10 +931,26 @@ include(BASE_URL.'index_READ_DATA.php');
                         //Total Staff Occupancy new field reserved.
                         //Total staff occupancy, new space for a field created on 11 09 2015.
                         echo "<td>";
-                        echo "--";
+
+                        //OCCUPANCY
+                        //Wolf Ridge Apartments
+                        $totalStaff_WolfRidge_Apartments_BEDS = $listRead->totalStaffOccupancyByArea($universityHousingBuildings,$area);
+                        $totalStaff_WolfVillage_Apartments_BEDS = $listRead->totalStaffOccupancyByArea($universityHousingBuildings,"Wolf Village");
+
+                        $totalStaff_For_WolfRidge_And_Wolf_VillageBEDS = ($totalStaff_WolfRidge_Apartments_BEDS+$totalStaff_WolfVillage_Apartments_BEDS);
+
+                        //Display the Total Staff Assigned for the Wolf Ridge & Wolf Village Apartments.
+                        //BEDS ONLY.
+                        echo $totalStaff_For_WolfRidge_And_Wolf_VillageBEDS;
+
+                        //END OCCUPANCY
+                        //echo "Apartments Staff Occupancy --";
                         echo "</td>\n";
                         //End new field created regarding new staff occupancy.
                         //END NEW FIELD ADDED
+
+
+
 
 
                         //Total Building Capacity
@@ -889,9 +959,9 @@ include(BASE_URL.'index_READ_DATA.php');
                         //and Wolf Village Apartments.
 
                         $totalPossibleBuildingOccupancyBasedOnArea = $listRead->totalBuildingCapacityByArea($universityHousingBuildings, $area);
-                        $totalPossibleBuildingOccupancyBasedOnArea_WV = $listRead->totalBuildingCapacityByArea($universityHousingBuildings, "Wolf Village");
+                        $totalPossibleBuildingOccupancyBasedOnArea_WV= $listRead->totalBuildingCapacityByArea($universityHousingBuildings, "Wolf Village");
 
-                        $totalPossibleBuildingOccupancy_WolfRidge_WolfVillageTogether = ($totalPossibleBuildingOccupancyBasedOnArea + $totalPossibleBuildingOccupancyBasedOnArea_WV);
+                        $totalPossibleBuildingOccupancy_WolfRidge_WolfVillageTogether = ($totalPossibleBuildingOccupancyBasedOnArea+$totalPossibleBuildingOccupancyBasedOnArea_WV);
 
                         echo $totalPossibleBuildingOccupancy_WolfRidge_WolfVillageTogether;
                         //end new
@@ -912,7 +982,7 @@ include(BASE_URL.'index_READ_DATA.php');
                         //complex.
                         //It takes the students assigned to both WR & WV and takes the combined number (above -- see line 993) and has it formatted
                         //to two decimal places.
-                        echo $listRead->createPercentage($studentsAssigned_ALL_APARTMENTS, $totalPossibleBuildingOccupancy_WolfRidge_WolfVillageTogether, 2);
+                        echo $listRead->createPercentage($studentsAssigned_ALL_APARTMENTS,$totalPossibleBuildingOccupancy_WolfRidge_WolfVillageTogether, 2);
 
                         echo "</td> \n";
                         //End total Bldg Capacity Percentage
@@ -946,7 +1016,7 @@ include(BASE_URL.'index_READ_DATA.php');
                     //"complex" column of the dash board.
                     //Complexes are listed as
                     //Avent Ferry Complex, Wood, Quad, Tri Towers, West (Not true complex), Wolf Ridge & Wolf Village
-                    if ($buildingListed == "Avent Ferry Complex" || $buildingListed == "Wood" || $buildingListed == "Quad" || $buildingListed == "Tri Towers" || $buildingListed == "TOTA" || $buildingListed == "West" || $buildingListed == "Wolf Ridge" || $buildingListed == "Wolf Village") {
+                    if ($buildingListed == "Avent Ferry Complex" || $buildingListed == "Wood" || $buildingListed == "Quad" || $buildingListed == "Tri Towers" || $buildingListed == "TOTA" || $buildingListed == "West"|| $buildingListed == "Wolf Ridge"|| $buildingListed == "Wolf Village") {
 
                         //Create new row element
                         //Displays the COMPLEX
@@ -966,7 +1036,8 @@ include(BASE_URL.'index_READ_DATA.php');
                         //Add ID for Tri-Towers
                         else if ($buildingListed == "Tri Towers") {
                             echo "<tr class='auto-hide building-elements-CentralGroup'>";
-                        } //Add ID for TOTA
+                        }
+                        //Add ID for TOTA
                         else if ($buildingListed == "TOTA") {
                             echo "<tr class='auto-hide building-elements-CentralGroup'>";
                         }
@@ -980,13 +1051,15 @@ include(BASE_URL.'index_READ_DATA.php');
 
                         //For the Wolf Ridge & Wolf Village Apartments
                         //Wolf Ridge Segment
-                        else if ($buildingListed == "Wolf Ridge") {
+                        else if ($buildingListed=="Wolf Ridge"){
                             echo "<tr class='auto-hide building-elements-apartment_WolfRidge'>";
-                        } //Wolf Village Segment
-                        else if ($buildingListed == "Wolf Village") {
+                        }
+                        //Wolf Village Segment
+                        else if ($buildingListed=="Wolf Village"){
                             echo "<tr class='auto-hide building-elements-WolfVillage'>";
 
-                        } //End adding classes to teh "West" side of campus.
+                        }
+                        //End adding classes to teh "West" side of campus.
 
                         else {
                             echo "<tr> \n";
@@ -1018,13 +1091,17 @@ include(BASE_URL.'index_READ_DATA.php');
 
                         } else if ($complexArea == "West") {
 
-                        } //Check Wolf Ridge
+                        }
+                        //Check Wolf Ridge
                         else if ($complexArea == "Wolf Ridge") {
 
-                        } //Check Wolf Village
+                        }
+                        //Check Wolf Village
                         else if ($complexArea == "Wolf Village") {
 
-                        } //If no Complexes are listed....(West,Tri-Towers, AFC, etc.)
+                        }
+
+                        //If no Complexes are listed....(West,Tri-Towers, AFC, etc.)
                         else {
 
                         }
@@ -1048,7 +1125,7 @@ include(BASE_URL.'index_READ_DATA.php');
 
                         //The array name is universityHousingBuildings...
                         //Get the students assigned based on the complex they reside in... (i.e. student assignments for Tri-Towers, TOTA & West Campus
-                        $studentsAssigned_ByComplex = $listRead->getStudentsAssignedByComplexName($universityHousingBuildings, $complexArea);
+                        $studentsAssigned_ByComplex = $listRead->getStudentsAssignedByComplexName($universityHousingBuildings,$complexArea);
                         echo $studentsAssigned_ByComplex;
                         echo "</td>";
 
@@ -1070,7 +1147,7 @@ include(BASE_URL.'index_READ_DATA.php');
                         //Staff Capacity for individual complexes
                         echo "<td>";
                         //Staff
-                        $totalStaffPerComplex = $listRead->totalStaffCapacityByComplex($universityHousingBuildings, $complexArea);
+                        $totalStaffPerComplex = $listRead->totalStaffCapacityByComplex($universityHousingBuildings,$complexArea);
                         echo $totalStaffPerComplex;
                         echo "</td>";
                         //End Staff Capacity for individual complexes
@@ -1078,17 +1155,20 @@ include(BASE_URL.'index_READ_DATA.php');
                         //Total Staff Occupancy new field reserved.
                         //Total staff occupancy, new space for a field created on 11 09 2015.
                         echo "<td>";
-
-                        echo "--";
-
+                        //Subcomplexs are located here...
+                        //E.g. Avent ferry Complex, Wood, Quad, Tri Towers, TOTA, West, Wolf Ridge, Wolf Village
+                        //Occupancy Rates
+                        $totalStaffPerComplexBED_AMOUNT = $listRead->totalStaffOccupancyByComplex($universityHousingBuildings,$complexArea);
+                        echo $totalStaffPerComplexBED_AMOUNT;
                         echo "</td>\n";
                         //End new field created regarding new staff occupancy.
+
 
 
                         //Total Building Capacity for individual complexes
 
                         echo "<td>";
-                        $totalPossibleBuildingOccupancyBasedOnComplex = $listRead->totalBuildingCapacityByComplex($universityHousingBuildings, $complexArea);
+                        $totalPossibleBuildingOccupancyBasedOnComplex = $listRead->totalBuildingCapacityByComplex($universityHousingBuildings,$complexArea);
                         echo $totalPossibleBuildingOccupancyBasedOnComplex;
                         echo "</td>";
                         //End total building capacity for individual complexes
@@ -1106,7 +1186,7 @@ include(BASE_URL.'index_READ_DATA.php');
                     }//Close IF statement that specifically looks for the top Row that indicates the correct building to show
 
 
-//Close Complex Block.
+                    //Close Complex Block.
 
                     //Pull Buildings (AFC - B, AFC - E, AFC - F)
                     if ($listRead->getComplexBasedonBuilding() == " ") {
@@ -1157,8 +1237,6 @@ include(BASE_URL.'index_READ_DATA.php');
                         //New Row
                         //This row starts the beginning of the building items, (i.e. AFC - A, Wood -A)...
                         //But only the first row, i.e AFC - A, Wood - A, Bagwell
-
-
                         //start
                         //Special IDs for AFC
                         if ($listRead->getBuildingName() == "AFC - A" || $listRead->getBuildingName() == "AFC - B" || $listRead->getBuildingName() == "AFC - E" || $listRead->getBuildingName() == "AFC - F") {
@@ -1178,17 +1256,20 @@ include(BASE_URL.'index_READ_DATA.php');
                         } //Special IDs for West Campus
                         elseif ($listRead->getBuildingName() == "Lee" || $listRead->getBuildingName() == "Sullivan" || $listRead->getBuildingName() == "Bragaw") {
                             echo "<tr class='auto-hide building-elements-west'>";
-                        } //Special IDs for Wolf Ridge Apartments
-                        elseif ($listRead->getBuildingName() == "WR Grove" || $listRead->getBuildingName() == "WR Innovat" || $listRead->getBuildingName() == "WR Lakeview" || $listRead->getBuildingName() == "WR Plaza" || $listRead->getBuildingName() == "WR Tower" || $listRead->getBuildingName() == "WR Valley") {
+                        }
+                        //Special IDs for Wolf Ridge Apartments
+                        elseif ($listRead->getBuildingName() == "WR Grove" || $listRead->getBuildingName() == "WR Innovat" || $listRead->getBuildingName() == "WR Lakeview"|| $listRead->getBuildingName() == "WR Plaza"|| $listRead->getBuildingName() == "WR Tower"|| $listRead->getBuildingName() == "WR Valley") {
                             echo "<tr class='auto-hide building-elements-apartment_wolf_ridge'>";
                         }
 
                         //img#arrowFirst-wolf_ridge
 
                         //Special IDs for Wolf Village Apartments
-                        elseif ($listRead->getBuildingName() == "Wolf Vlg A" || $listRead->getBuildingName() == "Wolf Vlg B" || $listRead->getBuildingName() == "Wolf Vlg C" || $listRead->getBuildingName() == "Wolf Vlg D" || $listRead->getBuildingName() == "Wolf Vlg E" || $listRead->getBuildingName() == "Wolf Vlg F" || $listRead->getBuildingName() == "Wolf Vlg G" || $listRead->getBuildingName() == "Wolf Vlg H") {
+                        elseif ($listRead->getBuildingName() == "Wolf Vlg A" || $listRead->getBuildingName() == "Wolf Vlg B" || $listRead->getBuildingName() == "Wolf Vlg C"|| $listRead->getBuildingName() == "Wolf Vlg D"|| $listRead->getBuildingName() == "Wolf Vlg E"|| $listRead->getBuildingName() == "Wolf Vlg F"|| $listRead->getBuildingName() == "Wolf Vlg G"|| $listRead->getBuildingName() == "Wolf Vlg H") {
                             echo "<tr class='auto-hide building-elements-apartment_wolf_village'>";
-                        } else {
+                        }
+
+                        else {
                             echo "<tr id='building-elements' class=''>";
 
                         }
@@ -1215,30 +1296,9 @@ include(BASE_URL.'index_READ_DATA.php');
                         echo "\n</td>\n";
                         //Building
                         echo "<td>\n";
-                        //echo 'testtesttest'.$pulledBuilding;
-
-                        //test
-
-                        //Temporary comment out ..
-                        //echo "test test test";
-                        //Add the clickable link for detailed information about the building..
-
-                        //Separate configuration file for the pop-up for detailed building information
-                        //This provides a PHP file that generates the JS to create a pop-up based on the correct
-                        //parameters generated by the row being displayed in the table's cell.
-
-                        //Below causes problems when copying data using the "COPY" button with the jQuery datatable.
-                        //include('includes/configure_pop_up_for_specified_building_area.php');
-
-                        //Use this separate file to provide the correct building needed in the link popup.
-                        //Allows the pop-up to happen...commenting this file out
-                        //will turn off the pop-up that is being used for the particular building.
-                        include(BASE_URL . 'includes/detailedBuilding_pulledBuilding.php');
-                        //end separate file
-
                         //Display the Pulled Building
                         echo $pulledBuilding;
-
+                        //End adding the clickable link...
 
                         echo "\n</td>\n";
                         //Students Assigned
@@ -1263,13 +1323,11 @@ include(BASE_URL.'index_READ_DATA.php');
                         //Total Staff Occupancy new field reserved.
                         //Total staff occupancy, new space for a field created on 11 09 2015.
                         echo "<td>";
-
-
-                        echo "--";
-
+                        //Below provides the number of
+                        //beds available
+                        echo $listRead->getStaffOccupancy();
                         echo "</td>\n";
                         //End new field created regarding new staff occupancy.
-
 
                         //Total Building Capacity
                         echo "<td>\n";
@@ -1285,9 +1343,8 @@ include(BASE_URL.'index_READ_DATA.php');
                     }//close else statement
                 }//close foreach
 
-
                 /**
-                 *  TOTALS
+                 *  TOTALS AMOUNTS LISTED BELOW ...
                  */
                 //New foreach
 
@@ -1332,17 +1389,13 @@ include(BASE_URL.'index_READ_DATA.php');
                 echo "</td>";
                 //End Staff Capacity Total
 
-
                 //STAFF OCCUPANCY NEW VALUE
-                //NOVEMBER 09 2015
+                //ADDED TOTAL VALUE on 12/4/2015...
+                //CALCULATES THE TOTAL OF THE ENTIRE TOP COLUMN.
                 echo "<td>";
                 //Overall totals of the TOTAL STAFF OCCUPANCY.
-                echo "TEMP - TOTAL STAFF OCCUPANCY TOTAL";
+                echo $completeTotalStaffCapacity;
                 echo "</td>";
-
-                //END -- -- NOVEMBER 09 2015
-
-
                 //Total of Total Building Capacity
                 echo "<td>";
                 echo $totalBuildingCapacity;
@@ -1361,22 +1414,30 @@ include(BASE_URL.'index_READ_DATA.php');
                 echo "</tr>";//End New Row
                 //End Get Totals
 
-            }
 
+            }
 
             else{
-                //THERE IS NO INFORMATION CURRENTLY FOR THE REPORT>
-                echo "<p style='color:red; text-align:center; font-size:large;'>As of  ".date("Y-m-d")." there is nothing for this particular time period.";
-                echo "<br/>";
-                echo "Term looking for: "."<span style='font-weight:bold;'>".$myTERM."</span>";
-
-
-
-
+                //First run of the program...
+                //Display no wierd messages.
+                if($myTERM==''){
+                    echo "<p style='color:red; text-align:center; font-size:large;'>Please select a term to view information from the drop-down menu on your bottom left.</p>";
+                }
+                //If a person selects an academic term from the drop-down and there is no information
+                //in the PeopleSoft database, then let's display the term number that was set up.
+                else{
+                    echo "<p style='color:red; text-align:center; font-size:large;'>As of  ".date("Y-m-d")." there is nothing for this particular time period.";
+                    echo "<br/>";
+                    echo "Term looking for: "."<span style='font-weight:bold;'>".$myTERM."</span>";
+                }
+                echo "</p>";
             }
+
+
             ?>
             </tbody>
         </table>
     </div>
+    <!--End Report-->
 </div>
 </html>

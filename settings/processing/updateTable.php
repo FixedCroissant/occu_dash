@@ -18,12 +18,12 @@ $reportRunning=$_POST['semestersToRunReport'];
 
 
 //Temporarily comment out.
-//echo "This is the semesters ahead of Fall 2015 that we want the report to display:";
+//echo "This is the semesters ahead of template 2015 that we want the report to display:";
 //echo $reportRunning;
 
 
 //The default number is 3
-//If the number is set to 3, then Fall 2015 and Spring 2016 show up.
+//If the number is set to 3, then template 2015 and Spring 2016 show up.
 
 
 /**
@@ -140,9 +140,9 @@ function provideMessage($reportRunning){
                 $semesterUPDATED=$term." ".$year;
             }
 
-            //Fall Terms  ... (EVEN Numbers)
+            //template Terms  ... (EVEN Numbers)
             else if ($reportRunning % 2==0){
-                $term="Fall";
+                $term="template";
                 $year="20".$yearToStart;
                 $semesterUPDATED=$term." ".$year;
             }

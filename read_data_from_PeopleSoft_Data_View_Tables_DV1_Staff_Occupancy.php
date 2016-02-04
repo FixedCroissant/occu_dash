@@ -56,7 +56,7 @@ while($row = oci_fetch_array($STID_TOTAL_STAFF_OCCUPANCY, OCI_ASSOC+OCI_RETURN_N
          //$collectionOfData [$row['BUILDING']] =  array($prior_assigned_building_capacity,$prior_assigned_students_value,$prior_assigned_staff_value,50);
 
          //Try pulling from database view. 
-         $collectionOfData [$row['BUILDING']] =  array($prior_assigned_building_capacity,$prior_assigned_students_value,$prior_assigned_staff_value,$row['STAFF_ASSIGNED']);  
+         //$collectionOfData [$row['BUILDING']] =  array($prior_assigned_building_capacity,$prior_assigned_students_value,$prior_assigned_staff_value,$row['STAFF_ASSIGNED']);  
          //IN DEVELOPMENT THE ROW IS CALLED STAFF_ASSIGNED, HOWEVER IN PRODUCTION, IT IS COUNT1.
 
     //END DEVELOPMENT
@@ -66,7 +66,7 @@ while($row = oci_fetch_array($STID_TOTAL_STAFF_OCCUPANCY, OCI_ASSOC+OCI_RETURN_N
     //created through my DEV system.
          //ADD STAFF OCCUPANCY TO OUR ARRAY CALLED, $collectionOfData.
          //4th element, currently final element of the array. 
-        //$collectionOfData [$row['BUILDING']] =  array($prior_assigned_building_capacity,$prior_assigned_students_value,$prior_assigned_staff_value,$row['COUNT1']);
+        $collectionOfData [$row['BUILDING']] =  array($prior_assigned_building_capacity,$prior_assigned_students_value,$prior_assigned_staff_value,$row['COUNT1']);
     //END PRODUCTION
 
 }

@@ -45,21 +45,21 @@ catch(PDOException $error){
 echo "<form id='setTerm' action='index.php' method='POST'>";
 echo "<select id='setTermForReport' name='TERM'>";
 
-//Dynamically make a drop down based on the Spring and Summer terms that we need, starting on Fall 2015/2158 term.
+//Dynamically make a drop down based on the Spring and Summer terms that we need, starting on template 2015/2158 term.
     for($x=0;$x<$limitOFTerms;$x++){
                 //Beginning part.
                 if($x==0){
-                    //For Fall terms
-                    //Below works for adding Fall 2015, however it adds a whole additional
+                    //For template terms
+                    //Below works for adding template 2015, however it adds a whole additional
                     //select row that is unnecessary.
-                    //echo "<option value='2".$year."8'>Fall 20".$year."</option>";
+                    //echo "<option value='2".$year."8'>template 20".$year."</option>";
                     //By default we will start with 1111 term or NO term.
                     //Then, the end-user can make the change on the information they want to pull from the
                     //report.
                     echo "<option value='1111'>None</option>";
                 }
                 else if($x%2){
-                    //For Fall terms
+                    //For template terms
                     echo "<option value='2".$year."8'>Fall 20".$year."</option>";
 
                 }

@@ -17,7 +17,7 @@ include('classes/buildingOccupancydetail.php');
 //PRODUCTION
 //Reading view PS_NC_HIS_PPE_VW
 //This view provides the "CURRENT TERM" for the effective term and will automatically update as the date changes
-//into a new term period. As of 10/9/2015, it is currently showing 2158, Fall 2015.
+//into a new term period. As of 10/9/2015, it is currently showing 2158, template 2015.
 include('read_classification_data.php');
 
 
@@ -116,6 +116,8 @@ $genders = array("male"=>$male,"female"=>$female);
     </head>
 <div id="container">
     <?php
+    var_dump($classifications);
+
     //Write the necessary JavaScript to provide the bar chart
     echo "<script type='text/javascript'>\n";
     //encode information into json as javascript
@@ -209,6 +211,10 @@ $genders = array("male"=>$male,"female"=>$female);
         </thead>
         <tbody>
             <?php
+            //testing
+
+            //end testing
+
                     //end adding the classifications to the array.
                     foreach($classifications as $key=> $studentsCLASSIFICATIONS){
                         echo "<tr>";

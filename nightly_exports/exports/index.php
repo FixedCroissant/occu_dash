@@ -7,7 +7,7 @@
 //May work on the host...
 $directory = getcwd();
 
-$files = glob($directory.'\*',GLOB_ONLYDIR);
+$files = glob($directory.'/*',GLOB_ONLYDIR);
 
 //Make it look a little prettier....
 echo "<!DOCTYPE html> \n";
@@ -21,6 +21,7 @@ echo "</head>\n";
 echo "<body>";
 echo "Please right click and click 'Save Target As (Internet Explorer)'  or 'Save Link As' (Mozilla Firefox)\n";
 echo "<ul>\n ";
+
 foreach($files as $myFileDisplayed) {
     echo "<li>\n";
     echo "<a href =".basename($myFileDisplayed).">".basename($myFileDisplayed)."</a>\n";

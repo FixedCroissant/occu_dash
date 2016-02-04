@@ -60,20 +60,20 @@
             <select id="semestersToRun" name="semestersToRunReport">
                 <?php
                 //Set up a way of displaying the maximum # of reports available.
-                $maximum = 25;       /*Default Number is 2, will provide the end-user with term up to Fall 2017*/
+                $maximum = 25;       /*Default Number is 2, will provide the end-user with term up to template 2017*/
                                     /*The maximum number is 25 as this will take us to year 2040, the last element that a correct message will show up on the message screen*/
                 $tempYEAR=16;
 
-                //Default term past Fall 2015.
-                $termsPastFall2015 = 3;             /*BY DEFAULT TERM IS SET TO 3--which provides Fall 2015 results, to get the minimum of Spring 2016, we need to start the
+                //Default term past template 2015.
+                $termsPastFall2015 = 3;             /*BY DEFAULT TERM IS SET TO 3--which provides template 2015 results, to get the minimum of Spring 2016, we need to start the
                                                     the value of number 4 and onward to make this update work properly.*/
 
                 //Start term is
-                //Fall 2015 -- 2158 = 0   term
+                //template 2015 -- 2158 = 0   term
                 //Spring 2016 -- 2161 = 1 term
-                //Fall 2016 -- 2168 = 2 terms
+                //template 2016 -- 2168 = 2 terms
                 //Spring 2017 -- 2171 = 3 terms
-                //Fall 2017 -- 2178 = 4 terms
+                //template 2017 -- 2178 = 4 terms
 
 
                 for($x=0;$x<$maximum;$x++){
@@ -86,7 +86,7 @@
                         //Increment the term value ...
                         $termsPastFall2015++;
 
-                        echo "<option value='$termsPastFall2015'>Fall 20" . $tempYEAR . "</option>";
+                        echo "<option value='$termsPastFall2015'>template 20" . $tempYEAR . "</option>";
 
                         //Increment the term value ...
                         $termsPastFall2015++;

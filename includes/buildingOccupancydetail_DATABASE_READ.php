@@ -13,7 +13,7 @@
 global $males;
        $males="0";
 global $females;
-       $females = "0";
+       $females="0";
 global $fresh;
         $fresh="0";
 global $newFresh;
@@ -71,24 +71,50 @@ foreach ($collectionOfOccupancyDetail as $listToClense) {
     //if ($building == "Bragaw") {
 
 
+	
     if ($building==$buildingTOLOOKFOR){
+	
+	//Temporary -- added 02-03-2016.
+	//echo $listToClense['gender'];
+	//echo "<br/>";
+	//End temporary....
+	
+	
         //Check Males in Bragaw Residence Hall
+								//UNALTERED
+								/*
                                 if (count(preg_grep('/M/', $listToClense))) {
                                     $males++;
                                 }
                                 //Check Females in Bragaw Residence Hall
+								//Took off else if.
                                 else if (count(preg_grep('/F/', $listToClense))){
                                     $females++;
+                                }*/
+								
+								if ($listToClense['gender']=="M")
+								{
+                                    $males++;
                                 }
+                                //Check Females in Bragaw Residence Hall
+								//Took off else if.
+                                else if ($listToClense['gender']=="F"){
+                                    $females++;
+                                }
+								
         //Done checking Females or Males
 
         //Check classification for Bragaw
-        //Freshmen
+        //Freshmen		(FR)
                                 if($academic_level=="FR"){
                                     $fresh++;
                                 }
+		//New Freshmen (NFR)
+                            if($academic_level=="NFR"){
+                                $newFresh++;
+                            }
 
-        //Sophomores
+        //Sophomores	(SO)
                                 if($academic_level=="SO"){
                                     $sophomore++;
                                 }
@@ -129,7 +155,7 @@ foreach ($collectionOfOccupancyDetail as $listToClense) {
                             $sp++;
                         }
         //UN/Undecided
-                        if($academic_level=="SP"){
+                        if($academic_level=="UN"){
                             $un++;
                         }
         //END SETTING CLASSIFICATIONS FOR THE RESIDENCE HALL.
@@ -143,6 +169,8 @@ foreach ($collectionOfOccupancyDetail as $listToClense) {
             /**
              * BRAGAW RESIDENCE HALL
              */
+			 //COMMENT OUT ON 02-03-2016 @ 241pm
+			 /*
                     //Set new constructor of object type buildingOccupancydetail.
                     $bragawResidenceHall = new buildingOccupancydetail("East","$building","M",$males,"fr",$fresh);
                     //Set females
@@ -169,7 +197,7 @@ foreach ($collectionOfOccupancyDetail as $listToClense) {
                     $bragawResidenceHall->setClassification("SP",$sp);
                     //Set UN (Undecided)
                     $bragawResidenceHall->setClassification("UN",$un);
-
+				*/
 
 
 
@@ -186,6 +214,10 @@ $classifications = array("fr"=>$fresh,"nfr"=>$newFresh,"so"=>$sophomore,"jr"=>$j
 
 
 //var_dump($bragawResidenceHall);
+
+//added 02-03-2016
+//var_dump($listToClense);
+//End additions 02-03-2016
 
 /*
  *  END BUILDING OCCUPANCY DETAILS FOR BUILDINGS
