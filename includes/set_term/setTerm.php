@@ -17,7 +17,7 @@ try{
     $databaseREAD = new PDO($hostname,$username,$password);                                  /*All of this information is contained in the above include file.*/
     $databaseREAD->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $queryToReadData = "SELECT terms_to_display,terms_to_get_backups FROM occu_dash_settings";        /*Query to pull information from the ***REMOVED*** database.*/
+    $queryToReadData = "SELECT terms_to_display,terms_to_get_backups FROM occu_dash_settings";        /*Query to pull information from the housing_apps database.*/
 
     //Execute the query....
     $queryRUN = $databaseREAD->query($queryToReadData);

@@ -5,7 +5,7 @@
  * Date: 11/19/2015
  * Time: 11:12 AM
  * Description: This file will update the information from the settings page for the Occupancy Dashboard
- * to the table "occu_dash_settings" that resides within the ***REMOVED*** database.
+ * to the table "occu_dash_settings" that resides within the housing_apps database.
  */
 
 

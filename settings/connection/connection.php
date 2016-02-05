@@ -10,14 +10,14 @@
 
 //This is the connection file for the Housing Applications.
 //DEVELOPMENT
-$dbname="***REMOVED***";                             /*Set the database that we want to view, in this case ***REMOVED****/
+$dbname="XXREMOVEDXXX";                             /*Set the database that we want to view, in this case housing_apps*/
 $hostname="mysql:dbname=".$dbname.";host=127.0.0.1;port=3306";                   /*Set the hostname and the database*/
-$username="root";                                   /*Development Side only */
-$password ="***REMOVED***";                     /*Development Side only */
+$username="XXREMOVEDXXX";                                   /*Development Side only */
+$password ="XXREMOVEDXXX";                     /*Development Side only */
 
 //Below is the database user name for the housing website
-//$username="***REMOVED***";
+//$username="XXREMOVEDXXX";
 //Removed old database due to testing
-//$password="***REMOVED***";
-//$hostname="mysql:host=localhost;dbname=***REMOVED***;port=3306";
+//$password="XXREMOVEDXXX";
+//$hostname="mysql:host=localhost;dbname=XXREMOVEDXXX;port=3306";
 
