@@ -1,9 +1,12 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: jjwill10
- * Date: 8/31/2015
- * Time: 10:10 AM
+ * Author: J. Williams
+ * Date: 12/10/2015
+ * Description: Front-facing page to show the assignments for a given term based on the selected drop-down 
+ * picked by the end user. Automatically picks the current term based on the given date, (see line 57), for example,
+ * January 2015 will display 2151 automatically.
+ * Additional terms can be found (currently showing, Fall 2016, Spring 2017 and Fall 2017) at the bottom left-hand side
+ * of the page.
  */
 
 //Retrieve the buildingOccupancy Class.
@@ -21,19 +24,13 @@ $myBuildingOccupancyDetailedItem = new buildingOccupancydetail();
 $totalHousingPicture = array();
 
 
-//What is in buildingOccupancy by default.
-
-//var_dump($myBuildingOccupancy);
-
 //create a new object.
-
 //Create an Array that will be my collection of buildingOccupancy objects.
-
 $universityHousingBuildings = array("AFC_A" => "", "AFC_B" => "", "AFC_E" => "", "AFC_F" => "");
 
 /**
  * THIS VALUE WILL SET THE TERM OF THE INFORMATION WE ARE PULLING.
- * An indentical term variable is set up within the read_data_testing.php file....
+ * An identical term variable is set up within the read_data_testing.php file....
  * THE read_data_testing file contains all the PeopleSoft queries for pulling information and it is embedded and included
  * within the index_READ_DATA.php file.
  * that is included below.
@@ -51,7 +48,6 @@ if(isset($_POST['TERM'])){
 ////Automatically provide template term based on current date.
 
 else{
-    
     //use  below file to automatically set the term.
     include('includes/set_term/provideTERMAUTO.php');
 
@@ -59,7 +55,6 @@ else{
     //For testing only.
     //Displays the term on the top left hand portion of the screen with no CSS formatting.
     //echo $myTERM;
-
 }
 
 
@@ -67,7 +62,10 @@ else{
 //IMPORTANT DO NOT REMOVE. IF REMOVED, NO DATA WILL BE PULLED.
 include('index_READ_DATA.php');
 
-
+//Tally those who have logged in.
+//Added 02-05-2016.
+include('includes/tally_check.php');
+//End Tally.
 
 ?>
 <!DOCTYPE html>
@@ -106,8 +104,7 @@ include('index_READ_DATA.php');
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.1.0/js/buttons.html5.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.1.0/js/buttons.print.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.1.0/js/buttons.flash.min.js"></script>
-    <!--FIle needed for continual backups-->
-    <!--TO DO TO DO-->
+    
 
 
     <!--JavaScript needs to do the pop-up windows for the gender and classification break downs.-->
@@ -168,9 +165,7 @@ include('index_READ_DATA.php');
                 <a href ="#" id="resetCols">Columns Reset</a>
             </p>
                 <!--Provide a way of securely logging out of the webpage to allow for Shibboleth log-in to continue next time someone tries to access this web page.-->
-                <a href="https://shib.ncsu.edu/idp/logoutredir.jsp?return_url=https://housing.ncsu.edu/Shibboleth.sso/Logout?return=/reports/occu_dash/loggedout.php" style='font-weight:bold; size:xx-large;'>Logout of this Report</a>
-        
-
+                <a href="https://shib.ncsu.edu/idp/logoutredir.jsp?return_url=https://housing.ncsu.edu/Shibboleth.sso/Logout?return=/reports/loggedout.php" style='font-weight:bold; size:xx-large;'>Logout of this Report</a>
         </div>
         <div id ='Current Term' style='text-align:center; font-weight:bold;'>
                 Current Term: <?php echo $myTERM?>
@@ -293,8 +288,16 @@ include('index_READ_DATA.php');
                                             echo "<img src='images/arrow.png' class='initialArrow' id='arrowFirst-east_Group'/> ";
                                             //End Add Arrow
 
-                                            echo $campus;               //East
-                                            echo "&nbsp;";            //If I don't specify the campus area, at the very least leave a blank space.
+                                            
+											//Use this separate file to provide the correct building needed in the link popup.
+                                            //Allows the pop-up to happen...commenting this file out
+                                            //will turn off the pop-up that is being used for the particular campus area.
+											include('includes/detailedCampus_pulledCampus.php');
+                                            //end separate file
+											
+											echo $campus;               //East
+											
+                                            //echo "&nbsp;";            //If I don't specify the campus area, at the very least leave a blank space.
                                             //close datacell
                                             echo "</td>\n";
 
@@ -359,9 +362,6 @@ include('index_READ_DATA.php');
 
                                             //Let us know the staff occupancy of east campus.    
                                             echo $staffOccupancy_EAST_CAMPUS;
-
-
-
 
                                             echo "</td>\n";
                                             //End new field created regarding new staff occupancy.
@@ -702,8 +702,27 @@ include('index_READ_DATA.php');
                                             //Add Arrow
                                             echo "<img src='images/arrow.png'  title='click to expand and collapse data' style='' class='initialArrow' id='arrowFirst-central_Group'/> ";
                                             //End Add Arrow
-                                            echo "Central";
-                                            echo "</td>";
+											
+											
+													
+											
+											
+											//Show Central Campus Area, based on the pulled building, in this case (Bowen)
+											$campus = $listRead->setMainCampusArea("Bowen");
+											$campus = $listRead->getMainCampusArea();
+											
+											$campusAreaCentral = $campus;
+											
+											//Use this separate file to provide the correct building needed in the link popup.
+                                            //Allows the pop-up to happen...commenting this file out
+                                            //will turn off the pop-up that is being used for the particular campus area.
+											include('includes/detailedCampus_pulledCampus.php');
+                                            //end separate file
+											
+											echo $campus;
+											//Presents central campus area.
+											
+											echo "</td>";
 
                                             //Check area...
                                             echo "<td> \n";
@@ -823,8 +842,27 @@ include('index_READ_DATA.php');
                                                             //Add Arrow
                                                             echo "<img src='images/arrow.png' style='' class='initialArrow' id='arrowFirst-west_Group'/> ";
                                                             //End Add Arrow
-
-                                                            echo "West";      //Specifically State "West" Campus & the area will be "West as well
+															
+															//echo "West";     //Hard coded.... doesn't work with the pop-up to provide the correct links.
+															//Show Central Campus Area, based on the pulled building, in this case (Bowen)
+															$campus = $listRead->setMainCampusArea("Lee");
+															$campus = $listRead->getMainCampusArea();
+															$campusAreaWest = $campus;
+															
+															//Use this separate file to provide the correct building needed in the link popup.
+															//Allows the pop-up to happen...commenting this file out
+															//will turn off the pop-up that is being used for the particular campus area.
+															include('includes/detailedCampus_pulledCampus.php');
+															//end separate file
+															
+															
+															echo $campus;
+															//Presents West campus area.
+															
+															
+															
+															
+															
                                                             echo "</td>";
 
                                                             //Check area...
@@ -928,10 +966,10 @@ include('index_READ_DATA.php');
 
                                                         }//end printing of the area "West, etc"
 
-                                        //End Residence Halls
+                                       //END RESIDENCE HALLS
 
 
-
+										//START APARTMENTS
 
 
                                         //Start Apartments
@@ -942,8 +980,32 @@ include('index_READ_DATA.php');
                                                                     echo "<td>";
                                                                     //Add Arrow
                                                                     echo "<img src='images/arrow.png' style='' class='initialArrow' id='arrowFirst-apartments'/> ";
-                                                                    //End Add Arrow
-                                                                    echo "Apartments";
+                                                                    //End Add Arrow																	
+																																		
+																	//echo "Apartments";				//Hard coded.
+																	//echo $campus;						//Apartments Campus.
+
+																	
+																	//Show Central Campus Area, based on the pulled building, in this case (Bowen)
+																	$campus = $listRead->setMainCampusArea("WR Grove");
+																	$campus = $listRead->getMainCampusArea();
+																	$campusAreaApartments = $campus;
+																	
+																	//Use this separate file to provide the correct building needed in the link popup.
+																	//Allows the pop-up to happen...commenting this file out
+																	//will turn off the pop-up that is being used for the particular campus area.
+																	include('includes/detailedCampus_pulledCampus.php');
+																	//end separate file
+																	
+																	
+																	
+																	echo $campus;
+																	//Presents Apartments campus area.
+																			
+																	
+																	//Comment out as we want to use the included pop-up to
+																	//show current semester gender and classification numbers.
+                                                                    //echo "Apartments";		//Campus Section Apartments.
 
                                                                     echo "</td>";
 
@@ -1259,8 +1321,17 @@ include('index_READ_DATA.php');
                                                 echo "<img src='images/arrow.png' class='initialArrow' id='arrowFirst'/> ";
                                             }
                                             //
+											//Use this separate file to provide the correct building needed in the link popup.
+                                            //Allows the pop-up to happen...commenting this file out
+                                            //will turn off the pop-up that is being used for the particular complex.
+                                                include('includes/detailedComplex_pulledComplex.php');
+                                            //end separate file
+											
                                             echo $complexArea;     //Retrieve the correct complex
                                             //End Complexes
+											
+											
+											
                                             echo "\n</td>\n";
 
                                             /*Subtotals for TRI-Towers, TOTA & WEST AREAS OF CAMPUS*/
@@ -1475,11 +1546,9 @@ include('index_READ_DATA.php');
                                             //Display the Pulled Building
                                             echo $pulledBuilding;
                                             //End adding the clickable link....
-
-
-
                                             ?>
-                                            <script src="scripts/configure_pop_up_for_specified_building_area.js"></script>
+												<!--Script Used to configure the pop-up-->
+												<script src="scripts/configure_pop_up_for_specified_building_area.js"></script>
                                                 <script type="text/javascript">
                                                         setPulledCampus(<?php echo json_encode($campus); ?>);
                                                         setPulledBuilding(<?php echo json_encode($pulledBuilding)?>);

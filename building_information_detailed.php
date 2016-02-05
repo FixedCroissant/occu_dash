@@ -116,7 +116,7 @@ $genders = array("male"=>$male,"female"=>$female);
     </head>
 <div id="container">
     <?php
-    var_dump($classifications);
+    //var_dump($classifications);
 
     //Write the necessary JavaScript to provide the bar chart
     echo "<script type='text/javascript'>\n";
@@ -235,9 +235,10 @@ $genders = array("male"=>$male,"female"=>$female);
     </table>
 
     <!--Chart-->
+    <!--
     <div id="chart">
 
-    </div>
+    </div>-->
 
 </div>
 </html>

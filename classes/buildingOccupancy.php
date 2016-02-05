@@ -115,14 +115,21 @@ class buildingOccupancy {
             $this->campus="Central";
         }
 
-
-
-
-
-
-
-
-    }
+		//Check West CAMPUS
+		if ($buildingLocation=="Lee" ||$buildingLocation=="Sullivan"||$buildingLocation=="Bragaw"){
+            $this->campus="West";
+        }
+		
+		//Check APARTMENTS
+		//Wolf Ridge
+		if ($buildingLocation=="WR Grove" ||$buildingLocation=="WR Innovat"||$buildingLocation=="WR Lakeview"||$buildingLocation=="WR Plaza"||$buildingLocation=="WR Tower"||$buildingLocation=="WR Tower"||$buildingLocation=="WR Tower"||$buildingLocation=="WR Valley"){
+            $this->campus="Apartments";
+        }
+		if ($buildingLocation=="Wolf Vlg A" ||$buildingLocation=="Wolf Vlg B"||$buildingLocation=="Wolf Vlg C"||$buildingLocation=="Wolf Vlg D"||$buildingLocation=="Wolf Vlg D"||$buildingLocation=="Wolf Vlg E"||$buildingLocation=="WR Tower"||$buildingLocation=="Wolf Vlg F"){
+            $this->campus="Apartments";
+        }
+    }//Close setMainCampus function.
+	
     //Setter
     function setBuildingName($newBuildingName){
         $this->buildingName=$newBuildingName;

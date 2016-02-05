@@ -3,6 +3,7 @@
  * Created by PhpStorm.
  * User: jjwill10
  * Date: 10/9/2015
+ * Updated to work with the correct view on 02-03-2016.
  * Time: 8:15 AM
  * Description: This is the Oracle/PeopleSoft database view lookup for the Classification, Gender of Assigned students
  * within the Housing Information System at NC State.
@@ -11,6 +12,10 @@
 
 //Read log-in information
 include('includes/connection.php');
+
+//GET TERM
+//$termLookUP=$_GET['TERM'];
+$termLookUP="2161";
 
 //start
 $connectionToDatabase = oci_connect($username,$password,$database_host);
@@ -27,7 +32,7 @@ if(!$connectionToDatabase){
 //$queryToLookUpInformation = "SELECT BUILDING,NC_GENDER,ACAD_LEVEL_BOT FROM PS_NC_HIS_PP2_VW ";          //DEVELOPMENT (THIS VIEW SPECIFICALLY LOOKS FOR A PARTICULAR TERM)
 
 //PRODUCTION USE ON NC STATES SERVER.
-$queryToLookUpInformation = "SELECT BUILDING,NC_GENDER,ACAD_LEVEL_BOT FROM PS_NC_HIS_PPE_VW ";          //PRODUCTION (THIS VIEW SPECIFICALLY USES THE CURRENT TERM, SO IF DATE IS AUGUST 2014, TERM IS 2148, IF IT IS JANUARY 2015, TERM IS 2151)
+$queryToLookUpInformation = "SELECT BUILDING,NC_GENDER,ACAD_LEVEL_BOT,STRM FROM PS_NC_HIS_ASGNT_VW WHERE STRM=$termLookUP";          //PRODUCTION (Uses Current and all future terms for flexibility.)
 
 
 //QUERY END
@@ -74,10 +79,101 @@ while ($row=oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)){
     $gender = $row['NC_GENDER'];
     //Retrieve Academic level
     $academic_level = $row['ACAD_LEVEL_BOT'];
-    $collectionOfOccupancyDetail[] = array ('building'=>$building,'gender'=>$gender,'academic_level'=>$academic_level);
+
+	//Create Complexes based on the buildings
+	//Avent Ferry Complex
+    if($building=="AFC - A"||$building=="AFC - B"||$building=="AFC - E"||$building=="AFC - F"){
+        $complex = "Avent Ferry Complex";
+		$campus = "East";
+    }
+	//End Avent Ferry Complex
+	//Start Wood
+    else if($building=="Wood - A"||$building=="Wood - B"){
+        $complex = "Wood";
+        $area = "Southeast";
+        $campus = "East";
+    }
+    //Close Wood
+    //Start Quad
+    //Start Wood
+    else if($building=="Bagwell"||$building=="Becton"||$building=="Berry"||$building=="Gold"||$building=="Welch"||$building=="Syme"||$building=="Watauga"||$building=="North")
+    {
+        $complex = "Quad";
+        $area = "Northeast";
+        $campus = "East";
+    }
+    //End Quad
+    //Start Tri-Towers
+    else if($building=="Bowen"||$building=="Carroll"||$building=="Metcalf")
+    {
+        $complex = "Tri-Towers";
+        $area = " "; //Campus is Central, //Area is blank.
+        $campus = "Central";
+    }
+    //End Tri-Towers
+    //Start TOTA
+    else if($building=="Tucker"||$building=="Owen"||$building=="Turlington"||$building=="Alexander")
+    {
+        $complex = "TOTA";
+        $area = " "; //Campus is Central, //Area is blank.
+        $campus = "Central";
+    }
+    //END TOTA
+    //Start West
+    else if($building=="Lee"||$building=="Sullivan"||$building=="Bragaw")
+    {
+        $complex = "West";
+        $area = " "; //Campus is West, //Area is blank.
+        $campus = "West";
+    }
+    //END West
+    //Start Wolf Ridge
+    else if($building=="WR Grove"||$building=="WR Innovat"||$building=="WR Lakevw"||$building=="WR Plaza"||$building=="WR Plaza"||$building=="WR Tower"||$building=="WR Valley")
+    {
+        $complex = "Wolf Ridge";
+        $area = " "; //Campus is blank, //Area is blank.
+        $campus = "Apartments";
+    }
+    //End Wolf Ridge
+    //Start Wolf Village
+    else if($building=="Wolf Vlg A"||$building=="Wolf Vlg B"||$building=="Wolf Vlg C"||$building=="Wolf Vlg D"||$building=="Wolf Vlg E"||$building=="Wolf Vlg F"||$building=="Wolf Vlg G"||$building=="Wolf Vlg H")
+    {
+        $complex = "Wolf Village";
+        $area = " "; //Campus is blank, //Area is blank.
+        $campus = "Apartments";
+    }
+    //End Wolf Village
+    /*
+     * END COMPLEXES & AREA
+     */
+    else{
+        $complex = "";
+        $area = "";
+        $campus= "";
+    }	
+	
+    //Untouched
+    //$collectionOfOccupancyDetail[] = array ('building'=>$building,'gender'=>$gender,'academic_level'=>$academic_level);
+
+	$collectionOfOccupancyDetail[] = array ('building'=>$building,'complex'=>$complex,'area'=>$area,'campus'=>$campus,'gender'=>$gender,'academic_level'=>$academic_level);
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
 //End get information
-
+//BELOW LINE IS FOR TESTING ONLY.
 //var_dump($collectionOfOccupancyDetail);
 
 //Utilize the file buildingOccupancydetail_DATABASE_READ.php file (under the includes folder) that will consolidate the database information
