@@ -12,11 +12,11 @@
 //Development
 
 //User Name
-$username = "***REMOVED***";                         //Username
+$username = "XXXXREMOVEDXXXX";                         //Username
 //Password
-$password = "***REMOVED***";                  //Password
+$password = "XXXXREMOVEDXXXX";                  //Password
 //Database
-$database_host = "***REMOVED***";          //Localhost, testing environment.
+$database_host = "XXXXREMOVEDXXXX";          //Localhost, testing environment.
 //DEVELOPMENT
 
 
@@ -28,11 +28,11 @@ $database_host = "***REMOVED***";          //Localhost, testing environment.
 
 //Production
 //User Name
-$username = "***REMOVED***";
+$username = "XXXXREMOVEDXXXX";
 //Password
-$password = "***REMOVED***";
+$password = "XXXXREMOVEDXXXX";
 //Database
-$database_host = "***REMOVED***";          //CS900PROD
+$database_host = "XXXXREMOVEDXXXX"          XXXXREMOVEDXXXX
 //End Production
 
 */
