@@ -116,6 +116,12 @@ $genders = array("male"=>$male,"female"=>$female);
     </head>
 <div id="container">
     <?php
+    //GET TERM PROVIDED THROUGH THE URL
+    $requestedTERM;
+    $_GET['TERM']=2161;
+    $requestedTERM = $_GET['TERM'];
+
+
     //var_dump($classifications);
 
     //Write the necessary JavaScript to provide the bar chart
@@ -129,7 +135,11 @@ $genders = array("male"=>$male,"female"=>$female);
 
     <a href='' class='small' onclick='window.close();' >Close Window </a><img src="images/close_window.png"/>
     <br/>
-    <br/>
+
+    <p style="text-align: center;">
+        Information provided for term: <?php echo $requestedTERM ?>
+    </p>
+
 
     <table id ="selected_building_overview_information" name="selected_building_overview_information" border="1" width="700px">
         <thead>
@@ -211,9 +221,6 @@ $genders = array("male"=>$male,"female"=>$female);
         </thead>
         <tbody>
             <?php
-            //testing
-
-            //end testing
 
                     //end adding the classifications to the array.
                     foreach($classifications as $key=> $studentsCLASSIFICATIONS){

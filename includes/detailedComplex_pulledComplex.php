@@ -63,35 +63,35 @@
 						
                         //Avent Ferry Complex	
                         if($complexArea=="Avent Ferry Complex") {							
-                            echo "<a class='link' target='blank' onclick='return openforBuildingInformation(getCampus(pulledBuildingArray[lengthOFBUILDING_ARRAY-36]),getArea(pulledBuildingArray[lengthOFBUILDING_ARRAY-36]),getComplex(pulledBuildingArray[lengthOFBUILDING_ARRAY-36]),getBuilding(NONE));'>";                           
+                            echo "<a class='link' target='blank' onclick='return openforBuildingInformation(getCampus(pulledBuildingArray[lengthOFBUILDING_ARRAY-36]),getArea(pulledBuildingArray[lengthOFBUILDING_ARRAY-36]),getComplex(pulledBuildingArray[lengthOFBUILDING_ARRAY-36]),getBuilding(NONE),$myTERM);'>";                           
                         }
                         //Wood
                         else if($complexArea=="Wood") {						
-                            echo "<a class='link' target='blank' onclick='return openforBuildingInformation(getCampus(pulledBuildingArray[lengthOFBUILDING_ARRAY-33]),getArea(pulledBuildingArray[lengthOFBUILDING_ARRAY-33]),getComplex(pulledBuildingArray[lengthOFBUILDING_ARRAY-33]),getBuilding(NONE));'>";
+                            echo "<a class='link' target='blank' onclick='return openforBuildingInformation(getCampus(pulledBuildingArray[lengthOFBUILDING_ARRAY-33]),getArea(pulledBuildingArray[lengthOFBUILDING_ARRAY-33]),getComplex(pulledBuildingArray[lengthOFBUILDING_ARRAY-33]),getBuilding(NONE),$myTERM);'>";
                         }
                         //Quad
                         else if($complexArea=="Quad") {
-                            echo "<a class='link' target='blank' onclick='return openforBuildingInformation(getCampus(pulledBuildingArray[lengthOFBUILDING_ARRAY-31]),getArea(pulledBuildingArray[lengthOFBUILDING_ARRAY-31]),getComplex(pulledBuildingArray[lengthOFBUILDING_ARRAY-31]),getBuilding(NONE));'>";
+                            echo "<a class='link' target='blank' onclick='return openforBuildingInformation(getCampus(pulledBuildingArray[lengthOFBUILDING_ARRAY-31]),getArea(pulledBuildingArray[lengthOFBUILDING_ARRAY-31]),getComplex(pulledBuildingArray[lengthOFBUILDING_ARRAY-31]),getBuilding(NONE),$myTERM);'>";
                         }
                         //Tri-Towers
                         else if($complexArea=="Tri Towers") {
-                           echo "<a class='link' target='blank' onclick='return openforBuildingInformation(getCampus(pulledBuildingArray[lengthOFBUILDING_ARRAY-23]),getArea(pulledBuildingArray[lengthOFBUILDING_ARRAY-23]),getComplex(pulledBuildingArray[lengthOFBUILDING_ARRAY-23]),getBuilding(NONE));'>"; 
+                           echo "<a class='link' target='blank' onclick='return openforBuildingInformation(getCampus(pulledBuildingArray[lengthOFBUILDING_ARRAY-23]),getArea(pulledBuildingArray[lengthOFBUILDING_ARRAY-23]),getComplex(pulledBuildingArray[lengthOFBUILDING_ARRAY-23]),getBuilding(NONE),$myTERM);'>"; 
                         }
                         //TOTA
                         else if($complexArea=="TOTA") {
-                           echo "<a class='link'  target='blank' onclick='return openforBuildingInformation(getCampus(pulledBuildingArray[lengthOFBUILDING_ARRAY-20]),getArea(pulledBuildingArray[lengthOFBUILDING_ARRAY-20]),getComplex(pulledBuildingArray[lengthOFBUILDING_ARRAY-20]),getBuilding(NONE));'>"; 
+                           echo "<a class='link'  target='blank' onclick='return openforBuildingInformation(getCampus(pulledBuildingArray[lengthOFBUILDING_ARRAY-20]),getArea(pulledBuildingArray[lengthOFBUILDING_ARRAY-20]),getComplex(pulledBuildingArray[lengthOFBUILDING_ARRAY-20]),getBuilding(NONE),$myTERM);'>"; 
                         }
                         //WEST
                         else if($complexArea=="West") {
-                            echo "<a class='link' target='blank' onclick='return openforBuildingInformation(getCampus(pulledBuildingArray[lengthOFBUILDING_ARRAY-16]),getArea(pulledBuildingArray[lengthOFBUILDING_ARRAY-16]),getComplex(pulledBuildingArray[lengthOFBUILDING_ARRAY-16]),getBuilding(NONE));'>";
+                            echo "<a class='link' target='blank' onclick='return openforBuildingInformation(getCampus(pulledBuildingArray[lengthOFBUILDING_ARRAY-16]),getArea(pulledBuildingArray[lengthOFBUILDING_ARRAY-16]),getComplex(pulledBuildingArray[lengthOFBUILDING_ARRAY-16]),getBuilding(NONE),$myTERM);'>";
                         }
                         //Wolf Ridge
                         else if($complexArea=="Wolf Ridge") {
-                            echo "<a class='link' target='blank' onclick='return openforBuildingInformation(getCampus(pulledBuildingArray[lengthOFBUILDING_ARRAY-13]),getArea(pulledBuildingArray[lengthOFBUILDING_ARRAY-13]),getComplex(pulledBuildingArray[lengthOFBUILDING_ARRAY-13]),getBuilding(NONE));'>";
+                            echo "<a class='link' target='blank' onclick='return openforBuildingInformation(getCampus(pulledBuildingArray[lengthOFBUILDING_ARRAY-13]),getArea(pulledBuildingArray[lengthOFBUILDING_ARRAY-13]),getComplex(pulledBuildingArray[lengthOFBUILDING_ARRAY-13]),getBuilding(NONE),$myTERM);'>";
                         }
                         //Wolf Village
                         else if($complexArea=="Wolf Village") {
-                            echo "<a class='link' target='blank' onclick='return openforBuildingInformation(getCampus(pulledBuildingArray[lengthOFBUILDING_ARRAY-7]),getArea(pulledBuildingArray[lengthOFBUILDING_ARRAY-7]),getComplex(pulledBuildingArray[lengthOFBUILDING_ARRAY-7]),getBuilding(NONE));'>";
+                            echo "<a class='link' target='blank' onclick='return openforBuildingInformation(getCampus(pulledBuildingArray[lengthOFBUILDING_ARRAY-7]),getArea(pulledBuildingArray[lengthOFBUILDING_ARRAY-7]),getComplex(pulledBuildingArray[lengthOFBUILDING_ARRAY-7]),getBuilding(NONE),$myTERM);'>";
                         }
 
                         else{

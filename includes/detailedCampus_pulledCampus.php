@@ -60,6 +60,9 @@
 						echo "\n";
 						//End New line...
 
+                        //TERM SHOWN ON THE FRONT PAGE IS
+                        //CALLED $myTERM
+
 
                         /* *************
                          * CAMPUS AREAS
@@ -67,23 +70,23 @@
                          ****/
                         //EAST
                         if($campus=="East") {                           
-                            echo "<a class='link' target='blank' onclick='return openforBuildingInformation(getCampus(EAST),getBuilding(NONE),getBuilding(NONE),getBuilding(NONE));'>";                           
+                            echo "<a class='link' target='blank' onclick='return openforBuildingInformation(getCampus(EAST),getBuilding(NONE),getBuilding(NONE),getBuilding(NONE),$myTERM);'>";
                         }
 
                         //CENTRAL
                         //Wood
-                        if($campusAreaCentral==" Central") {                     
-                            echo "<a class='link' target='blank' onclick='return openforBuildingInformation(getCampus(CENTRAL),getBuilding(NONE),getBuilding(NONE),getBuilding(NONE));'>";
+                        if($campusAreaCentral==" Central") {
+                            echo "<a class='link' target='blank' onclick='return openforBuildingInformation(getCampus(CENTRAL),getBuilding(NONE),getBuilding(NONE),getBuilding(NONE),$myTERM);'>";
                         }
 
                         //WEST
                         //Quad
                         if($campusAreaWest=="West") {
-                            echo "<a class='link' target='blank' onclick='return openforBuildingInformation(getCampus(WEST),getBuilding(NONE),getBuilding(NONE),getBuilding(NONE));'>";
+                            echo "<a class='link' target='blank' onclick='return openforBuildingInformation(getCampus(WEST),getBuilding(NONE),getBuilding(NONE),getBuilding(NONE),$myTERM);'>";
                         }
                         //APARTMENTS
                         if($campusAreaApartments=="Apartments") {
-                            echo "<a class='link' target='blank' onclick='return openforBuildingInformation(getCampus(APARTMENTS),getBuilding(NONE),getBuilding(NONE),getBuilding(NONE));'>";
+                            echo "<a class='link' target='blank' onclick='return openforBuildingInformation(getCampus(APARTMENTS),getBuilding(NONE),getBuilding(NONE),getBuilding(NONE),$myTERM);'>";
                         }
 
 

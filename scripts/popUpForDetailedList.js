@@ -11,6 +11,20 @@ var pulledCampusTest=[];
 var pulledArea=[];
 var pulledComplex=[];
 var pulledBuildingArray=[];
+//VALUES ARE FOR PULLING SPECIFIC CAMPUS AREAS ON CAMPUS FROM THE
+//CLICKABLE LINK FOR EACH AREA.
+var NONE="NONE";
+
+//Campus Areas.
+var EAST="East";
+var CENTRAL = "Central";
+var WEST    = "West";
+var APARTMENTS = "Apartments";
+
+//Academic Term to look for information
+var TERM;
+
+
 
 /*
  /Will need to do some javascript
@@ -36,13 +50,22 @@ function setBuilding(pulledBuilding){
     pulledBuildingArray.push(pulledBuilding);
 }
 
+function setTerm(newTERM){
+    TERM=newTERM;
+}
+
+
+
+
+
+
 
 /*
  * This function creates the URL attached to building_information_detailed.php+campus+[pulledCampusTest]
  * In the future these values will be pulled from a database table within the housing MySQL system.
  */
 function getCampus(buildingName){
-   //Check Residence Halls
+    //Check Residence Halls
     //Avent Ferry Complex
     if(buildingName=="AFC - A"||buildingName=="AFC - B"||buildingName=="AFC - E"||buildingName=="AFC - F"){
         pulledCampusTest="East";
@@ -90,6 +113,30 @@ function getCampus(buildingName){
     else if(buildingName=="WR Grove"||buildingName=="WR Innovat"||buildingName=="WR Lakevw"||buildingName=="WR Plaza"||buildingName=="WR Tower"||buildingName=="WR Valley"||buildingName=="Wolf Vlg A"||buildingName=="Wolf Vlg B"||buildingName=="Wolf Vlg C"||buildingName=="Wolf Vlg D"||buildingName=="Wolf Vlg E"||buildingName=="Wolf Vlg H"){
         pulledCampusTest="Apartments";
     }
+
+    /**
+     * FOR THE POP-UPS TO EASILY WORK FOR EAST CENTRAL WEST AND APARTMENT AREAS.
+     */
+    //EAST
+    else if(buildingName=="East"){
+        pulledCampusTest="East";
+    }
+    //Central
+    else if(buildingName=="Central"){
+        pulledCampusTest="Central";
+    }
+    //West
+    else if(buildingName=="West"){
+        pulledCampusTest="West";
+    }
+    //Apartments
+    else if(buildingName=="Apartments"){
+        pulledCampusTest="Apartments";
+    }
+
+
+
+
     else{
         pulledCampusTest="";
     }
@@ -156,6 +203,11 @@ function getArea(buildingName){
     else if(buildingName=="WR Grove"||buildingName=="WR Innovat"||buildingName=="WR Lakevw"||buildingName=="WR Plaza"||buildingName=="WR Tower"||buildingName=="WR Valley"||buildingName=="Wolf Vlg A"||buildingName=="Wolf Vlg B"||buildingName=="Wolf Vlg C"||buildingName=="Wolf Vlg D"||buildingName=="Wolf Vlg E"||buildingName=="Wolf Vlg H"){
         pulledArea="-";
     }
+
+    else if(buildingName=="NONE"){
+        pulledArea="NONE";
+    }
+
     else{
         pulledArea="";
     }
@@ -204,7 +256,7 @@ function getComplex(buildingName){
     //WEST CAMPUS
     //Lee, Sullivan, Bragaw
     else if(buildingName=="Lee"||buildingName=="Sullivan"||buildingName=="Bragaw"){
-        pulledComplex="-";
+        pulledComplex="West";
     }
 
     /**
@@ -220,6 +272,10 @@ function getComplex(buildingName){
     else if(buildingName=="Wolf Vlg A"||buildingName=="Wolf Vlg B"||buildingName=="Wolf Vlg C"||buildingName=="Wolf Vlg D"||buildingName=="Wolf Vlg E"||buildingName=="Wolf Vlg H"){
         pulledComplex="Wolf Village";
     }
+
+    else if(buildingName=="NONE"){
+        pulledComplex="NONE";
+    }
     else{
         pulledComplex=" ";
     }
@@ -231,18 +287,31 @@ function getComplex(buildingName){
 
 //Function returns that location in the array that the building is located.
 function getBuilding (buildingName){
-    var location;
-    location = pulledBuildingArray.indexOf(buildingName);
-    return location;
-}
+    //Provide a fix for the Wolf Ridge Lakeview name in Development, but called "WR-Lakevw" at NCSU.
+    if(buildingName=="WR Lakeview"){
+        buildingName="WR Lakevw";
+    }
+    if(buildingName=="NONE"){
+        var location;
+        location="NONE"; //DO NOT SPECIFY THE LOCATION.
+        return location;
+    }
+
+    else{
+
+        var location;
+        location = pulledBuildingArray.indexOf(buildingName);
+        return location;
+    }
+}//close getBuilding function.
 
 
-function openforBuildingInformation(pulledCampus,pulledArea,pulledComplex,pulledBuilding){
+function openforBuildingInformation(pulledCampus,pulledArea,pulledComplex,pulledBuilding,term){
 
 //Create a popupWindow based on the four parameters set ....
     var myWindow = window.open('building_information_detailed.php?campus='+
     pulledCampus+'&area='+pulledArea+'&complex='+pulledComplex+'&building='+
-    pulledBuilding +
+    pulledBuilding +'&term='+ term +
     '', '_blank','resizable=no, menubar=no,toolbar=no,width=715, height=920');
 }
 

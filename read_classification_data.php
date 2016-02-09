@@ -15,7 +15,7 @@ include('includes/connection.php');
 
 //GET TERM
 //$termLookUP=$_GET['TERM'];
-$termLookUP="2161";
+$termLookUP=$_GET['term'];
 
 //start
 $connectionToDatabase = oci_connect($username,$password,$database_host);
@@ -29,10 +29,10 @@ if(!$connectionToDatabase){
 }
 
 //QUERY START
-//$queryToLookUpInformation = "SELECT BUILDING,NC_GENDER,ACAD_LEVEL_BOT FROM PS_NC_HIS_PP2_VW ";          //DEVELOPMENT (THIS VIEW SPECIFICALLY LOOKS FOR A PARTICULAR TERM)
+$queryToLookUpInformation = "SELECT BUILDING,NC_GENDER,ACAD_LEVEL_BOT,EFFECTIVE_TERM  FROM PS_NC_HIS_PP2_VW WHERE EFFECTIVE_TERM=$termLookUP";          //DEVELOPMENT (THIS VIEW SPECIFICALLY LOOKS FOR A PARTICULAR TERM)
 
 //PRODUCTION USE ON NC STATES SERVER.
-$queryToLookUpInformation = "SELECT BUILDING,NC_GENDER,ACAD_LEVEL_BOT,STRM FROM PS_NC_HIS_ASGNT_VW WHERE STRM=$termLookUP";          //PRODUCTION (Uses Current and all future terms for flexibility.)
+//$queryToLookUpInformation = "SELECT BUILDING,NC_GENDER,ACAD_LEVEL_BOT,STRM FROM PS_NC_HIS_ASGNT_VW WHERE STRM=$termLookUP";          //PRODUCTION (Uses Current and all future terms for flexibility.)
 
 
 //QUERY END
