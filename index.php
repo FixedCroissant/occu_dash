@@ -64,7 +64,7 @@ include('index_READ_DATA.php');
 
 //Tally those who have logged in.
 //Added 02-05-2016.
-include('includes/tally_check.php');
+//include('includes/tally_check.php');
 //End Tally.
 
 ?>
@@ -137,6 +137,16 @@ include('includes/tally_check.php');
 
                         //Add darker color to the row
                         $(".expand_SUBROW").addClass("light-grey");
+
+                        //Color cells for the housing complex area.
+                        //Add the lighter grey color to the complex segments......
+                        $(".building-elements-SoutheastGroup").addClass('lighter-grey');
+                        $(".building-elements-EastGroup").addClass('lighter-grey');
+                        $(".building-elements-NortheastGroup").addClass('lighter-grey');
+                        $(".building-elements-CentralGroup").addClass('lighter-grey');
+                        $(".building-elements-West").addClass('lighter-grey');
+                        $(".building-elements-apartment_WolfRidge").addClass('lighter-grey');
+                        $(".building-elements-apartment-WolfVillage").addClass('lighter-grey');
                     });
                 }
                 function HideAll() {
@@ -146,6 +156,16 @@ include('includes/tally_check.php');
 
                         //Remove the darker color and bolding to the row.
                         $(".expand_SUBROW").removeClass("light-grey");
+
+                        //Remove the lighter grey color.
+                        $(".building-elements-SoutheastGroup").removeClass('lighter-grey');
+                        $(".building-elements-EastGroup").removeClass('lighter-grey');
+                        $(".building-elements-NortheastGroup").removeClass('lighter-grey');
+                        $(".building-elements-CentralGroup").removeClass('lighter-grey');
+                        $(".building-elements-West").removeClass('lighter-grey');
+                        $(".building-elements-apartment_WolfRidge").removeClass('lighter-grey');
+                        $(".building-elements-apartment-WolfVillage").removeClass('lighter-grey');
+                        //End removing the lighter grey color.
                     });
                 }
             </script>
@@ -288,14 +308,23 @@ include('includes/tally_check.php');
                                             echo "<img src='images/arrow.png' class='initialArrow' id='arrowFirst-east_Group'/> ";
                                             //End Add Arrow
 
-                                            
+
+                                            //Temporary values
+                                            $campusAreaCentral = $campus;
+                                            $campusAreaWest = $campus;
+                                            $campusAreaApartments = $campus;
+
 											//Use this separate file to provide the correct building needed in the link popup.
                                             //Allows the pop-up to happen...commenting this file out
                                             //will turn off the pop-up that is being used for the particular campus area.
 											include('includes/detailedCampus_pulledCampus.php');
                                             //end separate file
-											
+
 											echo $campus;               //East
+
+
+
+
 											
                                             //echo "&nbsp;";            //If I don't specify the campus area, at the very least leave a blank space.
                                             //close datacell
@@ -712,14 +741,17 @@ include('includes/tally_check.php');
 											$campus = $listRead->getMainCampusArea();
 											
 											$campusAreaCentral = $campus;
-											
-											//Use this separate file to provide the correct building needed in the link popup.
+
+
+                                            //Use this separate file to provide the correct building needed in the link popup.
                                             //Allows the pop-up to happen...commenting this file out
                                             //will turn off the pop-up that is being used for the particular campus area.
-											include('includes/detailedCampus_pulledCampus.php');
+                                            include('includes/detailedCampus_pulledCampus.php');
                                             //end separate file
-											
-											echo $campus;
+
+                                            echo $campusAreaCentral;
+
+
 											//Presents central campus area.
 											
 											echo "</td>";
